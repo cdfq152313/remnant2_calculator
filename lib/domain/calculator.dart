@@ -15,7 +15,7 @@ class Calculator {
     final map = <Type, Effect>{};
     for (final effect in effects) {
       if (map.containsKey(effect.runtimeType)) {
-        map[effect.runtimeType] = map[effect.runtimeType]!.merge(effect);
+        map[effect.runtimeType] = effect.merge(map[effect.runtimeType]!);
       } else {
         map[effect.runtimeType] = effect;
       }

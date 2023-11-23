@@ -1,3 +1,5 @@
+import 'dart:math';
+
 class Effect {
   Effect(this.value);
 
@@ -18,6 +20,11 @@ class AllDamage extends Effect {
 
 class AllCriticalChance extends Effect {
   AllCriticalChance(super.value);
+
+  @override
+  Effect merge(Effect effect) {
+    return Effect(max(100, value + effect.value));
+  }
 }
 
 class AllCriticalDamage extends Effect {

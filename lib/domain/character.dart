@@ -1,5 +1,9 @@
+import 'package:copy_with_extension/copy_with_extension.dart';
 import 'package:remnant2_calculator/domain/item.dart';
 
+part 'character.g.dart';
+
+@CopyWith()
 class Character {
   Character({
     this.firstClass,

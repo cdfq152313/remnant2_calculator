@@ -1,6 +1,18 @@
 import 'dart:math';
 
 class Effect {
+  static Map<Type, Effect> collect(List<Effect> effects) {
+    final map = <Type, Effect>{};
+    for (final effect in effects) {
+      if (map.containsKey(effect.runtimeType)) {
+        map[effect.runtimeType] = effect.merge(map[effect.runtimeType]!);
+      } else {
+        map[effect.runtimeType] = effect;
+      }
+    }
+    return map;
+  }
+
   Effect(this.value);
 
   final int value;
@@ -23,7 +35,7 @@ class AllCriticalChance extends Effect {
 
   @override
   Effect merge(Effect effect) {
-    return Effect(max(100, value + effect.value));
+    return Effect(min(100, value + effect.value));
   }
 }
 

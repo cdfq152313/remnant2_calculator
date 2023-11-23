@@ -5,13 +5,13 @@ import 'package:test/test.dart';
 void main() {
   test('Regular Damage', () {
     final calculator = Calculator();
-    calculator.calculate([
+    calculator.calculate(Effect.collect([
       BaseDamage(100),
       AllDamage(0),
       AllCriticalChance(50),
       AllCriticalDamage(50),
       AllWeakSpotDamage(100),
-    ]);
+    ]));
     expect(calculator.baseDamage, equals(100));
     expect(calculator.baseDamageIncrease, equals(0));
     expect(calculator.criticalChance, equals(50));

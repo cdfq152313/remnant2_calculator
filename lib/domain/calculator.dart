@@ -11,21 +11,12 @@ class Calculator {
   int expectedDamage = 0;
   int expectedWeakSpotDamage = 0;
 
-  void calculate(List<Effect> effects) {
-    final map = <Type, Effect>{};
-    for (final effect in effects) {
-      if (map.containsKey(effect.runtimeType)) {
-        map[effect.runtimeType] = effect.merge(map[effect.runtimeType]!);
-      } else {
-        map[effect.runtimeType] = effect;
-      }
-    }
-
-    baseDamage = map[BaseDamage]?.value ?? 100;
-    baseDamageIncrease = map[AllDamage]?.value ?? 0;
-    criticalChance = map[AllCriticalChance]?.value ?? 0;
-    criticalDamage = 50 + (map[AllCriticalDamage]?.value ?? 0);
-    weakSpotDamage = map[AllWeakSpotDamage]?.value ?? 0;
+  void calculate(Map<Type, Effect> effectMap) {
+    baseDamage = effectMap[BaseDamage]?.value ?? 100;
+    baseDamageIncrease = effectMap[AllDamage]?.value ?? 0;
+    criticalChance = effectMap[AllCriticalChance]?.value ?? 0;
+    criticalDamage = 50 + (effectMap[AllCriticalDamage]?.value ?? 0);
+    weakSpotDamage = effectMap[AllWeakSpotDamage]?.value ?? 0;
 
     expectedDamage = (baseDamage *
             (1 + baseDamageIncrease.pc) *

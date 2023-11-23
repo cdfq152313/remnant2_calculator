@@ -1,27 +1,72 @@
+import 'package:flutter/material.dart';
+import 'package:remnant2_calculator/domain/calculation.dart';
 import 'package:remnant2_calculator/domain/effect.dart';
 import 'package:remnant2_calculator/extension.dart';
 
-class Calculator {
-  int baseDamage = 0;
-  int baseDamageIncrease = 0;
-  int criticalChance = 0;
-  int criticalDamage = 0;
-  int weakSpotDamage = 0;
+abstract class Calculator {
+  static Calculator allDamageCalculator = AllDamageCalculator();
 
-  int expectedDamage = 0;
-  int expectedWeakSpotDamage = 0;
+  Calculation calculate(Map<Type, Effect> effectMap) {
+    final baseDamage = getBaseDamage(effectMap);
+    final baseDamageIncrease = getBaseDamageIncrease(effectMap);
+    final criticalChance = getCriticalChance(effectMap);
+    final criticalDamage = getCriticalDamage(effectMap);
+    final weakSpotDamage = getWeakSpotDamage(effectMap);
 
-  void calculate(Map<Type, Effect> effectMap) {
-    baseDamage = effectMap[BaseDamage]?.value ?? 100;
-    baseDamageIncrease = effectMap[AllDamage]?.value ?? 0;
-    criticalChance = effectMap[AllCriticalChance]?.value ?? 0;
-    criticalDamage = 50 + (effectMap[AllCriticalDamage]?.value ?? 0);
-    weakSpotDamage = effectMap[AllWeakSpotDamage]?.value ?? 0;
+    final expectedDamage = baseDamage *
+        (1 + baseDamageIncrease.pc) *
+        (1 + criticalDamage.pc * criticalChance.pc);
+    final expectedWeakSpotDamage = expectedDamage * (1 + weakSpotDamage.pc);
+    return Calculation(
+      baseDamage: baseDamage,
+      baseDamageIncrease: baseDamageIncrease,
+      criticalChance: criticalChance,
+      criticalDamage: criticalDamage,
+      weakSpotDamage: weakSpotDamage,
+      expectedDamage: expectedDamage.toInt(),
+      expectedWeakSpotDamage: expectedWeakSpotDamage.toInt(),
+    );
+  }
 
-    expectedDamage = (baseDamage *
-            (1 + baseDamageIncrease.pc) *
-            (1 + criticalDamage.pc * criticalChance.pc))
-        .toInt();
-    expectedWeakSpotDamage = (expectedDamage * (1 + weakSpotDamage.pc)).toInt();
+  @protected
+  int getBaseDamage(Map<Type, Effect> effectMap);
+
+  @protected
+  int getBaseDamageIncrease(Map<Type, Effect> effectMap);
+
+  @protected
+  int getCriticalChance(Map<Type, Effect> effectMap);
+
+  @protected
+  int getCriticalDamage(Map<Type, Effect> effectMap);
+
+  @protected
+  int getWeakSpotDamage(Map<Type, Effect> effectMap);
+}
+
+class AllDamageCalculator extends Calculator {
+  @override
+  int getBaseDamage(Map<Type, Effect> effectMap) {
+    return effectMap[BaseDamage]?.value ?? 100;
+  }
+
+  @override
+  int getBaseDamageIncrease(Map<Type, Effect> effectMap) {
+    return effectMap[AllDamage]?.value ?? 0;
+  }
+
+  @override
+  int getCriticalChance(Map<Type, Effect> effectMap) {
+    return effectMap[AllCriticalChance]?.value ?? 0;
+  }
+
+  @override
+  int getCriticalDamage(Map<Type, Effect> effectMap) {
+    return 50 + (effectMap[AllCriticalDamage]?.value ?? 0);
+  }
+
+  @override
+  int getWeakSpotDamage(Map<Type, Effect> effectMap) {
+    return effectMap[AllWeakSpotDamage]?.value ?? 0;
   }
 }

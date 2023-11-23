@@ -1,3 +1,3 @@
 extension NumExtension on num {
-  num get pc => toDouble() / 100;
+  double get pc => toDouble() / 100;
 }

@@ -3,22 +3,22 @@ import 'package:remnant2_calculator/domain/effect.dart';
 import 'package:test/test.dart';
 
 void main() {
-  test('Regular Damage', () {
-    final calculator = Calculator();
-    calculator.calculate(Effect.collect([
+  test('All Damage', () {
+    final calculator = Calculator.allDamageCalculator;
+    final result = calculator.calculate(Effect.collect([
       BaseDamage(100),
       AllDamage(0),
       AllCriticalChance(50),
       AllCriticalDamage(50),
       AllWeakSpotDamage(100),
     ]));
-    expect(calculator.baseDamage, equals(100));
-    expect(calculator.baseDamageIncrease, equals(0));
-    expect(calculator.criticalChance, equals(50));
-    expect(calculator.criticalDamage, equals(100));
-    expect(calculator.weakSpotDamage, equals(100));
+    expect(result.baseDamage, equals(100));
+    expect(result.baseDamageIncrease, equals(0));
+    expect(result.criticalChance, equals(50));
+    expect(result.criticalDamage, equals(100));
+    expect(result.weakSpotDamage, equals(100));
 
-    expect(calculator.expectedDamage, equals(150));
-    expect(calculator.expectedWeakSpotDamage, equals(300));
+    expect(result.expectedDamage, equals(150));
+    expect(result.expectedWeakSpotDamage, equals(300));
   });
 }

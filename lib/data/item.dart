@@ -19,6 +19,12 @@ final amulets = [
 
 final rings = [
   Item(
+    name: '扎尼亞的惡意',
+    effects: [
+      AllWeakSpotDamage(30),
+    ],
+  ),
+  Item(
     name: '戰爭指環',
     effects: [
       AllCriticalChance(15),
@@ -29,6 +35,12 @@ final rings = [
     name: '機率之圈',
     effects: [
       AllCriticalDamage(30),
+    ],
+  ),
+  Item(
+    name: '破壞者之負擔',
+    effects: [
+      AllDamage(15),
     ],
   ),
 ];

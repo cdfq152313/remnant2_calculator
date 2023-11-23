@@ -1,69 +1,34 @@
-import 'package:remnant2_calculator/domain/calculator.dart';
 import 'package:remnant2_calculator/domain/item.dart';
 
 class Character {
-  Item? firstClass;
-  Item? secondClass;
+  Character({
+    this.firstClass,
+    this.secondClass,
+    this.longGun,
+    this.longGunMutator,
+    this.handGun,
+    this.handGunMutator,
+    this.melee,
+    this.meleeMutator,
+    this.amulet,
+    this.rings = const [null, null, null, null],
+    this.modifiers = const [],
+  });
 
-  Item? longGun;
-  Item? longGunMutator;
+  final Item? firstClass;
+  final Item? secondClass;
 
-  Item? handGun;
-  Item? handGunMutator;
+  final Item? longGun;
+  final Item? longGunMutator;
 
-  Item? melee;
-  Item? meleeMutator;
+  final Item? handGun;
+  final Item? handGunMutator;
 
-  Item? amulet;
-  List<Item?> rings = [null, null, null, null];
+  final Item? melee;
+  final Item? meleeMutator;
 
-  List<Item> modifiers = [];
+  final Item? amulet;
+  final List<Item?> rings;
 
-  void setFirstClass(Item? value) {
-    firstClass = value;
-  }
-
-  void setSecondClass(Item? value) {
-    secondClass = value;
-  }
-
-  void setLongGun(Item? value) {
-    longGun = value;
-  }
-
-  void setLongGunMutator(Item? value) {
-    longGunMutator = value;
-  }
-
-  void setHandGun(Item? value) {
-    handGun = value;
-  }
-
-  void setHandGunMutator(Item? value) {
-    handGunMutator = value;
-  }
-
-  void setMelee(Item? value) {
-    melee = value;
-  }
-
-  void setMeleeMutator(Item? value) {
-    handGunMutator = value;
-  }
-
-  void setAmulet(Item? value) {
-    amulet = value;
-  }
-
-  void setRing(int index, Item? value) {
-    rings[index] = value;
-  }
-
-  void addModifier(Item item) {
-    modifiers.add(item);
-  }
-
-  void removeModifier(int index) {
-    modifiers.removeAt(index);
-  }
+  final List<Item> modifiers;
 }

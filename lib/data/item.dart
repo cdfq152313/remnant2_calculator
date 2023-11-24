@@ -15,16 +15,16 @@ final archetypes = [
   Item(
     name: '獵人',
     effects: [
-      AllDamage(40),
-      AllWeakSpotDamage(15),
-      AllCriticalChance(5),
+      RangeDamage(40),
+      RangeWeakSpotDamage(15),
+      RangeCriticalChance(5),
     ],
   ),
   Item(
     name: '槍手',
     effects: [
-      AllDamage(25),
-      AllCriticalChance(5),
+      RangeDamage(25),
+      RangeCriticalChance(5),
     ],
   ),
 ];
@@ -33,8 +33,8 @@ final modifiers = [
   Item(
     name: '獵人1技能',
     effects: [
-      AllDamage(15),
-      AllCriticalChance(15),
+      RangeDamage(15),
+      RangeCriticalChance(15),
     ],
   ),
 ];
@@ -60,7 +60,7 @@ final amulets = [
   Item(
     name: '聖十字輝光',
     effects: [
-      BaseDamage(15),
+      AllDamage(15),
     ],
   ),
 ];
@@ -97,19 +97,19 @@ final relicFragments = [
   Item(
     name: '遠程傷害',
     effects: [
-      AllDamage(10),
+      RangeDamage(10),
     ],
   ),
   Item(
     name: '遠程暴擊率',
     effects: [
-      AllCriticalChance(10),
+      RangeCriticalChance(10),
     ],
   ),
   Item(
     name: '遠程暴擊傷害',
     effects: [
-      AllCriticalDamage(20),
+      RangeCriticalDamage(20),
     ],
   ),
 ];

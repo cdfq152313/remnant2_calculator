@@ -36,7 +36,7 @@ class CharacterCalculatorCubit extends Cubit<CharacterCalculatorCubitResult?> {
       ...regularEffects,
     ]);
     final result = CharacterCalculatorCubitResult(
-      longGun: Calculator.allDamageCalculator.calculate(longGunEffects),
+      longGun: Calculator.rangeDamageCalculator.calculate(longGunEffects),
       longGunMod: Calculator.allDamageCalculator.calculate(longGunEffects),
       handGun: Calculator.allDamageCalculator.calculate(handGunEffects),
       handGunMod: Calculator.allDamageCalculator.calculate(handGunEffects),

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:remnant2_calculator/domain/calculation.dart';
 import 'package:remnant2_calculator/domain/effect.dart';
+import 'package:remnant2_calculator/domain/effect_merger.dart';
 import 'package:remnant2_calculator/extension.dart';
 
 abstract class Calculator {
   static Calculator allDamageCalculator = AllDamageCalculator();
+  static Calculator rangeDamageCalculator = RangeDamageCalculator();
 
   Calculation calculate(Map<Type, Effect> effectMap) {
     final baseDamage = getBaseDamage(effectMap);
@@ -29,7 +31,9 @@ abstract class Calculator {
   }
 
   @protected
-  int getBaseDamage(Map<Type, Effect> effectMap);
+  int getBaseDamage(Map<Type, Effect> effectMap) {
+    return effectMap[BaseDamage]?.value ?? 100;
+  }
 
   @protected
   int getBaseDamageIncrease(Map<Type, Effect> effectMap);
@@ -45,11 +49,6 @@ abstract class Calculator {
 }
 
 class AllDamageCalculator extends Calculator {
-  @override
-  int getBaseDamage(Map<Type, Effect> effectMap) {
-    return effectMap[BaseDamage]?.value ?? 100;
-  }
-
   @override
   int getBaseDamageIncrease(Map<Type, Effect> effectMap) {
     return effectMap[AllDamage]?.value ?? 0;
@@ -68,5 +67,36 @@ class AllDamageCalculator extends Calculator {
   @override
   int getWeakSpotDamage(Map<Type, Effect> effectMap) {
     return effectMap[AllWeakSpotDamage]?.value ?? 0;
+  }
+}
+
+class RangeDamageCalculator extends Calculator {
+  @override
+  int getBaseDamageIncrease(Map<Type, Effect> effectMap) {
+    return EffectMerger.sum
+        .merge(effectMap[AllDamage], effectMap[RangeDamage])
+        .value;
+  }
+
+  @override
+  int getCriticalChance(Map<Type, Effect> effectMap) {
+    return EffectMerger.sumLimit100
+        .merge(effectMap[AllCriticalChance], effectMap[RangeCriticalChance])
+        .value;
+  }
+
+  @override
+  int getCriticalDamage(Map<Type, Effect> effectMap) {
+    return 50 +
+        EffectMerger.sum
+            .merge(effectMap[AllCriticalDamage], effectMap[RangeCriticalDamage])
+            .value;
+  }
+
+  @override
+  int getWeakSpotDamage(Map<Type, Effect> effectMap) {
+    return EffectMerger.sum
+        .merge(effectMap[AllWeakSpotDamage], effectMap[RangeWeakSpotDamage])
+        .value;
   }
 }

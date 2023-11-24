@@ -6,12 +6,12 @@ import 'package:remnant2_calculator/extension.dart';
 class CharacterCubit extends Cubit<Character> {
   CharacterCubit() : super(Character());
 
-  void setFirstClass(Item? item) {
-    emit(state.copyWith(firstClass: item));
+  void setPrimaryArchetype(Item? item) {
+    emit(state.copyWith(primaryArchetype: item));
   }
 
-  void setSecondClass(Item? item) {
-    emit(state.copyWith(secondClass: item));
+  void setSecondaryArchetype(Item? item) {
+    emit(state.copyWith(secondaryArchetype: item));
   }
 
   void setLongGun(Item? item) {

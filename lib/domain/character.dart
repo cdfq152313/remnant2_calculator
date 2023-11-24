@@ -6,8 +6,8 @@ part 'character.g.dart';
 @CopyWith()
 class Character {
   Character({
-    this.firstClass,
-    this.secondClass,
+    this.primaryArchetype,
+    this.secondaryArchetype,
     this.longGun,
     this.longGunMutator,
     this.handGun,
@@ -16,14 +16,15 @@ class Character {
     this.meleeMutator,
     this.amulet,
     this.rings = const [null, null, null, null],
+    this.relicFragments = const [null, null, null],
     this.regularModifiers = const [],
     this.longGunModifiers = const [],
     this.handGunModifiers = const [],
     this.meleeModifiers = const [],
   });
 
-  final Item? firstClass;
-  final Item? secondClass;
+  final Item? primaryArchetype;
+  final Item? secondaryArchetype;
 
   final Item? longGun;
   final Item? longGunMutator;
@@ -40,5 +41,6 @@ class Character {
   final Item? amulet;
   final List<Item?> rings;
 
+  final List<Item?> relicFragments;
   final List<Item> regularModifiers;
 }

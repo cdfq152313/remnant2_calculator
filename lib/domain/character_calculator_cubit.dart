@@ -9,10 +9,12 @@ class CharacterCalculatorCubit extends Cubit<CharacterCalculatorCubitResult?> {
 
   void update(Character character) {
     final regularEffects = [
-      ...character.firstClass?.effects ?? [],
-      ...character.secondClass?.effects ?? [],
+      ...character.primaryArchetype?.effects ?? [],
+      ...character.secondaryArchetype?.effects ?? [],
       ...character.amulet?.effects ?? [],
       for (final ring in character.rings) ...ring?.effects ?? [],
+      for (final relicFragment in character.relicFragments)
+        ...relicFragment?.effects ?? [],
       for (final modifier in character.regularModifiers) ...modifier.effects,
     ];
     final longGunEffects = Effect.collect([
@@ -33,13 +35,14 @@ class CharacterCalculatorCubit extends Cubit<CharacterCalculatorCubitResult?> {
       for (final modifier in character.meleeModifiers) ...modifier.effects,
       ...regularEffects,
     ]);
-    emit(CharacterCalculatorCubitResult(
+    final result = CharacterCalculatorCubitResult(
       longGun: Calculator.allDamageCalculator.calculate(longGunEffects),
       longGunMod: Calculator.allDamageCalculator.calculate(longGunEffects),
       handGun: Calculator.allDamageCalculator.calculate(handGunEffects),
       handGunMod: Calculator.allDamageCalculator.calculate(handGunEffects),
       melee: Calculator.allDamageCalculator.calculate(meleeEffects),
-    ));
+    );
+    emit(result);
   }
 }
 

@@ -42,6 +42,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   test:
+  bloc_test:
   build_runner:
   copy_with_extension_gen:
 

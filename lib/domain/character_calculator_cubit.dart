@@ -6,9 +6,10 @@ import 'package:remnant2_calculator/domain/effect.dart';
 
 class CharacterCalculatorCubit extends Cubit<CharacterCalculatorCubitResult?> {
   CharacterCalculatorCubit() : super(null);
+  final calculator = Calculator();
 
   void update(Character character) {
-    final regularEffects = [
+    final regularEffects = <Effect>[
       ...character.primaryArchetype?.effects ?? [],
       ...character.secondaryArchetype?.effects ?? [],
       ...character.amulet?.effects ?? [],
@@ -17,30 +18,30 @@ class CharacterCalculatorCubit extends Cubit<CharacterCalculatorCubitResult?> {
         ...relicFragment?.effects ?? [],
       for (final modifier in character.regularModifiers) ...modifier.effects,
     ];
-    final longGunEffects = Effect.collect([
+    final longGunEffects = <Effect>[
       ...character.longGun?.effects ?? [],
       ...character.longGunMutator?.effects ?? [],
       for (final modifier in character.longGunModifiers) ...modifier.effects,
       ...regularEffects,
-    ]);
-    final handGunEffects = Effect.collect([
+    ];
+    final handGunEffects = <Effect>[
       ...character.handGun?.effects ?? [],
       ...character.handGunMutator?.effects ?? [],
       for (final modifier in character.handGunModifiers) ...modifier.effects,
       ...regularEffects,
-    ]);
-    final meleeEffects = Effect.collect([
+    ];
+    final meleeEffects = <Effect>[
       ...character.melee?.effects ?? [],
       ...character.meleeMutator?.effects ?? [],
       for (final modifier in character.meleeModifiers) ...modifier.effects,
       ...regularEffects,
-    ]);
+    ];
     final result = CharacterCalculatorCubitResult(
-      longGun: Calculator.rangeDamageCalculator.calculate(longGunEffects),
-      longGunMod: Calculator.allDamageCalculator.calculate(longGunEffects),
-      handGun: Calculator.allDamageCalculator.calculate(handGunEffects),
-      handGunMod: Calculator.allDamageCalculator.calculate(handGunEffects),
-      melee: Calculator.allDamageCalculator.calculate(meleeEffects),
+      longGun: calculator.calculate(longGunEffects, [DamageType.range]),
+      longGunMod: calculator.calculate(longGunEffects, [DamageType.mod]),
+      handGun: calculator.calculate(handGunEffects, [DamageType.range]),
+      handGunMod: calculator.calculate(handGunEffects, [DamageType.mod]),
+      melee: calculator.calculate(meleeEffects, [DamageType.melee]),
     );
     emit(result);
   }

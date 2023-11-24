@@ -1,103 +1,31 @@
-import 'package:remnant2_calculator/domain/effect_merger.dart';
+enum DamageType { range, melee, mod, elemental, status }
 
-class Effect {
-  static Map<Type, Effect> collect(List<Effect> effects) {
-    final map = <Type, Effect>{};
-    for (final effect in effects) {
-      if (map.containsKey(effect.runtimeType)) {
-        map[effect.runtimeType] = effect.merge(map[effect.runtimeType]);
-      } else {
-        map[effect.runtimeType] = effect;
-      }
-    }
-    return map;
-  }
-
-  Effect(this.value, {this.merger = EffectMerger.sum});
+sealed class Effect {
+  Effect(
+    this.value, {
+    required this.damageTypes,
+  });
 
   final int value;
-  final EffectMerger merger;
-
-  Effect merge(Effect? effect) => merger.merge(this, effect);
+  final List<DamageType> damageTypes;
 }
 
 class BaseDamage extends Effect {
-  BaseDamage(super.value);
+  BaseDamage(super.value, {super.damageTypes = DamageType.values});
 }
 
-class AllDamage extends Effect {
-  AllDamage(super.value);
+class DamageIncrease extends Effect {
+  DamageIncrease(super.value, {super.damageTypes = DamageType.values});
 }
 
-class AllCriticalChance extends Effect {
-  AllCriticalChance(super.value) : super(merger: EffectMerger.sumLimit100);
+class CriticalChance extends Effect {
+  CriticalChance(super.value, {super.damageTypes = DamageType.values});
 }
 
-class AllCriticalDamage extends Effect {
-  AllCriticalDamage(super.value);
+class CriticalDamage extends Effect {
+  CriticalDamage(super.value, {super.damageTypes = DamageType.values});
 }
 
-class AllWeakSpotDamage extends Effect {
-  AllWeakSpotDamage(super.value);
-}
-
-class RangeDamage extends Effect {
-  RangeDamage(super.value);
-}
-
-class RangeCriticalChance extends Effect {
-  RangeCriticalChance(super.value) : super(merger: EffectMerger.sumLimit100);
-}
-
-class RangeCriticalDamage extends Effect {
-  RangeCriticalDamage(super.value);
-}
-
-class RangeWeakSpotDamage extends Effect {
-  RangeWeakSpotDamage(super.value);
-}
-
-class MeleeDamage extends Effect {
-  MeleeDamage(super.value);
-}
-
-class MeleeCriticalChance extends Effect {
-  MeleeCriticalChance(super.value) : super(merger: EffectMerger.sumLimit100);
-}
-
-class MeleeCriticalDamage extends Effect {
-  MeleeCriticalDamage(super.value);
-}
-
-class MeleeWeakSpotDamage extends Effect {
-  MeleeWeakSpotDamage(super.value);
-}
-
-class ModDamage extends Effect {
-  ModDamage(super.value);
-}
-
-class ModCriticalChance extends Effect {
-  ModCriticalChance(super.value) : super(merger: EffectMerger.sumLimit100);
-}
-
-class ModCriticalDamage extends Effect {
-  ModCriticalDamage(super.value);
-}
-
-class ModWeakSpotDamage extends Effect {
-  ModWeakSpotDamage(super.value);
-}
-
-class ElementalDamage extends Effect {
-  ElementalDamage(super.value);
-}
-
-class ElementalCriticalChance extends Effect {
-  ElementalCriticalChance(super.value)
-      : super(merger: EffectMerger.sumLimit100);
-}
-
-class ElementalCriticalDamage extends Effect {
-  ElementalCriticalDamage(super.value);
+class WeakSpotDamage extends Effect {
+  WeakSpotDamage(super.value, {super.damageTypes = DamageType.values});
 }

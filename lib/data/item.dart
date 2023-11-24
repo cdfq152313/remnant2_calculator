@@ -15,16 +15,16 @@ final archetypes = [
   Item(
     name: '獵人',
     effects: [
-      RangeDamage(40),
-      RangeWeakSpotDamage(15),
-      RangeCriticalChance(5),
+      DamageIncrease(40, damageTypes: [DamageType.range]),
+      WeakSpotDamage(15, damageTypes: [DamageType.range]),
+      CriticalChance(5, damageTypes: [DamageType.range]),
     ],
   ),
   Item(
     name: '槍手',
     effects: [
-      RangeDamage(25),
-      RangeCriticalChance(5),
+      DamageIncrease(25, damageTypes: [DamageType.range]),
+      CriticalChance(5, damageTypes: [DamageType.range]),
     ],
   ),
 ];
@@ -33,8 +33,8 @@ final modifiers = [
   Item(
     name: '獵人1技能',
     effects: [
-      RangeDamage(15),
-      RangeCriticalChance(15),
+      DamageIncrease(15, damageTypes: [DamageType.range]),
+      CriticalChance(15, damageTypes: [DamageType.range]),
     ],
   ),
 ];
@@ -44,7 +44,8 @@ final weapon = [
     name: '日暮',
     effects: [
       BaseDamage(100),
-      AllCriticalChance(5),
+      CriticalChance(5),
+      WeakSpotDamage(105),
     ],
   ),
 ];
@@ -53,14 +54,14 @@ final amulets = [
   Item(
     name: '腐蝕磨石',
     effects: [
-      AllCriticalChance(15),
-      AllCriticalDamage(30),
+      CriticalChance(15),
+      CriticalDamage(30),
     ],
   ),
   Item(
     name: '聖十字輝光',
     effects: [
-      AllDamage(15),
+      DamageIncrease(15),
     ],
   ),
 ];
@@ -69,26 +70,26 @@ final rings = [
   Item(
     name: '扎尼亞的惡意',
     effects: [
-      AllWeakSpotDamage(30),
+      WeakSpotDamage(30),
     ],
   ),
   Item(
     name: '戰爭指環',
     effects: [
-      AllCriticalChance(15),
-      AllCriticalDamage(15),
+      CriticalChance(15),
+      CriticalDamage(15),
     ],
   ),
   Item(
     name: '機率之圈',
     effects: [
-      AllCriticalDamage(30),
+      CriticalDamage(30),
     ],
   ),
   Item(
     name: '破壞者之負擔',
     effects: [
-      AllDamage(15),
+      DamageIncrease(15),
     ],
   ),
 ];
@@ -97,19 +98,19 @@ final relicFragments = [
   Item(
     name: '遠程傷害',
     effects: [
-      RangeDamage(10),
+      DamageIncrease(10, damageTypes: [DamageType.range]),
     ],
   ),
   Item(
     name: '遠程暴擊率',
     effects: [
-      RangeCriticalChance(10),
+      CriticalChance(10, damageTypes: [DamageType.range]),
     ],
   ),
   Item(
     name: '遠程暴擊傷害',
     effects: [
-      RangeCriticalDamage(20),
+      CriticalDamage(20, damageTypes: [DamageType.range]),
     ],
   ),
 ];
@@ -118,8 +119,8 @@ final mutator = [
   Item(
     name: '動量',
     effects: [
-      AllCriticalChance(30),
-      AllCriticalDamage(30),
+      CriticalChance(30),
+      CriticalDamage(30),
     ],
   ),
 ];

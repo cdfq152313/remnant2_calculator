@@ -16,7 +16,10 @@ class Character {
     this.meleeMutator,
     this.amulet,
     this.rings = const [null, null, null, null],
-    this.modifiers = const [],
+    this.regularModifiers = const [],
+    this.longGunModifiers = const [],
+    this.handGunModifiers = const [],
+    this.meleeModifiers = const [],
   });
 
   final Item? firstClass;
@@ -24,15 +27,18 @@ class Character {
 
   final Item? longGun;
   final Item? longGunMutator;
+  final List<Item> longGunModifiers;
 
   final Item? handGun;
   final Item? handGunMutator;
+  final List<Item> handGunModifiers;
 
   final Item? melee;
   final Item? meleeMutator;
+  final List<Item> meleeModifiers;
 
   final Item? amulet;
   final List<Item?> rings;
 
-  final List<Item> modifiers;
+  final List<Item> regularModifiers;
 }

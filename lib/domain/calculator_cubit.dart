@@ -1,15 +1,14 @@
 import 'package:bloc/bloc.dart';
-import 'package:remnant2_calculator/domain/calculation.dart';
 import 'package:remnant2_calculator/domain/calculator.dart';
-import 'package:remnant2_calculator/domain/character.dart';
+import 'package:remnant2_calculator/domain/character_cubit.dart';
 import 'package:remnant2_calculator/domain/effect.dart';
 import 'package:remnant2_calculator/extension.dart';
 
-class CharacterCalculatorCubit extends Cubit<CharacterCalculatorCubitResult?> {
-  CharacterCalculatorCubit() : super(null);
+class CalculatorCubit extends Cubit<CalculatorState> {
+  CalculatorCubit() : super(CalculatorState());
   final calculator = Calculator();
 
-  void update(Character character) {
+  void update(CharacterState character) {
     final regularEffects = <Effect>[
       ...character.primaryArchetype?.effects ?? [],
       ...character.secondaryArchetype?.effects ?? [],
@@ -37,7 +36,7 @@ class CharacterCalculatorCubit extends Cubit<CharacterCalculatorCubitResult?> {
       for (final modifier in character.meleeModifiers) ...modifier.effects,
       ...regularEffects,
     ];
-    final result = CharacterCalculatorCubitResult(
+    final result = CalculatorState(
       longGun: character.longGun.to(
         (weapon) => calculator.calculate(longGunEffects, weapon.damageTypes),
       ),
@@ -58,8 +57,8 @@ class CharacterCalculatorCubit extends Cubit<CharacterCalculatorCubitResult?> {
   }
 }
 
-class CharacterCalculatorCubitResult {
-  CharacterCalculatorCubitResult({
+class CalculatorState {
+  CalculatorState({
     this.longGun,
     this.longGunMod,
     this.handGun,

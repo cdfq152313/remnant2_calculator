@@ -37,6 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   copy_with_extension:
   bloc:
+  flutter_bloc:
 
 dev_dependencies:
   flutter_test:

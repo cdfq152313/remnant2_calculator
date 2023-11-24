@@ -1,13 +1,13 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:remnant2_calculator/data/item.dart';
-import 'package:remnant2_calculator/domain/character.dart';
-import 'package:remnant2_calculator/domain/character_calculator_cubit.dart';
+import 'package:remnant2_calculator/domain/calculator_cubit.dart';
+import 'package:remnant2_calculator/domain/character_cubit.dart';
 import 'package:remnant2_calculator/domain/item.dart';
 import 'package:test/test.dart';
 
 void main() {
-  late CharacterCalculatorCubit cubit;
-  setUp(() => cubit = CharacterCalculatorCubit());
+  late CalculatorCubit cubit;
+  setUp(() => cubit = CalculatorCubit());
 
   test('init state is null', () {
     expect(cubit.state, equals(null));
@@ -16,7 +16,7 @@ void main() {
   blocTest(
     'default long gun calculation',
     build: () => cubit,
-    act: (cubit) => cubit.update(Character(
+    act: (cubit) => cubit.update(CharacterState(
       primaryArchetype: itemMap['獵人'],
       secondaryArchetype: itemMap['槍手'],
       longGun: itemMap['日暮'] as Weapon,
@@ -36,11 +36,11 @@ void main() {
       ],
     )),
     verify: (cubit) {
-      expect(cubit.state?.longGun?.expectedDamage, equals(448));
-      expect(cubit.state?.longGunMod, isNull);
-      expect(cubit.state?.handGun, isNull);
-      expect(cubit.state?.handGunMod, isNull);
-      expect(cubit.state?.melee, isNull);
+      expect(cubit.state.longGun?.expectedDamage, equals(448));
+      expect(cubit.state.longGunMod, isNull);
+      expect(cubit.state.handGun, isNull);
+      expect(cubit.state.handGunMod, isNull);
+      expect(cubit.state.melee, isNull);
     },
   );
 }

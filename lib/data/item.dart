@@ -40,8 +40,9 @@ final modifiers = [
 ];
 
 final weapon = [
-  Item(
+  Weapon(
     name: '日暮',
+    damageTypes: [DamageType.range],
     effects: [
       BaseDamage(100),
       CriticalChance(5),

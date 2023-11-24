@@ -21,3 +21,7 @@ extension ListExtension<T> on List<T> {
     return list;
   }
 }
+
+extension ObjectExtension<T, K> on T? {
+  K? to(K? Function(T value) fn) => this == null ? null : fn(this as T);
+}

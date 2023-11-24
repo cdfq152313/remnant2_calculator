@@ -9,8 +9,10 @@ class Character {
     this.primaryArchetype,
     this.secondaryArchetype,
     this.longGun,
+    this.longGunMod,
     this.longGunMutator,
     this.handGun,
+    this.handGunMod,
     this.handGunMutator,
     this.melee,
     this.meleeMutator,
@@ -26,15 +28,17 @@ class Character {
   final Item? primaryArchetype;
   final Item? secondaryArchetype;
 
-  final Item? longGun;
+  final Weapon? longGun;
+  final Weapon? longGunMod;
   final Item? longGunMutator;
   final List<Item> longGunModifiers;
 
-  final Item? handGun;
+  final Weapon? handGun;
+  final Weapon? handGunMod;
   final Item? handGunMutator;
   final List<Item> handGunModifiers;
 
-  final Item? melee;
+  final Weapon? melee;
   final Item? meleeMutator;
   final List<Item> meleeModifiers;
 

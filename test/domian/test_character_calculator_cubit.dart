@@ -2,6 +2,7 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:remnant2_calculator/data/item.dart';
 import 'package:remnant2_calculator/domain/character.dart';
 import 'package:remnant2_calculator/domain/character_calculator_cubit.dart';
+import 'package:remnant2_calculator/domain/item.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -18,7 +19,7 @@ void main() {
     act: (cubit) => cubit.update(Character(
       primaryArchetype: itemMap['獵人'],
       secondaryArchetype: itemMap['槍手'],
-      longGun: itemMap['日暮'],
+      longGun: itemMap['日暮'] as Weapon,
       longGunMutator: itemMap['動量'],
       amulet: itemMap['腐蝕磨石'],
       rings: [
@@ -35,7 +36,11 @@ void main() {
       ],
     )),
     verify: (cubit) {
-      expect(cubit.state?.longGun.expectedDamage, equals(448));
+      expect(cubit.state?.longGun?.expectedDamage, equals(448));
+      expect(cubit.state?.longGunMod, isNull);
+      expect(cubit.state?.handGun, isNull);
+      expect(cubit.state?.handGunMod, isNull);
+      expect(cubit.state?.melee, isNull);
     },
   );
 }

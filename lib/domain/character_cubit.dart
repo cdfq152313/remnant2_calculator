@@ -14,23 +14,31 @@ class CharacterCubit extends Cubit<Character> {
     emit(state.copyWith(secondaryArchetype: item));
   }
 
-  void setLongGun(Item? item) {
+  void setLongGun(Weapon? item) {
     emit(state.copyWith(longGun: item));
+  }
+
+  void setLongGunMod(Weapon? item) {
+    emit(state.copyWith(longGunMod: item));
   }
 
   void setLongGunMutator(Item? item) {
     emit(state.copyWith(longGunMutator: item));
   }
 
-  void setHandGun(Item? item) {
+  void setHandGun(Weapon? item) {
     emit(state.copyWith(handGun: item));
+  }
+
+  void setHandGunMod(Weapon? item) {
+    emit(state.copyWith(handGunMod: item));
   }
 
   void setHandGunMutator(Item? item) {
     emit(state.copyWith(handGunMutator: item));
   }
 
-  void setMelee(Item? item) {
+  void setMelee(Weapon? item) {
     emit(state.copyWith(melee: item));
   }
 

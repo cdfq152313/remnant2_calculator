@@ -3,6 +3,7 @@ import 'package:remnant2_calculator/domain/calculation.dart';
 import 'package:remnant2_calculator/domain/calculator.dart';
 import 'package:remnant2_calculator/domain/character.dart';
 import 'package:remnant2_calculator/domain/effect.dart';
+import 'package:remnant2_calculator/extension.dart';
 
 class CharacterCalculatorCubit extends Cubit<CharacterCalculatorCubitResult?> {
   CharacterCalculatorCubit() : super(null);
@@ -37,11 +38,21 @@ class CharacterCalculatorCubit extends Cubit<CharacterCalculatorCubitResult?> {
       ...regularEffects,
     ];
     final result = CharacterCalculatorCubitResult(
-      longGun: calculator.calculate(longGunEffects, [DamageType.range]),
-      longGunMod: calculator.calculate(longGunEffects, [DamageType.mod]),
-      handGun: calculator.calculate(handGunEffects, [DamageType.range]),
-      handGunMod: calculator.calculate(handGunEffects, [DamageType.mod]),
-      melee: calculator.calculate(meleeEffects, [DamageType.melee]),
+      longGun: character.longGun.to(
+        (weapon) => calculator.calculate(longGunEffects, weapon.damageTypes),
+      ),
+      longGunMod: character.longGunMod.to(
+        (weapon) => calculator.calculate(longGunEffects, weapon.damageTypes),
+      ),
+      handGun: character.handGun.to(
+        (weapon) => calculator.calculate(handGunEffects, weapon.damageTypes),
+      ),
+      handGunMod: character.handGunMod.to(
+        (weapon) => calculator.calculate(handGunEffects, weapon.damageTypes),
+      ),
+      melee: character.melee.to(
+        (weapon) => calculator.calculate(meleeEffects, weapon.damageTypes),
+      ),
     );
     emit(result);
   }
@@ -49,16 +60,16 @@ class CharacterCalculatorCubit extends Cubit<CharacterCalculatorCubitResult?> {
 
 class CharacterCalculatorCubitResult {
   CharacterCalculatorCubitResult({
-    required this.longGun,
-    required this.longGunMod,
-    required this.handGun,
-    required this.handGunMod,
-    required this.melee,
+    this.longGun,
+    this.longGunMod,
+    this.handGun,
+    this.handGunMod,
+    this.melee,
   });
 
-  final Calculation longGun;
-  final Calculation longGunMod;
-  final Calculation handGun;
-  final Calculation handGunMod;
-  final Calculation melee;
+  final Calculation? longGun;
+  final Calculation? longGunMod;
+  final Calculation? handGun;
+  final Calculation? handGunMod;
+  final Calculation? melee;
 }

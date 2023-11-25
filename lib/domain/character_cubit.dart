@@ -9,25 +9,25 @@ class CharacterCubit extends Cubit<CharacterState> {
   CharacterCubit({CharacterState? state}) : super(state ?? CharacterState());
 
   void setPrimaryArchetype(Item? item) {
-    if (item == state.secondaryArchetype) {
-      emit(
-        state.copyWith(
-          primaryArchetype: item,
-          secondaryArchetype: state.primaryArchetype,
-        ),
-      );
-    }
+    emit(
+      state.copyWith(
+        primaryArchetype: item,
+        secondaryArchetype: item == state.secondaryArchetype
+            ? state.primaryArchetype
+            : state.secondaryArchetype,
+      ),
+    );
   }
 
   void setSecondaryArchetype(Item? item) {
-    if (item == state.primaryArchetype) {
-      emit(
-        state.copyWith(
-          primaryArchetype: state.secondaryArchetype,
-          secondaryArchetype: item,
-        ),
-      );
-    }
+    emit(
+      state.copyWith(
+        primaryArchetype: item == state.primaryArchetype
+            ? state.secondaryArchetype
+            : state.primaryArchetype,
+        secondaryArchetype: item,
+      ),
+    );
   }
 
   void setLongGun(Weapon? item) {

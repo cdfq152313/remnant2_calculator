@@ -27,6 +27,13 @@ final archetypes = [
       CriticalChance(5, damageTypes: [DamageType.range]),
     ],
   ),
+  Item(
+    name: '醫療兵',
+    effects: [
+      DamageIncrease(25),
+      CriticalChance(5),
+    ],
+  ),
 ];
 
 final modifiers = [

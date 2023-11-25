@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:remnant2_calculator/data/item.dart';
 import 'package:remnant2_calculator/domain/calculator_cubit.dart';
 import 'package:remnant2_calculator/domain/character_cubit.dart';
+import 'package:remnant2_calculator/domain/item.dart';
 
 class CharacterView extends StatelessWidget {
   const CharacterView({super.key});
@@ -35,8 +36,16 @@ class _CharacterView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        ArchetypeView(),
-        ArchetypeView(),
+        ArchetypeView(
+          title: '主職業',
+          setter: (cubit, item) => cubit.setPrimaryArchetype(item),
+          getter: (state) => state.primaryArchetype,
+        ),
+        ArchetypeView(
+          title: '副職業',
+          setter: (cubit, item) => cubit.setSecondaryArchetype(item),
+          getter: (state) => state.secondaryArchetype,
+        ),
       ],
     );
   }
@@ -44,16 +53,22 @@ class _CharacterView extends StatelessWidget {
 
 class ArchetypeView extends StatelessWidget {
   const ArchetypeView({
+    required this.title,
+    required this.getter,
+    required this.setter,
     super.key,
   });
+
+  final String title;
+  final void Function(CharacterCubit cubit, Item? item) setter;
+  final Item? Function(CharacterState state) getter;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        const Text('主職業'),
-        BlocBuilder<CharacterCubit, CharacterState>(
-            builder: (context, state) {
+        Text(title),
+        BlocBuilder<CharacterCubit, CharacterState>(builder: (context, state) {
           return DropdownButton(
             items: archetypes
                 .map(
@@ -63,9 +78,8 @@ class ArchetypeView extends StatelessWidget {
                   ),
                 )
                 .toList(),
-            value: state.primaryArchetype,
-            onChanged: (v) =>
-                context.read<CharacterCubit>().setPrimaryArchetype(v),
+            value: getter(state),
+            onChanged: (v) => setter(context.read<CharacterCubit>(), v),
           );
         }),
       ],

@@ -20,9 +20,11 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-          title: Text('遺跡2傷害計算機'),
+          title: const Text('遺跡2傷害計算機'),
         ),
-        body: const CharacterView(),
+        body: const SingleChildScrollView(
+          child: CharacterView(),
+        ),
       ),
     );
   }

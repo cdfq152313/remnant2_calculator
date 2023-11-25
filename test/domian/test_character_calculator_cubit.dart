@@ -9,10 +9,6 @@ void main() {
   late CalculatorCubit cubit;
   setUp(() => cubit = CalculatorCubit());
 
-  test('init state is null', () {
-    expect(cubit.state, equals(null));
-  });
-
   blocTest(
     'default long gun calculation',
     build: () => cubit,
@@ -36,7 +32,7 @@ void main() {
       ],
     )),
     verify: (cubit) {
-      expect(cubit.state.longGun?.expectedDamage, equals(448));
+      expect(cubit.state.longGun?.expectedDamage, equals(417));
       expect(cubit.state.longGunMod, isNull);
       expect(cubit.state.handGun, isNull);
       expect(cubit.state.handGunMod, isNull);

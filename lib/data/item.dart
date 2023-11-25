@@ -3,11 +3,11 @@ import 'package:remnant2_calculator/domain/item.dart';
 
 final itemMap = Map.fromEntries([
   ...archetypes,
-  ...weapon,
+  ...longGuns,
   ...amulets,
   ...rings,
   ...relicFragments,
-  ...mutator,
+  ...rangeMutator,
   ...modifiers,
 ].map((v) => MapEntry(v.name, v)));
 
@@ -46,14 +46,26 @@ final modifiers = [
   ),
 ];
 
-final weapon = [
+final longGuns = [
   Weapon(
     name: '日暮',
     damageTypes: [DamageType.range],
     effects: [
-      BaseDamage(100),
+      BaseDamage(93),
       CriticalChance(5),
       WeakSpotDamage(105),
+    ],
+  ),
+];
+
+final handGuns = [
+  Weapon(
+    name: 'MP60-R',
+    damageTypes: [DamageType.range],
+    effects: [
+      BaseDamage(27),
+      CriticalChance(10),
+      WeakSpotDamage(100),
     ],
   ),
 ];
@@ -123,7 +135,7 @@ final relicFragments = [
   ),
 ];
 
-final mutator = [
+final rangeMutator = [
   Item(
     name: '動量',
     effects: [

@@ -23,9 +23,9 @@ sealed class Effect {
       ? '全部'
       : damageTypes.map((e) => e.displayText).join('/');
 
-  String get _effectName => '';
+  String get effectName => '';
 
-  String get displayText => '$_damageTypeText$_effectName $value%';
+  String get displayText => '$_damageTypeText$effectName $value%';
 }
 
 class BaseDamage extends Effect {
@@ -39,26 +39,26 @@ class DamageIncrease extends Effect {
   DamageIncrease(super.value, {super.damageTypes = DamageType.values});
 
   @override
-  String get _effectName => '傷害';
+  String get effectName => '傷害';
 }
 
 class CriticalChance extends Effect {
   CriticalChance(super.value, {super.damageTypes = DamageType.values});
 
   @override
-  String get _effectName => '暴擊率';
+  String get effectName => '暴擊率';
 }
 
 class CriticalDamage extends Effect {
   CriticalDamage(super.value, {super.damageTypes = DamageType.values});
 
   @override
-  String get _effectName => '暴擊傷害';
+  String get effectName => '暴擊傷害';
 }
 
 class WeakSpotDamage extends Effect {
   WeakSpotDamage(super.value, {super.damageTypes = DamageType.values});
 
   @override
-  String get _effectName => '弱點傷害';
+  String get effectName => '弱點傷害';
 }

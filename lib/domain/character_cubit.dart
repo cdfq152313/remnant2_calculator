@@ -39,7 +39,11 @@ class CharacterCubit extends Cubit<CharacterState> {
   }
 
   void setLongGunMutator(Item? item) {
-    emit(state.copyWith(longGunMutator: item));
+    if (item != null && item == state.handGunMutator) {
+      emit(state.copyWith(longGunMutator: item, handGunMutator: null));
+    } else {
+      emit(state.copyWith(longGunMutator: item));
+    }
   }
 
   void setHandGun(Weapon? item) {
@@ -51,7 +55,11 @@ class CharacterCubit extends Cubit<CharacterState> {
   }
 
   void setHandGunMutator(Item? item) {
-    emit(state.copyWith(handGunMutator: item));
+    if (item != null && item == state.longGunMutator) {
+      emit(state.copyWith(longGunMutator: null, handGunMutator: item));
+    } else {
+      emit(state.copyWith(handGunMutator: item));
+    }
   }
 
   void setMelee(Weapon? item) {
@@ -67,13 +75,25 @@ class CharacterCubit extends Cubit<CharacterState> {
   }
 
   void setRing(int index, Item? item) {
-    final rings = state.rings.toList();
-    final existIndex = item == null ? -1 : rings.indexOf(item);
+    emit(state.copyWith(rings: _setAndSwitch(index, item, state.rings)));
+  }
+
+  void setRelicFragment(int index, Item? item) {
+    emit(
+      state.copyWith(
+        relicFragments: _setAndSwitch(index, item, state.relicFragments),
+      ),
+    );
+  }
+
+  List<Item?> _setAndSwitch(int index, Item? item, List<Item?> origin) {
+    final copy = origin.toList();
+    final existIndex = item == null ? -1 : copy.indexOf(item);
     if (existIndex != -1) {
-      rings[existIndex] = state.rings[index];
+      copy[existIndex] = copy[index];
     }
-    rings[index] = item;
-    emit(state.copyWith(rings: rings));
+    copy[index] = item;
+    return copy;
   }
 
   void addRegularModifier(Item item) {

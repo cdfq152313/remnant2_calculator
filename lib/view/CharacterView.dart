@@ -36,31 +36,47 @@ class _CharacterView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        ArchetypeView(
+        ItemView(
           title: '主職業',
+          items: archetypes,
           setter: (cubit, item) => cubit.setPrimaryArchetype(item),
           getter: (state) => state.primaryArchetype,
         ),
-        ArchetypeView(
+        ItemView(
           title: '副職業',
+          items: archetypes,
           setter: (cubit, item) => cubit.setSecondaryArchetype(item),
           getter: (state) => state.secondaryArchetype,
         ),
-        AmuletView(),
+        ItemView(
+          title: '項鍊',
+          items: amulets,
+          setter: (cubit, item) => cubit.setAmulet(item),
+          getter: (state) => state.amulet,
+        ),
+        for (var i = 0; i < 4; ++i)
+          ItemView(
+            title: '戒指${i + 1}',
+            items: rings,
+            setter: (cubit, item) => cubit.setRing(i, item),
+            getter: (state) => state.rings[i],
+          ),
       ],
     );
   }
 }
 
-class ArchetypeView extends StatelessWidget {
-  const ArchetypeView({
+class ItemView extends StatelessWidget {
+  const ItemView({
     required this.title,
+    required this.items,
     required this.getter,
     required this.setter,
     super.key,
   });
 
   final String title;
+  final List<Item> items;
   final void Function(CharacterCubit cubit, Item? item) setter;
   final Item? Function(CharacterState state) getter;
 
@@ -68,49 +84,16 @@ class ArchetypeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Text(title),
-        BlocBuilder<CharacterCubit, CharacterState>(builder: (context, state) {
-          return DropdownButton(
-            items: [null, ...archetypes]
-                .map(
-                  (e) => DropdownMenuItem(
-                    value: e,
-                    child: Text(e?.name ?? '空'),
-                  ),
-                )
-                .toList(),
-            value: getter(state),
-            onChanged: (v) => setter(context.read<CharacterCubit>(), v),
-          );
-        }),
-        BlocBuilder<CharacterCubit, CharacterState>(builder: (context, state) {
-          return Column(
-            children: getter(state)
-                    ?.effects
-                    .map((e) => Text(e.displayText))
-                    .toList() ??
-                [],
-          );
-        }),
-      ],
-    );
-  }
-}
-
-class AmuletView extends StatelessWidget {
-  const AmuletView({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        const Text('項鍊'),
-        BlocBuilder<CharacterCubit, CharacterState>(
-          builder: (context, state) {
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(title),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: BlocBuilder<CharacterCubit, CharacterState>(
+              builder: (context, state) {
             return DropdownButton(
-              items: [null, ...amulets]
+              items: [null, ...items]
                   .map(
                     (e) => DropdownMenuItem(
                       value: e,
@@ -118,19 +101,22 @@ class AmuletView extends StatelessWidget {
                     ),
                   )
                   .toList(),
-              value: state.amulet,
-              onChanged: (v) => context.read<CharacterCubit>().setAmulet(v),
+              value: getter(state),
+              onChanged: (v) => setter(context.read<CharacterCubit>(), v),
+            );
+          }),
+        ),
+        BlocBuilder<CharacterCubit, CharacterState>(
+          builder: (context, state) {
+            return Column(
+              children: getter(state)
+                      ?.effects
+                      .map((e) => Text(e.displayText))
+                      .toList() ??
+                  [],
             );
           },
         ),
-        BlocBuilder<CharacterCubit, CharacterState>(builder: (context, state) {
-          return Column(
-            children: state.amulet?.effects
-                    .map((e) => Text(e.displayText))
-                    .toList() ??
-                [],
-          );
-        }),
       ],
     );
   }

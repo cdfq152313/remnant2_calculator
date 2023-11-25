@@ -30,7 +30,7 @@ class CharacterView extends StatelessWidget {
 }
 
 class _CharacterView extends StatelessWidget {
-  const _CharacterView({super.key});
+  const _CharacterView();
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +46,7 @@ class _CharacterView extends StatelessWidget {
           setter: (cubit, item) => cubit.setSecondaryArchetype(item),
           getter: (state) => state.secondaryArchetype,
         ),
+        AmuletView(),
       ],
     );
   }
@@ -70,16 +71,64 @@ class ArchetypeView extends StatelessWidget {
         Text(title),
         BlocBuilder<CharacterCubit, CharacterState>(builder: (context, state) {
           return DropdownButton(
-            items: archetypes
+            items: [null, ...archetypes]
                 .map(
                   (e) => DropdownMenuItem(
                     value: e,
-                    child: Text(e.name),
+                    child: Text(e?.name ?? '空'),
                   ),
                 )
                 .toList(),
             value: getter(state),
             onChanged: (v) => setter(context.read<CharacterCubit>(), v),
+          );
+        }),
+        BlocBuilder<CharacterCubit, CharacterState>(builder: (context, state) {
+          return Column(
+            children: getter(state)
+                    ?.effects
+                    .map((e) => Text(e.displayText))
+                    .toList() ??
+                [],
+          );
+        }),
+      ],
+    );
+  }
+}
+
+class AmuletView extends StatelessWidget {
+  const AmuletView({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        const Text('項鍊'),
+        BlocBuilder<CharacterCubit, CharacterState>(
+          builder: (context, state) {
+            return DropdownButton(
+              items: [null, ...amulets]
+                  .map(
+                    (e) => DropdownMenuItem(
+                      value: e,
+                      child: Text(e?.name ?? '空'),
+                    ),
+                  )
+                  .toList(),
+              value: state.amulet,
+              onChanged: (v) => context.read<CharacterCubit>().setAmulet(v),
+            );
+          },
+        ),
+        BlocBuilder<CharacterCubit, CharacterState>(builder: (context, state) {
+          return Column(
+            children: state.amulet?.effects
+                    .map((e) => Text(e.displayText))
+                    .toList() ??
+                [],
           );
         }),
       ],

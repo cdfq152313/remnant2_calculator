@@ -67,12 +67,13 @@ class CharacterCubit extends Cubit<CharacterState> {
   }
 
   void setRing(int index, Item? item) {
-    final originItem = state.rings[index];
-    final existIndex = state.rings.indexOf(item);
-    final rings = state.rings.copyWithReplace(index, item);
-    emit(
-      state.copyWith(rings: state.rings.copyWithReplace(index, item)),
-    );
+    final rings = state.rings.toList();
+    final existIndex = item == null ? -1 : rings.indexOf(item);
+    if (existIndex != -1) {
+      rings[existIndex] = state.rings[index];
+    }
+    rings[index] = item;
+    emit(state.copyWith(rings: rings));
   }
 
   void addRegularModifier(Item item) {

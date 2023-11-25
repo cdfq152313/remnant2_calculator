@@ -35,27 +35,39 @@ class _CharacterView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Row(
-          children: [
-            const Text('主職業'),
-            BlocBuilder<CharacterCubit, CharacterState>(
-                builder: (context, state) {
-              return DropdownButton(
-                items: archetypes
-                    .map(
-                      (e) => DropdownMenuItem(
-                        value: e,
-                        child: Text(e.name),
-                      ),
-                    )
-                    .toList(),
-                value: state.primaryArchetype,
-                onChanged: (v) =>
-                    context.read<CharacterCubit>().setPrimaryArchetype(v),
-              );
-            }),
-          ],
-        ),
+        ArchetypeView(),
+        ArchetypeView(),
+      ],
+    );
+  }
+}
+
+class ArchetypeView extends StatelessWidget {
+  const ArchetypeView({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        const Text('主職業'),
+        BlocBuilder<CharacterCubit, CharacterState>(
+            builder: (context, state) {
+          return DropdownButton(
+            items: archetypes
+                .map(
+                  (e) => DropdownMenuItem(
+                    value: e,
+                    child: Text(e.name),
+                  ),
+                )
+                .toList(),
+            value: state.primaryArchetype,
+            onChanged: (v) =>
+                context.read<CharacterCubit>().setPrimaryArchetype(v),
+          );
+        }),
       ],
     );
   }

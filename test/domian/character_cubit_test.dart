@@ -27,6 +27,17 @@ void main() {
   );
 
   blocTest(
+    'Set Primary Archetype to null not effect Secondary Archetype',
+    build: () => CharacterCubit(
+      state: CharacterState(primaryArchetype: itemMap['槍手']),
+    ),
+    act: (cubit) => cubit.setPrimaryArchetype(null),
+    expect: () => [
+      CharacterState(),
+    ],
+  );
+
+  blocTest(
     'Switch Primary Archetype to Secondary Archetype when select same item',
     build: () => CharacterCubit(
       state: CharacterState(
@@ -63,6 +74,17 @@ void main() {
         primaryArchetype: itemMap['獵人'],
         secondaryArchetype: itemMap['槍手'],
       ),
+    ],
+  );
+
+  blocTest(
+    'Set Secondary Archetype to null not effect Primary Archetype',
+    build: () => CharacterCubit(
+      state: CharacterState(secondaryArchetype: itemMap['槍手']),
+    ),
+    act: (cubit) => cubit.setSecondaryArchetype(null),
+    expect: () => [
+      CharacterState(),
     ],
   );
 

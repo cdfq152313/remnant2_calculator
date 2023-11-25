@@ -10,23 +10,23 @@ class CharacterCubit extends Cubit<CharacterState> {
 
   void setPrimaryArchetype(Item? item) {
     emit(
-      state.copyWith(
-        primaryArchetype: item,
-        secondaryArchetype: item == state.secondaryArchetype
-            ? state.primaryArchetype
-            : state.secondaryArchetype,
-      ),
+      item != null && item == state.secondaryArchetype
+          ? state.copyWith(
+              primaryArchetype: item,
+              secondaryArchetype: state.primaryArchetype,
+            )
+          : state.copyWith(primaryArchetype: item),
     );
   }
 
   void setSecondaryArchetype(Item? item) {
     emit(
-      state.copyWith(
-        primaryArchetype: item == state.primaryArchetype
-            ? state.secondaryArchetype
-            : state.primaryArchetype,
-        secondaryArchetype: item,
-      ),
+      item != null && item == state.primaryArchetype
+          ? state.copyWith(
+              primaryArchetype: state.secondaryArchetype,
+              secondaryArchetype: item,
+            )
+          : state.copyWith(secondaryArchetype: item),
     );
   }
 
@@ -67,6 +67,9 @@ class CharacterCubit extends Cubit<CharacterState> {
   }
 
   void setRing(int index, Item? item) {
+    final originItem = state.rings[index];
+    final existIndex = state.rings.indexOf(item);
+    final rings = state.rings.copyWithReplace(index, item);
     emit(
       state.copyWith(rings: state.rings.copyWithReplace(index, item)),
     );

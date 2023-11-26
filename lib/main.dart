@@ -14,6 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
+        typography: Typography.material2021(),
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
@@ -22,9 +23,7 @@ class MyApp extends StatelessWidget {
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           title: const Text('遺跡2傷害計算機'),
         ),
-        body: const SingleChildScrollView(
-          child: CharacterView(),
-        ),
+        body: const CharacterView(),
       ),
     );
   }

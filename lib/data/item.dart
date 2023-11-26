@@ -70,6 +70,18 @@ final handGuns = [
   ),
 ];
 
+final melees = [
+  Weapon(
+    name: '斧頭',
+    damageTypes: [DamageType.range],
+    effects: [
+      BaseDamage(162),
+      CriticalChance(3),
+      WeakSpotDamage(85),
+    ],
+  ),
+];
+
 final amulets = [
   Item(
     name: '腐蝕磨石',
@@ -141,6 +153,32 @@ final rangeMutator = [
     effects: [
       CriticalChance(30),
       CriticalDamage(30),
+    ],
+  ),
+  Item(
+    name: '扭曲傷口',
+    effects: [
+      DamageIncrease(20),
+    ],
+  ),
+  Item(
+    name: '調諧者',
+    effects: [
+      DamageIncrease(20, damageTypes: [DamageType.mod]),
+    ],
+  ),
+  Item(
+    name: '失效保護',
+    effects: [
+      DamageIncrease(20, damageTypes: [DamageType.mod]),
+    ],
+  ),
+];
+final meleeMutator = [
+  Item(
+    name: '污穢之刃',
+    effects: [
+      DamageIncrease(20),
     ],
   ),
 ];

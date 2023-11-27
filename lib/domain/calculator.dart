@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:remnant2_calculator/domain/base_damage.dart';
+import 'package:remnant2_calculator/domain/damage_type.dart';
 import 'package:remnant2_calculator/domain/effect.dart';
 import 'package:remnant2_calculator/extension.dart';
 
@@ -10,10 +11,10 @@ class Calculator {
     List<Effect> effects,
   ) {
     final effectMap = mergeEffect(effects, baseDamage.damageTypes);
-    final baseDamageIncrease = effectMap[DamageIncrease] ?? 0;
-    final criticalChance = effectMap[CriticalChance] ?? 0;
-    final criticalDamage = 50 + (effectMap[CriticalDamage] ?? 0);
-    final weakSpotDamage = effectMap[WeakSpotDamage] ?? 0;
+    final baseDamageIncrease = effectMap[EffectType.damageIncrease] ?? 0;
+    final criticalChance = effectMap[EffectType.criticalChance] ?? 0;
+    final criticalDamage = 50 + (effectMap[EffectType.criticalDamage] ?? 0);
+    final weakSpotDamage = effectMap[EffectType.weakSpotDamage] ?? 0;
 
     final expectedDamage = baseDamage.value *
         (1 + baseDamageIncrease.pc) *
@@ -30,24 +31,28 @@ class Calculator {
     );
   }
 
-  Map<Type, int> mergeEffect(
+  Map<EffectType, int> mergeEffect(
     List<Effect> effects,
     List<DamageType> applyDamageTypes,
   ) {
     final applyDamageTypeSet = applyDamageTypes.toSet();
-    final map = <Type, int>{};
+    final map = <EffectType, int>{};
     for (final effect in effects.where(
       (effect) => effect.damageTypes.any(
         (damageType) => applyDamageTypeSet.contains(damageType),
       ),
     )) {
       map.update(
-        effect.runtimeType,
+        effect.type,
         (value) => value + effect.value,
         ifAbsent: () => effect.value,
       );
     }
-    map.update(CriticalChance, (value) => min(100, value), ifAbsent: () => 0);
+    map.update(
+      EffectType.criticalChance,
+      (value) => min(100, value),
+      ifAbsent: () => 0,
+    );
     return map;
   }
 }

@@ -1,12 +1,21 @@
-enum DamageType { range, melee, mod, elemental, status }
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:remnant2_calculator/domain/damage_type.dart';
 
-extension DamageTypeExtension on DamageType {
+part 'effect.g.dart';
+
+enum EffectType {
+  damageIncrease,
+  criticalChance,
+  criticalDamage,
+  weakSpotDamage,
+}
+
+extension EffectTypeExtension on EffectType {
   String get displayText => switch (this) {
-        DamageType.range => '遠端',
-        DamageType.melee => '近戰',
-        DamageType.mod => '改裝',
-        DamageType.elemental => '元素',
-        DamageType.status => '狀態',
+        EffectType.damageIncrease => '傷害',
+        EffectType.criticalChance => '暴擊率',
+        EffectType.criticalDamage => '暴擊傷害',
+        EffectType.weakSpotDamage => '弱點傷害',
       };
 }
 
@@ -14,48 +23,25 @@ extension DamageTypeListExtension on List<DamageType> {
   String get displayText => map((e) => e.displayText).join('/');
 }
 
-sealed class Effect {
-  Effect(
-    this.value, {
-    required this.damageTypes,
+@JsonSerializable()
+class Effect {
+  Effect({
+    required this.type,
+    required this.value,
+    this.damageTypes = DamageType.values,
   });
 
   final int value;
+  final EffectType type;
   final List<DamageType> damageTypes;
 
   String get _damageTypeText => damageTypes.length == DamageType.values.length
       ? '全部'
       : damageTypes.displayText;
 
-  String get effectName => '';
+  String get displayText => '$_damageTypeText${type.displayText} $value%';
 
-  String get displayText => '$_damageTypeText$effectName $value%';
-}
+  factory Effect.fromJson(Map<String, dynamic> json) => _$EffectFromJson(json);
 
-class DamageIncrease extends Effect {
-  DamageIncrease(super.value, {super.damageTypes = DamageType.values});
-
-  @override
-  String get effectName => '傷害';
-}
-
-class CriticalChance extends Effect {
-  CriticalChance(super.value, {super.damageTypes = DamageType.values});
-
-  @override
-  String get effectName => '暴擊率';
-}
-
-class CriticalDamage extends Effect {
-  CriticalDamage(super.value, {super.damageTypes = DamageType.values});
-
-  @override
-  String get effectName => '暴擊傷害';
-}
-
-class WeakSpotDamage extends Effect {
-  WeakSpotDamage(super.value, {super.damageTypes = DamageType.values});
-
-  @override
-  String get effectName => '弱點傷害';
+  Map<String, dynamic> toJson() => _$EffectToJson(this);
 }

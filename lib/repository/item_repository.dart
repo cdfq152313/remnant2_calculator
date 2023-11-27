@@ -2,6 +2,8 @@ import 'package:remnant2_calculator/data/item.dart';
 import 'package:remnant2_calculator/domain/item.dart';
 
 class ItemRepository {
+
+
   List<Item> getArchetypes() {
     return archetypes;
   }

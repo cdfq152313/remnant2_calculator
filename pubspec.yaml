@@ -38,6 +38,7 @@ dependencies:
   freezed_annotation:
   bloc:
   flutter_bloc:
+  shared_preferences:
 
 dev_dependencies:
   flutter_test:

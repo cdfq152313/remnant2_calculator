@@ -1,3 +1,4 @@
+import 'package:remnant2_calculator/domain/base_damage.dart';
 import 'package:remnant2_calculator/domain/effect.dart';
 import 'package:remnant2_calculator/domain/item.dart';
 
@@ -49,9 +50,8 @@ final modifiers = [
 final longGuns = [
   Weapon(
     name: '日暮',
-    damageTypes: [DamageType.range],
+    damage: BaseDamage(93, [DamageType.range]),
     effects: [
-      BaseDamage(93),
       CriticalChance(5),
       WeakSpotDamage(105),
     ],
@@ -61,9 +61,8 @@ final longGuns = [
 final handGuns = [
   Weapon(
     name: 'MP60-R',
-    damageTypes: [DamageType.range],
+    damage: BaseDamage(27, [DamageType.range]),
     effects: [
-      BaseDamage(27),
       CriticalChance(10),
       WeakSpotDamage(100),
     ],
@@ -73,9 +72,8 @@ final handGuns = [
 final melees = [
   Weapon(
     name: '斧頭',
-    damageTypes: [DamageType.range],
+    damage: BaseDamage(162, [DamageType.melee]),
     effects: [
-      BaseDamage(162),
       CriticalChance(3),
       WeakSpotDamage(85),
     ],

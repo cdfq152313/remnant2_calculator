@@ -10,6 +10,10 @@ extension DamageTypeExtension on DamageType {
       };
 }
 
+extension DamageTypeListExtension on List<DamageType> {
+  String get displayText => map((e) => e.displayText).join('/');
+}
+
 sealed class Effect {
   Effect(
     this.value, {
@@ -21,18 +25,11 @@ sealed class Effect {
 
   String get _damageTypeText => damageTypes.length == DamageType.values.length
       ? '全部'
-      : damageTypes.map((e) => e.displayText).join('/');
+      : damageTypes.displayText;
 
   String get effectName => '';
 
   String get displayText => '$_damageTypeText$effectName $value%';
-}
-
-class BaseDamage extends Effect {
-  BaseDamage(super.value, {super.damageTypes = DamageType.values});
-
-  @override
-  String get displayText => '基礎傷害 $value';
 }
 
 class DamageIncrease extends Effect {

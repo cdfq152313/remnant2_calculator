@@ -137,64 +137,13 @@ class _CharacterView extends StatelessWidget {
   }
 }
 
-class WeaponView extends StatelessWidget {
-  const WeaponView({
-    super.key,
-    required this.title,
-    required this.items,
-    required this.weaponSetter,
-    required this.weaponGetter,
-    required this.calculationGetter,
-  });
-
-  final String title;
-  final List<Weapon> items;
-  final void Function(CharacterCubit cubit, Weapon? item) weaponSetter;
-  final Weapon? Function(CharacterState state) weaponGetter;
-  final Calculation? Function(CalculatorState state) calculationGetter;
-
-  @override
-  Widget build(BuildContext context) {
-    return ItemView(
-      title: title,
-      items: items,
-      getter: weaponGetter,
-      setter: (c, i) => weaponSetter(c, i as Weapon),
-      additionalInfo: Builder(
-        builder: (context) {
-          final characterState = context.watch<CharacterCubit>().state;
-          final calculatorState = context.watch<CalculatorCubit>().state;
-          return weaponGetter(characterState).to(
-                (item) {
-                  final calculation = calculationGetter(calculatorState);
-                  return Column(
-                    children: [
-                      const Divider(indent: 0),
-                      Text(
-                        '適用增傷: ${item.damageTypes.map((e) => e.displayText).join(',')}',
-                      ),
-                      Text('一般期望值: ${calculation?.expectedDamage ?? '--'}'),
-                      Text(
-                        '弱點期望值: ${calculation?.expectedWeakSpotDamage ?? '--'}',
-                      ),
-                    ],
-                  );
-                },
-              ) ??
-              Container();
-        },
-      ),
-    );
-  }
-}
-
-class ItemView extends StatelessWidget {
-  const ItemView({
+class ItemLayout extends StatelessWidget {
+  const ItemLayout({
     required this.title,
     required this.items,
     required this.getter,
     required this.setter,
-    this.additionalInfo,
+    required this.itemInfo,
     super.key,
   });
 
@@ -202,7 +151,7 @@ class ItemView extends StatelessWidget {
   final List<Item> items;
   final void Function(CharacterCubit cubit, Item? item) setter;
   final Item? Function(CharacterState state) getter;
-  final Widget? additionalInfo;
+  final Widget itemInfo;
 
   @override
   Widget build(BuildContext context) {
@@ -235,25 +184,107 @@ class ItemView extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(4),
-              child: BlocBuilder<CharacterCubit, CharacterState>(
-                builder: (context, state) {
-                  final item = getter(state);
-                  return IntrinsicWidth(
-                    child: Column(
-                      children: [
-                        if (item != null)
-                          ...item.effects.map(
-                            (e) => Text(e.displayText),
-                          ),
-                        if (additionalInfo != null) additionalInfo!,
-                      ],
-                    ),
-                  );
-                },
-              ),
+              child: IntrinsicWidth(child: itemInfo),
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class ItemView extends StatelessWidget {
+  const ItemView({
+    required this.title,
+    required this.items,
+    required this.getter,
+    required this.setter,
+    this.additionalInfo,
+    super.key,
+  });
+
+  final String title;
+  final List<Item> items;
+  final void Function(CharacterCubit cubit, Item? item) setter;
+  final Item? Function(CharacterState state) getter;
+  final Widget? additionalInfo;
+
+  @override
+  Widget build(BuildContext context) {
+    return ItemLayout(
+      title: title,
+      items: items,
+      getter: getter,
+      setter: setter,
+      itemInfo: BlocBuilder<CharacterCubit, CharacterState>(
+        builder: (context, state) {
+          return getter(state)?.to(
+                (item) => Column(
+                  children: item.effects
+                      .map(
+                        (e) => Text(e.displayText),
+                      )
+                      .toList(),
+                ),
+              ) ??
+              Container();
+        },
+      ),
+    );
+  }
+}
+
+class WeaponView extends StatelessWidget {
+  const WeaponView({
+    super.key,
+    required this.title,
+    required this.items,
+    required this.weaponSetter,
+    required this.weaponGetter,
+    required this.calculationGetter,
+  });
+
+  final String title;
+  final List<Weapon> items;
+  final void Function(CharacterCubit cubit, Weapon? item) weaponSetter;
+  final Weapon? Function(CharacterState state) weaponGetter;
+  final Calculation? Function(CalculatorState state) calculationGetter;
+
+  @override
+  Widget build(BuildContext context) {
+    return ItemLayout(
+      title: title,
+      items: items,
+      getter: weaponGetter,
+      setter: (c, i) => weaponSetter(c, i as Weapon),
+      itemInfo: Builder(
+        builder: (context) {
+          final characterState = context.watch<CharacterCubit>().state;
+          final calculatorState = context.watch<CalculatorCubit>().state;
+          return weaponGetter(characterState).to(
+                (item) {
+                  final calculation = calculationGetter(calculatorState);
+                  return Column(
+                    children: [
+                      const Divider(indent: 0),
+                      Text(
+                        '適用增傷: ${item.damage.damageTypes.displayText}',
+                      ),
+                      Text(
+                        '基礎攻擊: ${item.damage.value}',
+                      ),
+                      ...item.effects.map((e) => Text(e.displayText)),
+                      const Divider(),
+                      Text('一般期望值: ${calculation?.expectedDamage ?? '--'}'),
+                      Text(
+                        '弱點期望值: ${calculation?.expectedWeakSpotDamage ?? '--'}',
+                      ),
+                    ],
+                  );
+                },
+              ) ??
+              Container();
+        },
       ),
     );
   }

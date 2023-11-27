@@ -1,3 +1,4 @@
+import 'package:remnant2_calculator/domain/base_damage.dart';
 import 'package:remnant2_calculator/domain/effect.dart';
 
 class Item {
@@ -10,9 +11,9 @@ class Item {
 class Weapon extends Item {
   Weapon({
     required super.name,
+    required this.damage,
     required super.effects,
-    required this.damageTypes,
   });
 
-  final List<DamageType> damageTypes;
+  final BaseDamage damage;
 }

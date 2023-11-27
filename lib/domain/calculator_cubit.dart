@@ -38,19 +38,19 @@ class CalculatorCubit extends Cubit<CalculatorState> {
     ];
     final result = CalculatorState(
       longGun: character.longGun.to(
-        (weapon) => calculator.calculate(longGunEffects, weapon.damageTypes),
+        (weapon) => calculator.calculate(weapon.damage, longGunEffects),
       ),
       longGunMod: character.longGunMod.to(
-        (weapon) => calculator.calculate(longGunEffects, weapon.damageTypes),
+        (weapon) => calculator.calculate(weapon.damage, longGunEffects),
       ),
       handGun: character.handGun.to(
-        (weapon) => calculator.calculate(handGunEffects, weapon.damageTypes),
+        (weapon) => calculator.calculate(weapon.damage, handGunEffects),
       ),
       handGunMod: character.handGunMod.to(
-        (weapon) => calculator.calculate(handGunEffects, weapon.damageTypes),
+        (weapon) => calculator.calculate(weapon.damage, handGunEffects),
       ),
       melee: character.melee.to(
-        (weapon) => calculator.calculate(meleeEffects, weapon.damageTypes),
+        (weapon) => calculator.calculate(weapon.damage, meleeEffects),
       ),
     );
     emit(result);

@@ -1,26 +1,26 @@
 import 'dart:math';
 
+import 'package:remnant2_calculator/domain/base_damage.dart';
 import 'package:remnant2_calculator/domain/effect.dart';
 import 'package:remnant2_calculator/extension.dart';
 
 class Calculator {
   Calculation calculate(
+    BaseDamage baseDamage,
     List<Effect> effects,
-    List<DamageType> applyDamageTypes,
   ) {
-    final effectMap = mergeEffect(effects, applyDamageTypes);
-    final baseDamage = effectMap[BaseDamage] ?? 100;
+    final effectMap = mergeEffect(effects, baseDamage.damageTypes);
     final baseDamageIncrease = effectMap[DamageIncrease] ?? 0;
     final criticalChance = effectMap[CriticalChance] ?? 0;
     final criticalDamage = 50 + (effectMap[CriticalDamage] ?? 0);
     final weakSpotDamage = effectMap[WeakSpotDamage] ?? 0;
 
-    final expectedDamage = baseDamage *
+    final expectedDamage = baseDamage.value *
         (1 + baseDamageIncrease.pc) *
         (1 + criticalDamage.pc * criticalChance.pc);
     final expectedWeakSpotDamage = expectedDamage * (1 + weakSpotDamage.pc);
     return Calculation(
-      baseDamage: baseDamage,
+      baseDamage: baseDamage.value,
       baseDamageIncrease: baseDamageIncrease,
       criticalChance: criticalChance,
       criticalDamage: criticalDamage,

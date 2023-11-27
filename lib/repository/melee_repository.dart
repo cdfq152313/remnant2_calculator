@@ -1,3 +1,5 @@
+import 'package:remnant2_calculator/data/item.dart';
+import 'package:remnant2_calculator/domain/item.dart';
 import 'package:remnant2_calculator/repository/weapon_repository.dart';
 
 class MeleeRepository extends WeaponRepository {
@@ -5,4 +7,7 @@ class MeleeRepository extends WeaponRepository {
 
   @override
   final String key = 'Melee';
+
+  @override
+  List<Weapon> getDefaultItems() => melees;
 }

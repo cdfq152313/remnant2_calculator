@@ -28,5 +28,6 @@ class Weapon extends Item {
 
   factory Weapon.fromJson(Map<String, dynamic> json) => _$WeaponFromJson(json);
 
+  @override
   Map<String, dynamic> toJson() => _$WeaponToJson(this);
 }

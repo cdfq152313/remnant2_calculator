@@ -11,8 +11,8 @@ final itemMap = Map.fromEntries([
   ...amulets,
   ...rings,
   ...relicFragments,
-  ...rangeMutator,
-  ...meleeMutator,
+  ...rangeMutators,
+  ...meleeMutators,
   ...modifiers,
 ].map((v) => MapEntry(v.name, v)));
 
@@ -189,7 +189,7 @@ final relicFragments = [
   ),
 ];
 
-final rangeMutator = [
+final rangeMutators = [
   Item(
     name: '動量',
     effects: [
@@ -224,7 +224,7 @@ final rangeMutator = [
     ],
   ),
 ];
-final meleeMutator = [
+final meleeMutators = [
   Item(
     name: '污穢之刃',
     effects: [

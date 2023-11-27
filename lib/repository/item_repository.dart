@@ -14,8 +14,6 @@ abstract class ItemRepository<T extends Item> {
 
   List<T> _items = [];
 
-  T fromJson(Map<String, dynamic> json);
-
   List<T> getAll() {
     return _items;
   }
@@ -34,6 +32,10 @@ abstract class ItemRepository<T extends Item> {
     _save();
   }
 
+  T fromJson(Map<String, dynamic> json);
+
+  List<T> getDefaultItems() => [];
+
   void _save() {
     _prefs.setString(
       key,
@@ -43,6 +45,6 @@ abstract class ItemRepository<T extends Item> {
 
   void _load() {
     final json = jsonDecode(_prefs.getString(key) ?? '[]') as List;
-    _items = json.map((v) => fromJson(v)).toList();
+    _items = getDefaultItems()..addAll(json.map((v) => fromJson(v)));
   }
 }

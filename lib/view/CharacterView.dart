@@ -6,7 +6,16 @@ import 'package:remnant2_calculator/domain/character_cubit.dart';
 import 'package:remnant2_calculator/domain/effect.dart';
 import 'package:remnant2_calculator/domain/item.dart';
 import 'package:remnant2_calculator/extension.dart';
+import 'package:remnant2_calculator/repository/amulet_repository.dart';
+import 'package:remnant2_calculator/repository/archetype_repository.dart';
+import 'package:remnant2_calculator/repository/hand_gun_repository.dart';
 import 'package:remnant2_calculator/repository/item_repository.dart';
+import 'package:remnant2_calculator/repository/long_gun_repository.dart';
+import 'package:remnant2_calculator/repository/melee_mutator_repository.dart';
+import 'package:remnant2_calculator/repository/melee_repository.dart';
+import 'package:remnant2_calculator/repository/range_mutator_repository.dart';
+import 'package:remnant2_calculator/repository/relic_fragment_repository.dart';
+import 'package:remnant2_calculator/repository/ring_repository.dart';
 
 class CharacterView extends StatelessWidget {
   const CharacterView({super.key});
@@ -44,21 +53,21 @@ class _CharacterView extends StatelessWidget {
           children: [
             WeaponView(
               title: '長槍',
-              items: context.read<ItemRepository>().getLongGuns(),
+              items: context.read<LongGunRepository>().getAll(),
               weaponSetter: (cubit, item) => cubit.setLongGun(item),
               weaponGetter: (state) => state.longGun,
               calculationGetter: (state) => state.longGun,
             ),
             WeaponView(
               title: '手槍',
-              items: context.read<ItemRepository>().getHandGuns(),
+              items: context.read<HandGunRepository>().getAll(),
               weaponSetter: (cubit, item) => cubit.setHandGun(item),
               weaponGetter: (state) => state.handGun,
               calculationGetter: (state) => state.longGun,
             ),
             WeaponView(
               title: '近戰',
-              items: context.read<ItemRepository>().getMelees(),
+              items: context.read<MeleeRepository>().getAll(),
               weaponSetter: (cubit, item) => cubit.setMelee(item),
               weaponGetter: (state) => state.melee,
               calculationGetter: (state) => state.melee,
@@ -70,19 +79,19 @@ class _CharacterView extends StatelessWidget {
           children: [
             ItemView(
               title: '長槍突變因子',
-              items: context.read<ItemRepository>().getRangeMutators(),
+              items: context.read<RangeMutatorRepository>().getAll(),
               setter: (cubit, item) => cubit.setLongGunMutator(item),
               getter: (state) => state.longGunMutator,
             ),
             ItemView(
               title: '手槍突變因子',
-              items: context.read<ItemRepository>().getRangeMutators(),
+              items: context.read<RangeMutatorRepository>().getAll(),
               setter: (cubit, item) => cubit.setHandGunMutator(item),
               getter: (state) => state.handGunMutator,
             ),
             ItemView(
               title: '近戰突變因子',
-              items: context.read<ItemRepository>().getMeleeMutators(),
+              items: context.read<MeleeMutatorRepository>().getAll(),
               setter: (cubit, item) => cubit.setMeleeMutator(item),
               getter: (state) => state.meleeMutator,
             ),
@@ -93,13 +102,13 @@ class _CharacterView extends StatelessWidget {
           children: [
             ItemView(
               title: '主職業',
-              items: context.read<ItemRepository>().getArchetypes(),
+              items: context.read<ArchetypeRepository>().getAll(),
               setter: (cubit, item) => cubit.setPrimaryArchetype(item),
               getter: (state) => state.primaryArchetype,
             ),
             ItemView(
               title: '副職業',
-              items: context.read<ItemRepository>().getArchetypes(),
+              items: context.read<ArchetypeRepository>().getAll(),
               setter: (cubit, item) => cubit.setSecondaryArchetype(item),
               getter: (state) => state.secondaryArchetype,
             ),
@@ -108,14 +117,14 @@ class _CharacterView extends StatelessWidget {
         _BlockLayout(title: '配件', children: [
           ItemView(
             title: '項鍊',
-            items: context.read<ItemRepository>().getAmulets(),
+            items: context.read<AmuletRepository>().getAll(),
             setter: (cubit, item) => cubit.setAmulet(item),
             getter: (state) => state.amulet,
           ),
           for (var i = 0; i < 4; ++i)
             ItemView(
               title: '戒指${i + 1}',
-              items: context.read<ItemRepository>().getRings(),
+              items: context.read<RingRepository>().getAll(),
               setter: (cubit, item) => cubit.setRing(i, item),
               getter: (state) => state.rings[i],
             ),
@@ -126,7 +135,7 @@ class _CharacterView extends StatelessWidget {
             for (var i = 0; i < 3; ++i)
               ItemView(
                 title: '聖物碎片${i + 1}',
-                items: context.read<ItemRepository>().getRelicFragments(),
+                items: context.read<RelicFragmentRepository>().getAll(),
                 setter: (cubit, item) => cubit.setRelicFragment(i, item),
                 getter: (state) => state.relicFragments[i],
               ),

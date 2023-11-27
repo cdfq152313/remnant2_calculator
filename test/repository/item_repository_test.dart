@@ -11,7 +11,6 @@ void main() {
     var repository = ArchetypeRepository(prefs);
     repository.add(item);
     repository = ArchetypeRepository(prefs);
-
     expect(repository.getAll().first.toString(), equals(item.toString()));
   });
 }

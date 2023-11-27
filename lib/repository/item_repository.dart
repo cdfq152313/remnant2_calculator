@@ -1,46 +1,48 @@
-import 'package:remnant2_calculator/data/item.dart';
+import 'dart:convert';
+
 import 'package:remnant2_calculator/domain/item.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class ItemRepository {
-
-
-  List<Item> getArchetypes() {
-    return archetypes;
+abstract class ItemRepository<T extends Item> {
+  ItemRepository(this._prefs) {
+    _load();
   }
 
-  List<Item> getModifiers() {
-    return modifiers;
+  final SharedPreferences _prefs;
+
+  String get key;
+
+  List<T> _items = [];
+
+  T fromJson(Map<String, dynamic> json);
+
+  List<T> getAll() {
+    return _items;
   }
 
-  List<Weapon> getLongGuns() {
-    return longGuns;
+  List<T> filter(String keyword) {
+    return _items.where((element) => element.name.contains(keyword)).toList();
   }
 
-  List<Weapon> getHandGuns() {
-    return handGuns;
+  void add(T item) {
+    _items.add(item);
+    _save();
   }
 
-  List<Weapon> getMelees() {
-    return melees;
+  void remove(T item) {
+    _items.remove(item);
+    _save();
   }
 
-  List<Item> getAmulets() {
-    return amulets;
+  void _save() {
+    _prefs.setString(
+      key,
+      jsonEncode(_items),
+    );
   }
 
-  List<Item> getRings() {
-    return rings;
-  }
-
-  List<Item> getRelicFragments() {
-    return relicFragments;
-  }
-
-  List<Item> getRangeMutators() {
-    return rangeMutator;
-  }
-
-  List<Item> getMeleeMutators() {
-    return meleeMutator;
+  void _load() {
+    final json = jsonDecode(_prefs.getString(key) ?? '[]') as List;
+    _items = json.map((v) => fromJson(v)).toList();
   }
 }

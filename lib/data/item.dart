@@ -6,10 +6,13 @@ import 'package:remnant2_calculator/domain/item.dart';
 final itemMap = Map.fromEntries([
   ...archetypes,
   ...longGuns,
+  ...handGuns,
+  ...melees,
   ...amulets,
   ...rings,
   ...relicFragments,
   ...rangeMutator,
+  ...meleeMutator,
   ...modifiers,
 ].map((v) => MapEntry(v.name, v)));
 

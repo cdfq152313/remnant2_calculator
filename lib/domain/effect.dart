@@ -1,3 +1,9 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'effect.freezed.dart';
+
+part 'effect.g.dart';
+
 enum DamageType { range, melee, mod, elemental, status }
 
 extension DamageTypeExtension on DamageType {
@@ -14,48 +20,55 @@ extension DamageTypeListExtension on List<DamageType> {
   String get displayText => map((e) => e.displayText).join('/');
 }
 
-sealed class Effect {
-  Effect(
-    this.value, {
-    required this.damageTypes,
-  });
+mixin _EffectField {
+  int get value;
 
-  final int value;
-  final List<DamageType> damageTypes;
+  List<DamageType> get damageTypes;
+}
+
+@freezed
+sealed class Effect with _$Effect, _EffectField {
+  const Effect._();
+
+  const factory Effect.damageIncrease(
+    int value, {
+    @Default(DamageType.values) List<DamageType> damageTypes,
+  }) = DamageIncrease;
+
+  const factory Effect.criticalChance(
+    int value, {
+    @Default(DamageType.values) List<DamageType> damageTypes,
+  }) = CriticalChance;
+
+  const factory Effect.criticalDamage(
+    int value, {
+    @Default(DamageType.values) List<DamageType> damageTypes,
+  }) = CriticalDamage;
+
+  const factory Effect.weakSpotDamage(
+    int value, {
+    @Default(DamageType.values) List<DamageType> damageTypes,
+  }) = WeakSpotDamage;
+
+  factory Effect.fromJson(Map<String, dynamic> json) => _$EffectFromJson(json);
 
   String get _damageTypeText => damageTypes.length == DamageType.values.length
       ? '全部'
       : damageTypes.displayText;
 
-  String get effectName => '';
+  String get effectName => switch (this) {
+        DamageIncrease() => '傷害',
+        CriticalChance() => '暴擊率',
+        CriticalDamage() => '暴擊傷害',
+        WeakSpotDamage() => '弱點傷害',
+      };
+
+  Type get caseType => switch (this) {
+        DamageIncrease() => DamageIncrease,
+        CriticalChance() => CriticalChance,
+        CriticalDamage() => CriticalDamage,
+        WeakSpotDamage() => WeakSpotDamage,
+      };
 
   String get displayText => '$_damageTypeText$effectName $value%';
-}
-
-class DamageIncrease extends Effect {
-  DamageIncrease(super.value, {super.damageTypes = DamageType.values});
-
-  @override
-  String get effectName => '傷害';
-}
-
-class CriticalChance extends Effect {
-  CriticalChance(super.value, {super.damageTypes = DamageType.values});
-
-  @override
-  String get effectName => '暴擊率';
-}
-
-class CriticalDamage extends Effect {
-  CriticalDamage(super.value, {super.damageTypes = DamageType.values});
-
-  @override
-  String get effectName => '暴擊傷害';
-}
-
-class WeakSpotDamage extends Effect {
-  WeakSpotDamage(super.value, {super.damageTypes = DamageType.values});
-
-  @override
-  String get effectName => '弱點傷害';
 }

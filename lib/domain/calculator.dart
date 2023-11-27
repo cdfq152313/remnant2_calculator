@@ -42,7 +42,7 @@ class Calculator {
       ),
     )) {
       map.update(
-        effect.runtimeType,
+        effect.caseType,
         (value) => value + effect.value,
         ifAbsent: () => effect.value,
       );

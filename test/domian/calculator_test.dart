@@ -8,9 +8,9 @@ void main() {
   test('sum effect', () {
     final result = calculator.mergeEffect(
       [
-        CriticalDamage(100),
-        CriticalDamage(50),
-        CriticalDamage(30),
+        const CriticalDamage(100),
+        const CriticalDamage(50),
+        const CriticalDamage(30),
       ],
       DamageType.values,
     );
@@ -20,9 +20,9 @@ void main() {
   test('critical chance cannot exceed 100', () {
     final result = calculator.mergeEffect(
       [
-        CriticalChance(40),
-        CriticalChance(30),
-        CriticalChance(40),
+        const CriticalChance(40),
+        const CriticalChance(30),
+        const CriticalChance(40),
       ],
       DamageType.values,
     );
@@ -31,12 +31,12 @@ void main() {
 
   test('All Damage', () {
     final result = calculator.calculate(
-      BaseDamage(100, DamageType.values),
+      const BaseDamage(100, DamageType.values),
       [
-        DamageIncrease(0),
-        CriticalChance(50),
-        CriticalDamage(50),
-        WeakSpotDamage(100),
+        const DamageIncrease(0),
+        const CriticalChance(50),
+        const CriticalDamage(50),
+        const WeakSpotDamage(100),
       ],
     );
     expect(result.baseDamage, equals(100));

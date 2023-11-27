@@ -1,8 +1,16 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:remnant2_calculator/domain/effect.dart';
 
-class BaseDamage {
-  BaseDamage(this.value, this.damageTypes);
+part 'base_damage.freezed.dart';
+part 'base_damage.g.dart';
 
-  final int value;
-  final List<DamageType> damageTypes;
+@freezed
+class BaseDamage with _$BaseDamage {
+  const factory BaseDamage(
+    int value,
+    List<DamageType> damageTypes,
+  ) = _BaseDamage;
+
+  factory BaseDamage.fromJson(Map<String, dynamic> json) =>
+      _$BaseDamageFromJson(json);
 }

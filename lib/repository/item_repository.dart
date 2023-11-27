@@ -14,6 +14,10 @@ abstract class ItemRepository<T extends Item> {
 
   List<T> _items = [];
 
+  T get(String key) {
+    return _items.firstWhere((element) => element.name == key);
+  }
+
   List<T> getAll() {
     return _items;
   }

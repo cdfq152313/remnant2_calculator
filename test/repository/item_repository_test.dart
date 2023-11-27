@@ -7,10 +7,10 @@ void main() {
   test('archetype test', () async {
     SharedPreferences.setMockInitialValues({});
     final prefs = await SharedPreferences.getInstance();
-    final item = Item(name: 'hello', effects: []);
+    const item = Item(name: 'hello', effects: []);
     var repository = ArchetypeRepository(prefs);
     repository.add(item);
     repository = ArchetypeRepository(prefs);
-    expect(repository.getAll().first.toString(), equals(item.toString()));
+    expect(repository.get(item.name).toString(), equals(item.toString()));
   });
 }

@@ -10,7 +10,8 @@ import 'package:remnant2_calculator/repository/modifier_repository.dart';
 import 'package:remnant2_calculator/repository/range_mutator_repository.dart';
 import 'package:remnant2_calculator/repository/relic_fragment_repository.dart';
 import 'package:remnant2_calculator/repository/ring_repository.dart';
-import 'package:remnant2_calculator/view/CharacterView.dart';
+import 'package:remnant2_calculator/view/character_view.dart';
+import 'package:remnant2_calculator/view/item_collection_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
@@ -46,12 +47,28 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: Scaffold(
-          appBar: AppBar(
-            backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-            title: const Text('遺跡2傷害計算機'),
+        home: DefaultTabController(
+          length: 2,
+          child: Scaffold(
+            appBar: AppBar(
+              backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+              title: const Text('遺跡2傷害計算機'),
+              bottom: const TabBar(
+                tabs: [
+                  Tab(text: '配裝'),
+                  Tab(
+                    text: '物品列表',
+                  ),
+                ],
+              ),
+            ),
+            body: const TabBarView(
+              children: [
+                CharacterView(),
+                ItemCollectionView(),
+              ],
+            ),
           ),
-          body: const CharacterView(),
         ),
       ),
     );

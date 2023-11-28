@@ -140,6 +140,7 @@ class _CharacterView extends StatelessWidget {
               ),
           ],
         ),
+        Container(height: 12),
       ],
     );
   }

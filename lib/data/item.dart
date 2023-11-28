@@ -74,7 +74,7 @@ final handGuns = [
 
 final melees = [
   const Weapon(
-    name: '斧頭',
+    name: '科雷爾斧',
     damage: BaseDamage(162, [DamageType.melee]),
     effects: [
       CriticalChance(3),

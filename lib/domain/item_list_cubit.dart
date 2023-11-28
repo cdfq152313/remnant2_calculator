@@ -27,6 +27,10 @@ class ItemListCubit<T extends Item> extends Cubit<ItemListState<T>>
     _update(state.keyword, value);
   }
 
+  void setState(String keyword, bool value) {
+    _update(keyword, value);
+  }
+
   void update() {
     _update(state.keyword, state.showDefault);
   }

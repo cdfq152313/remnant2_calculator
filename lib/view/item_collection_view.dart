@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:remnant2_calculator/domain/effect.dart';
 import 'package:remnant2_calculator/domain/item.dart';
 import 'package:remnant2_calculator/domain/item_list_cubit.dart';
 import 'package:remnant2_calculator/repository/amulet_repository.dart';
 import 'package:remnant2_calculator/repository/archetype_repository.dart';
 import 'package:remnant2_calculator/repository/hand_gun_repository.dart';
 import 'package:remnant2_calculator/repository/item_repository.dart';
+import 'package:remnant2_calculator/repository/keyword_and_show_default_cubit.dart';
 import 'package:remnant2_calculator/repository/long_gun_repository.dart';
 import 'package:remnant2_calculator/repository/melee_repository.dart';
 import 'package:remnant2_calculator/repository/range_mutator_repository.dart';
 import 'package:remnant2_calculator/repository/relic_fragment_repository.dart';
 import 'package:remnant2_calculator/repository/ring_repository.dart';
-import 'package:remnant2_calculator/repository/show_default_cubit.dart';
 
 class ItemCollectionView extends StatelessWidget {
   const ItemCollectionView({super.key});
@@ -19,7 +20,7 @@ class ItemCollectionView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => ShowDefaultCubit(true),
+      create: (_) => KeywordAndShowDefaultCubit(),
       child: ListView(
         children: [
           const ShowDefaultCheckbox(),
@@ -50,6 +51,7 @@ class ItemCollectionView extends StatelessWidget {
             repository: context.read<RelicFragmentRepository>(),
             title: '聖物碎片',
           ),
+          Container(height: 12),
         ],
       ),
     );
@@ -65,19 +67,47 @@ class ShowDefaultCheckbox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8),
-      child: Row(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('顯示預設物品', style: Theme.of(context).textTheme.titleMedium),
-          Padding(
-            padding: const EdgeInsets.only(left: 8),
-            child:
-                BlocBuilder<ShowDefaultCubit, bool>(builder: (context, state) {
-              return Switch(
-                value: state,
-                onChanged: (v) => context.read<ShowDefaultCubit>().set(v),
-              );
-            }),
-          )
+          Row(
+            children: [
+              Text('顯示預設物品', style: Theme.of(context).textTheme.bodyLarge),
+              Container(
+                margin: const EdgeInsets.only(left: 8),
+                child: BlocBuilder<KeywordAndShowDefaultCubit,
+                    KeywordAndShowDefaultState>(
+                  builder: (context, state) {
+                    return Switch(
+                      value: state.showDefault,
+                      onChanged: (v) => context
+                          .read<KeywordAndShowDefaultCubit>()
+                          .setShowDefault(v),
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Row(
+            children: [
+              Text('搜尋', style: Theme.of(context).textTheme.bodyLarge),
+              Container(
+                margin: const EdgeInsets.only(left: 8),
+                child: SizedBox(
+                  width: 250,
+                  child: TextField(
+                    decoration:
+                        const InputDecoration(border: OutlineInputBorder()),
+                    onChanged: (v) => context
+                        .read<KeywordAndShowDefaultCubit>()
+                        .setKeyword(v),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );
@@ -95,9 +125,12 @@ class _ItemList extends StatelessWidget {
     return BlocProvider(
       create: (_) => ItemListCubit(repository),
       child: Builder(builder: (context) {
-        return BlocListener<ShowDefaultCubit, bool>(
+        return BlocListener<KeywordAndShowDefaultCubit,
+            KeywordAndShowDefaultState>(
           listener: (BuildContext context, state) {
-            context.read<ItemListCubit>().setShowDefault(state);
+            context
+                .read<ItemListCubit>()
+                .setState(state.keyword, state.showDefault);
           },
           child: BlocBuilder<ItemListCubit, ItemListState>(
             builder: (context, state) {
@@ -152,6 +185,10 @@ class _ItemView extends StatelessWidget {
                 child: Text(item.name),
               ),
               const Divider(),
+              if (item is Weapon) ...[
+                Text('適用增傷 ${(item as Weapon).damage.damageTypes.displayText}'),
+                Text('基礎傷害 ${(item as Weapon).damage.value}'),
+              ],
               ...item.effects.map(
                 (e) => Text(e.displayText),
               ),

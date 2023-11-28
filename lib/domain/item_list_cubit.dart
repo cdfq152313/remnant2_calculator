@@ -6,17 +6,18 @@ import 'package:remnant2_calculator/util/auto_close.dart';
 
 part 'item_list_cubit.freezed.dart';
 
-class ItemListCubit extends Cubit<ItemListState> with AutoClose {
+class ItemListCubit<T extends Item> extends Cubit<ItemListState<T>>
+    with AutoClose {
   ItemListCubit(this._itemRepository)
       : super(
           ItemListState(_itemRepository.getAll()),
         ) {
     subscriptions = [
-      _itemRepository.event().listen((event) => filter(state.keyword)),
+      _itemRepository.stream.listen((event) => filter(state.keyword)),
     ];
   }
 
-  final ItemRepository<Item> _itemRepository;
+  final ItemRepository<T> _itemRepository;
 
   void filter(String keyword) {
     emit(
@@ -31,9 +32,9 @@ class ItemListCubit extends Cubit<ItemListState> with AutoClose {
 }
 
 @freezed
-class ItemListState with _$ItemListState {
+class ItemListState<T extends Item> with _$ItemListState {
   const factory ItemListState(
-    List<Item> items, {
+    List<T> items, {
     @Default('') String keyword,
   }) = _ItemListState;
 }

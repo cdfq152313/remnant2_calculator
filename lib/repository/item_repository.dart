@@ -12,12 +12,14 @@ abstract class ItemRepository<T extends Item> {
   }
 
   final SharedPreferences _prefs;
-  final StreamController<ItemUpdate> _controller = StreamController();
+  final StreamController<ItemUpdate> _controller = StreamController.broadcast();
 
   String get key;
 
   List<T> _items = [];
   List<T> _customizeditems = [];
+
+  Stream<ItemUpdate> get stream => _controller.stream;
 
   T get(String key) {
     return _items.firstWhere((element) => element.name == key);
@@ -42,8 +44,6 @@ abstract class ItemRepository<T extends Item> {
     _customizeditems.remove(item);
     _save();
   }
-
-  Stream<ItemUpdate> event() => _controller.stream;
 
   List<T> getDefaultItems() => [];
 

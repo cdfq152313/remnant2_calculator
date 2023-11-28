@@ -13,6 +13,7 @@ import 'package:remnant2_calculator/repository/melee_repository.dart';
 import 'package:remnant2_calculator/repository/range_mutator_repository.dart';
 import 'package:remnant2_calculator/repository/relic_fragment_repository.dart';
 import 'package:remnant2_calculator/repository/ring_repository.dart';
+import 'package:remnant2_calculator/view/item_editor_dialog.dart';
 
 class ItemCollectionView extends StatelessWidget {
   const ItemCollectionView({super.key});
@@ -118,7 +119,7 @@ class _ItemList extends StatelessWidget {
   const _ItemList({super.key, required this.repository, required this.title});
 
   final String title;
-  final ItemRepository<Item> repository;
+  final ItemRepository repository;
 
   @override
   Widget build(BuildContext context) {
@@ -145,14 +146,15 @@ class _ItemList extends StatelessWidget {
                     ),
                   ),
                   Wrap(
-                    children: state.items
-                        .map(
-                          (item) => Padding(
-                            padding: const EdgeInsets.only(left: 4),
-                            child: _ItemView(item: item),
-                          ),
-                        )
-                        .toList(),
+                    children: [
+                      ...state.items.map(
+                        (item) => Padding(
+                          padding: const EdgeInsets.only(left: 4),
+                          child: _ItemView(item: item),
+                        ),
+                      ),
+                      _AddItemView(repository),
+                    ],
                   ),
                 ],
               );
@@ -195,6 +197,29 @@ class _ItemView extends StatelessWidget {
               const SizedBox(height: 4),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class _AddItemView extends StatelessWidget {
+  const _AddItemView(this.repository, {super.key});
+
+  final ItemRepository repository;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: SizedBox(
+        width: 200,
+        height: 100,
+        child: MaterialButton(
+          onPressed: () => showDialog(
+            context: context,
+            builder: (_) => ItemEditorDialog(repository),
+          ),
+          child: const Icon(Icons.add),
         ),
       ),
     );

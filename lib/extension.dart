@@ -20,6 +20,12 @@ extension ListExtension<T> on List<T> {
     list.removeAt(value);
     return list;
   }
+
+  List<T> copyWithRemove(T value) {
+    final list = toList();
+    list.remove(value);
+    return list;
+  }
 }
 
 extension ObjectExtension<T, K> on T? {

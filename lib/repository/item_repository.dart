@@ -1,7 +1,10 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:remnant2_calculator/domain/item.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+class ItemUpdate {}
 
 abstract class ItemRepository<T extends Item> {
   ItemRepository(this._prefs) {
@@ -9,6 +12,7 @@ abstract class ItemRepository<T extends Item> {
   }
 
   final SharedPreferences _prefs;
+  final StreamController<ItemUpdate> _controller = StreamController();
 
   String get key;
 
@@ -39,9 +43,12 @@ abstract class ItemRepository<T extends Item> {
     _save();
   }
 
+  Stream<ItemUpdate> event() => _controller.stream;
+
   List<T> getDefaultItems() => [];
 
   void _save() {
+    _controller.sink.add(ItemUpdate());
     _prefs.setString(
       key,
       jsonEncode(_customizeditems),

@@ -13,6 +13,7 @@ abstract class ItemRepository<T extends Item> {
   String get key;
 
   List<T> _items = [];
+  List<T> _customizeditems = [];
 
   T get(String key) {
     return _items.firstWhere((element) => element.name == key);
@@ -28,11 +29,13 @@ abstract class ItemRepository<T extends Item> {
 
   void add(T item) {
     _items.add(item);
+    _customizeditems.add(item);
     _save();
   }
 
   void remove(T item) {
     _items.remove(item);
+    _customizeditems.remove(item);
     _save();
   }
 
@@ -41,13 +44,14 @@ abstract class ItemRepository<T extends Item> {
   void _save() {
     _prefs.setString(
       key,
-      jsonEncode(_items),
+      jsonEncode(_customizeditems),
     );
   }
 
   void _load() {
-    final json = jsonDecode(_prefs.getString(key) ?? '[]') as List;
     _items = getDefaultItems();
-    _items.addAll(json.map((v) => Item.fromJson(v) as T));
+    final json = jsonDecode(_prefs.getString(key) ?? '[]') as List;
+    _customizeditems = json.map((v) => Item.fromJson(v) as T).toList();
+    _items.addAll(_customizeditems);
   }
 }

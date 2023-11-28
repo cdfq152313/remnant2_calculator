@@ -29,6 +29,16 @@ abstract class ItemRepository<T extends Item> {
     return _items;
   }
 
+  List<T> getAllCustomized() {
+    return _customizeditems;
+  }
+
+  List<T> filterCustomized(String keyword) {
+    return _customizeditems
+        .where((element) => element.name.contains(keyword))
+        .toList();
+  }
+
   List<T> filter(String keyword) {
     return _items.where((element) => element.name.contains(keyword)).toList();
   }

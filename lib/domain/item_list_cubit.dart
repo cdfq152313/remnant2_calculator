@@ -13,19 +13,35 @@ class ItemListCubit<T extends Item> extends Cubit<ItemListState<T>>
           ItemListState(_itemRepository.getAll()),
         ) {
     subscriptions = [
-      _itemRepository.stream.listen((event) => filter(state.keyword)),
+      _itemRepository.stream.listen((event) => update()),
     ];
   }
 
   final ItemRepository<T> _itemRepository;
 
-  void filter(String keyword) {
+  void setKeyword(String keyword) {
+    _update(keyword, state.showDefault);
+  }
+
+  void setShowDefault(bool value) {
+    _update(state.keyword, value);
+  }
+
+  void update() {
+    _update(state.keyword, state.showDefault);
+  }
+
+  void _update(String keyword, bool showDefault) {
     emit(
       ItemListState(
-        keyword.isEmpty
-            ? _itemRepository.getAll()
-            : _itemRepository.filter(keyword),
+        switch ((keyword.isEmpty, showDefault)) {
+          (true, true) => _itemRepository.getAll(),
+          (true, false) => _itemRepository.getAllCustomized(),
+          (false, true) => _itemRepository.filter(keyword),
+          (false, false) => _itemRepository.filterCustomized(keyword),
+        },
         keyword: keyword,
+        showDefault: showDefault,
       ),
     );
   }
@@ -35,6 +51,7 @@ class ItemListCubit<T extends Item> extends Cubit<ItemListState<T>>
 class ItemListState<T extends Item> with _$ItemListState {
   const factory ItemListState(
     List<T> items, {
+    @Default(true) bool showDefault,
     @Default('') String keyword,
   }) = _ItemListState;
 }

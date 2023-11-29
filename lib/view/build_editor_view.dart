@@ -77,7 +77,7 @@ class _CharacterView extends StatelessWidget {
                 padding: EdgeInsets.all(4),
                 child: Icon(Icons.save),
               ),
-              Text('保存套裝'),
+              Text('儲存套裝'),
             ],
           ),
           onPressed: () {
@@ -85,7 +85,7 @@ class _CharacterView extends StatelessWidget {
                 .read<BuildRecordCubit>()
                 .add(context.read<BuildCubit>().state);
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('存檔成功')),
+              const SnackBar(content: Text('儲存成功')),
             );
           },
         ),

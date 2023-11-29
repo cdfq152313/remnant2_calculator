@@ -4,6 +4,7 @@ import 'package:remnant2_calculator/domain/item.dart';
 import 'package:remnant2_calculator/repository/archetype_repository.dart';
 import 'package:remnant2_calculator/repository/item_repository.dart';
 import 'package:remnant2_calculator/repository/melee_repository.dart';
+import 'package:remnant2_calculator/repository/repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:test/test.dart';
 
@@ -18,7 +19,7 @@ void main() {
     repository.add(item);
     repository = ArchetypeRepository(prefs);
 
-    expect(await event, isA<ItemUpdate>());
+    expect(await event, isA<Update>());
     expect(repository.get(item.name).toString(), equals(item.toString()));
   });
 
@@ -36,7 +37,7 @@ void main() {
     repository.add(item);
     repository = MeleeRepository(prefs);
 
-    expect(await event, isA<ItemUpdate>());
+    expect(await event, isA<Update>());
     expect(repository.get(item.name).toString(), equals(item.toString()));
   });
 }

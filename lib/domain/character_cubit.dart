@@ -4,6 +4,7 @@ import 'package:remnant2_calculator/domain/item.dart';
 import 'package:remnant2_calculator/extension.dart';
 
 part 'character_cubit.freezed.dart';
+part 'character_cubit.g.dart';
 
 class CharacterCubit extends Cubit<CharacterState> {
   CharacterCubit({CharacterState? state}) : super(state ?? CharacterState());
@@ -179,4 +180,7 @@ class CharacterState with _$CharacterState {
     @Default([null, null, null]) List<Item?> relicFragments,
     @Default([]) List<Item> regularModifiers,
   }) = _CharacterState;
+
+  factory CharacterState.fromJson(Map<String, dynamic> json) =>
+      _$CharacterStateFromJson(json);
 }

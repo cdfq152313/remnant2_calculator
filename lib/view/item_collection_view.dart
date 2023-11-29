@@ -208,7 +208,7 @@ class _ItemView extends StatelessWidget {
                 MaterialButton(
                   onPressed: () =>
                       context.read<ItemListCubit>().removeItem(item),
-                  child: const Icon(Icons.remove),
+                  child: const Icon(Icons.delete),
                 )
               ],
               const SizedBox(height: 4),

@@ -66,9 +66,11 @@ abstract class ItemRepository<T extends Item> {
   }
 
   void _load() {
-    _items = getDefaultItems();
     final json = jsonDecode(_prefs.getString(key) ?? '[]') as List;
     _customizeditems = json.map((v) => Item.fromJson(v) as T).toList();
-    _items.addAll(_customizeditems);
+    _items = [
+      ...getDefaultItems(),
+      ..._customizeditems,
+    ];
   }
 }

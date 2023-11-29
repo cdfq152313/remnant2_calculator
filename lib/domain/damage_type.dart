@@ -1,4 +1,4 @@
-enum DamageType { range, melee, mod, elemental, status }
+enum DamageType { range, melee, mod, elemental, status, bow, explosion }
 
 extension DamageTypeExtension on DamageType {
   String get displayText => switch (this) {
@@ -7,6 +7,8 @@ extension DamageTypeExtension on DamageType {
         DamageType.mod => '改裝',
         DamageType.elemental => '元素',
         DamageType.status => '狀態',
+        DamageType.bow => '弓箭',
+        DamageType.explosion => '爆炸',
       };
 }
 

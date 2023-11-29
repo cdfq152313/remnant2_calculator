@@ -22,9 +22,7 @@ class BuildRecordCubit extends Cubit<List<BuildRecordState>> with AutoClose {
   }
 
   void add(BuildState build) {
-    final newState = state.copyWithAppend(BuildRecordState(build: build));
-    _repository.saveToDb(newState);
-    emit(newState);
+    _repository.add(BuildRecordState(build: build));
   }
 
   void removeAt(int index) {

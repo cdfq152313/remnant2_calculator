@@ -2,7 +2,6 @@ import 'package:remnant2_calculator/domain/base_damage.dart';
 import 'package:remnant2_calculator/domain/damage_type.dart';
 import 'package:remnant2_calculator/domain/item.dart';
 import 'package:remnant2_calculator/repository/archetype_repository.dart';
-import 'package:remnant2_calculator/repository/item_repository.dart';
 import 'package:remnant2_calculator/repository/melee_repository.dart';
 import 'package:remnant2_calculator/repository/repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';

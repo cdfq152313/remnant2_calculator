@@ -26,11 +26,11 @@ abstract class ItemRepository<T extends Item> {
   }
 
   List<T> getAll() {
-    return _items;
+    return _items.toList();
   }
 
   List<T> getAllCustomized() {
-    return _customizeditems;
+    return _customizeditems.toList();
   }
 
   List<T> filterCustomized(String keyword) {

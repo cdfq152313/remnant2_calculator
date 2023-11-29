@@ -125,7 +125,7 @@ class ShowDefaultCheckbox extends StatelessWidget {
 }
 
 class _ItemList extends StatelessWidget {
-  const _ItemList({super.key, required this.repository, required this.title});
+  const _ItemList({required this.repository, required this.title});
 
   final String title;
   final ItemRepository repository;
@@ -178,7 +178,6 @@ class _ItemList extends StatelessWidget {
 
 class _ItemView extends StatelessWidget {
   const _ItemView({
-    super.key,
     required this.item,
   });
 
@@ -204,6 +203,14 @@ class _ItemView extends StatelessWidget {
               ...item.effects.map(
                 (e) => Text(e.displayText),
               ),
+              if (!item.isDefault) ...[
+                const Divider(),
+                MaterialButton(
+                  onPressed: () =>
+                      context.read<ItemListCubit>().removeItem(item),
+                  child: const Icon(Icons.remove),
+                )
+              ],
               const SizedBox(height: 4),
             ],
           ),
@@ -214,7 +221,7 @@ class _ItemView extends StatelessWidget {
 }
 
 class _AddItemView extends StatelessWidget {
-  const _AddItemView(this.repository, {super.key});
+  const _AddItemView(this.repository);
 
   final ItemRepository repository;
 

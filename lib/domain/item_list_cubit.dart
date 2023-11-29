@@ -31,6 +31,11 @@ class ItemListCubit<T extends Item> extends Cubit<ItemListState<T>>
     _update(keyword, value);
   }
 
+  void removeItem(T item) {
+    _itemRepository.remove(item);
+    update();
+  }
+
   void update() {
     _update(state.keyword, state.showDefault);
   }

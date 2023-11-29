@@ -42,109 +42,119 @@ class WeaponEditorDialog extends StatelessWidget {
 class _ItemEditorDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Row(
-            children: [
-              const Text('名字'),
-              SizedBox(
-                width: 200,
-                child: TextField(
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                  ),
-                  onChanged: (v) => context.read<ItemEditorCubit>().setName(v),
-                ),
-              ),
-              BlocSelector<ItemEditorCubit, ItemEditorState, bool>(
-                selector: (state) => state.nameError,
-                builder: (context, state) {
-                  return Visibility(
-                    visible: state,
-                    child: Text(
-                      '名稱不得為空',
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: Theme.of(context).colorScheme.error),
-                    ),
-                  );
-                },
-              ),
-            ],
-          ),
-          if (context.read<ItemEditorCubit>() is WeaponEditorCubit)
+    return BlocListener<ItemEditorCubit, ItemEditorState>(
+      listener: (context, state) {
+        if (state.finish) {
+          Navigator.pop(context);
+        }
+      },
+      child: Dialog(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
             Row(
               children: [
-                const Text('基礎攻擊'),
+                const Text('名字'),
                 SizedBox(
                   width: 200,
-                  child: BlocSelector<WeaponEditorCubit,
-                      ItemEditorState<Weapon>, int>(
-                    selector: (state) => state.value.damage.value,
-                    builder: (context, state) {
-                      return TextFormField(
-                        initialValue: state.toString(),
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                        ),
-                        onChanged: (v) =>
-                            context.read<WeaponEditorCubit>().setDamageValue(v),
-                      );
-                    },
+                  child: TextField(
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                    ),
+                    onChanged: (v) =>
+                        context.read<ItemEditorCubit>().setName(v),
                   ),
                 ),
-                BlocSelector<WeaponEditorCubit, ItemEditorState<Weapon>,
-                    List<DamageType>>(
-                  selector: (state) => state.value.damage.damageTypes,
+                BlocSelector<ItemEditorCubit, ItemEditorState, bool>(
+                  selector: (state) => state.nameError,
                   builder: (context, state) {
-                    return _DamageTypeCheckbox(
-                      currentDamageTypes: state,
-                      onChange: (e, v) =>
-                          context.read<WeaponEditorCubit>().setDamageType(e, v),
+                    return Visibility(
+                      visible: state,
+                      child: Text(
+                        '名稱不得為空',
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            color: Theme.of(context).colorScheme.error),
+                      ),
                     );
                   },
                 ),
               ],
             ),
-          const Divider(),
-          BlocSelector<ItemEditorCubit, ItemEditorState, List<Effect>>(
-            selector: (state) => state.value.effects,
-            builder: (context, state) {
-              return Column(
-                children: state.indexed
-                    .map(
-                      (e) => _EffectEditor(
-                        index: e.$1,
-                        effect: e.$2,
-                      ),
-                    )
-                    .toList(),
-              );
-            },
-          ),
-          MaterialButton(
-            onPressed: () => context.read<ItemEditorCubit>().addEffect(),
-            child: const Row(
+            if (context.read<ItemEditorCubit>() is WeaponEditorCubit)
+              Row(
+                children: [
+                  const Text('基礎攻擊'),
+                  SizedBox(
+                    width: 200,
+                    child: BlocSelector<WeaponEditorCubit,
+                        ItemEditorState<Weapon>, int>(
+                      selector: (state) => state.value.damage.value,
+                      builder: (context, state) {
+                        return TextFormField(
+                          initialValue: state.toString(),
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                          ),
+                          onChanged: (v) => context
+                              .read<WeaponEditorCubit>()
+                              .setDamageValue(v),
+                        );
+                      },
+                    ),
+                  ),
+                  BlocSelector<WeaponEditorCubit, ItemEditorState<Weapon>,
+                      List<DamageType>>(
+                    selector: (state) => state.value.damage.damageTypes,
+                    builder: (context, state) {
+                      return _DamageTypeCheckbox(
+                        currentDamageTypes: state,
+                        onChange: (e, v) => context
+                            .read<WeaponEditorCubit>()
+                            .setDamageType(e, v),
+                      );
+                    },
+                  ),
+                ],
+              ),
+            const Divider(),
+            BlocSelector<ItemEditorCubit, ItemEditorState, List<Effect>>(
+              selector: (state) => state.value.effects,
+              builder: (context, state) {
+                return Column(
+                  children: state.indexed
+                      .map(
+                        (e) => _EffectEditor(
+                          index: e.$1,
+                          effect: e.$2,
+                        ),
+                      )
+                      .toList(),
+                );
+              },
+            ),
+            MaterialButton(
+              onPressed: () => context.read<ItemEditorCubit>().addEffect(),
+              child: const Row(
+                children: [
+                  Icon(Icons.add),
+                  Text('新增效果'),
+                ],
+              ),
+            ),
+            Wrap(
               children: [
-                Icon(Icons.add),
-                Text('新增效果'),
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text('Cancel'),
+                ),
+                TextButton(
+                  onPressed: () => context.read<ItemEditorCubit>().save(),
+                  child: const Text('OK'),
+                ),
               ],
             ),
-          ),
-          Wrap(
-            children: [
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: const Text('Cancel'),
-              ),
-              TextButton(
-                onPressed: () => context.read<ItemEditorCubit>().save(),
-                child: const Text('OK'),
-              ),
-            ],
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -154,7 +164,6 @@ class _EffectEditor extends StatelessWidget {
   const _EffectEditor({
     required this.index,
     required this.effect,
-    super.key,
   });
 
   final int index;
@@ -208,7 +217,6 @@ class _EffectEditor extends StatelessWidget {
 
 class _DamageTypeCheckbox extends StatelessWidget {
   const _DamageTypeCheckbox({
-    super.key,
     required this.currentDamageTypes,
     required this.onChange,
   });

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:remnant2_calculator/domain/calculator.dart';
 import 'package:remnant2_calculator/domain/calculator_cubit.dart';
-import 'package:remnant2_calculator/domain/character_cubit.dart';
+import 'package:remnant2_calculator/domain/build_cubit.dart';
 import 'package:remnant2_calculator/domain/damage_type.dart';
 import 'package:remnant2_calculator/domain/item.dart';
 import 'package:remnant2_calculator/extension.dart';
@@ -16,21 +16,21 @@ import 'package:remnant2_calculator/repository/range_mutator_repository.dart';
 import 'package:remnant2_calculator/repository/relic_fragment_repository.dart';
 import 'package:remnant2_calculator/repository/ring_repository.dart';
 
-class CharacterView extends StatelessWidget {
-  const CharacterView({super.key});
+class BuildEditorView extends StatelessWidget {
+  const BuildEditorView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (_) => CharacterCubit(),
+          create: (_) => BuildCubit(),
         ),
         BlocProvider(
           create: (_) => CalculatorCubit(),
         ),
       ],
-      child: BlocListener<CharacterCubit, CharacterState>(
+      child: BlocListener<BuildCubit, BuildState>(
         listener: (BuildContext context, state) {
           context.read<CalculatorCubit>().update(state);
         },
@@ -158,8 +158,8 @@ class _ItemLayout extends StatelessWidget {
 
   final String title;
   final List<Item> items;
-  final void Function(CharacterCubit cubit, Item? item) setter;
-  final Item? Function(CharacterState state) getter;
+  final void Function(BuildCubit cubit, Item? item) setter;
+  final Item? Function(BuildState state) getter;
   final Widget itemInfo;
 
   @override
@@ -175,7 +175,7 @@ class _ItemLayout extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(4),
-              child: BlocBuilder<CharacterCubit, CharacterState>(
+              child: BlocBuilder<BuildCubit, BuildState>(
                   builder: (context, state) {
                 return DropdownButton(
                   items: [null, ...items]
@@ -187,7 +187,7 @@ class _ItemLayout extends StatelessWidget {
                       )
                       .toList(),
                   value: getter(state),
-                  onChanged: (v) => setter(context.read<CharacterCubit>(), v),
+                  onChanged: (v) => setter(context.read<BuildCubit>(), v),
                 );
               }),
             ),
@@ -213,8 +213,8 @@ class _ItemView extends StatelessWidget {
 
   final String title;
   final List<Item> items;
-  final void Function(CharacterCubit cubit, Item? item) setter;
-  final Item? Function(CharacterState state) getter;
+  final void Function(BuildCubit cubit, Item? item) setter;
+  final Item? Function(BuildState state) getter;
 
   @override
   Widget build(BuildContext context) {
@@ -223,7 +223,7 @@ class _ItemView extends StatelessWidget {
       items: items,
       getter: getter,
       setter: setter,
-      itemInfo: BlocBuilder<CharacterCubit, CharacterState>(
+      itemInfo: BlocBuilder<BuildCubit, BuildState>(
         builder: (context, state) {
           return getter(state)?.to(
                 (item) => Column(
@@ -253,8 +253,8 @@ class _WeaponView extends StatelessWidget {
 
   final String title;
   final List<Weapon> items;
-  final void Function(CharacterCubit cubit, Weapon? item) weaponSetter;
-  final Weapon? Function(CharacterState state) weaponGetter;
+  final void Function(BuildCubit cubit, Weapon? item) weaponSetter;
+  final Weapon? Function(BuildState state) weaponGetter;
   final Calculation? Function(CalculatorState state) calculationGetter;
 
   @override
@@ -266,9 +266,9 @@ class _WeaponView extends StatelessWidget {
       setter: (c, i) => weaponSetter(c, i as Weapon),
       itemInfo: Builder(
         builder: (context) {
-          final characterState = context.watch<CharacterCubit>().state;
+          final buildState = context.watch<BuildCubit>().state;
           final calculatorState = context.watch<CalculatorCubit>().state;
-          return weaponGetter(characterState).to(
+          return weaponGetter(buildState).to(
                 (item) {
                   final calculation = calculationGetter(calculatorState);
                   return Column(

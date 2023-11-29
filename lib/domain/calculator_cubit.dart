@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
+import 'package:remnant2_calculator/domain/build_cubit.dart';
 import 'package:remnant2_calculator/domain/calculator.dart';
-import 'package:remnant2_calculator/domain/character_cubit.dart';
 import 'package:remnant2_calculator/domain/effect.dart';
 import 'package:remnant2_calculator/extension.dart';
 
@@ -8,48 +8,48 @@ class CalculatorCubit extends Cubit<CalculatorState> {
   CalculatorCubit() : super(CalculatorState());
   final calculator = Calculator();
 
-  void update(CharacterState character) {
+  void update(BuildState build) {
     final regularEffects = <Effect>[
-      ...character.primaryArchetype?.effects ?? [],
-      ...character.secondaryArchetype?.effects ?? [],
-      ...character.amulet?.effects ?? [],
-      for (final ring in character.rings) ...ring?.effects ?? [],
-      for (final relicFragment in character.relicFragments)
+      ...build.primaryArchetype?.effects ?? [],
+      ...build.secondaryArchetype?.effects ?? [],
+      ...build.amulet?.effects ?? [],
+      for (final ring in build.rings) ...ring?.effects ?? [],
+      for (final relicFragment in build.relicFragments)
         ...relicFragment?.effects ?? [],
-      for (final modifier in character.regularModifiers) ...modifier.effects,
+      for (final modifier in build.regularModifiers) ...modifier.effects,
     ];
     final longGunEffects = <Effect>[
-      ...character.longGun?.effects ?? [],
-      ...character.longGunMutator?.effects ?? [],
-      for (final modifier in character.longGunModifiers) ...modifier.effects,
+      ...build.longGun?.effects ?? [],
+      ...build.longGunMutator?.effects ?? [],
+      for (final modifier in build.longGunModifiers) ...modifier.effects,
       ...regularEffects,
     ];
     final handGunEffects = <Effect>[
-      ...character.handGun?.effects ?? [],
-      ...character.handGunMutator?.effects ?? [],
-      for (final modifier in character.handGunModifiers) ...modifier.effects,
+      ...build.handGun?.effects ?? [],
+      ...build.handGunMutator?.effects ?? [],
+      for (final modifier in build.handGunModifiers) ...modifier.effects,
       ...regularEffects,
     ];
     final meleeEffects = <Effect>[
-      ...character.melee?.effects ?? [],
-      ...character.meleeMutator?.effects ?? [],
-      for (final modifier in character.meleeModifiers) ...modifier.effects,
+      ...build.melee?.effects ?? [],
+      ...build.meleeMutator?.effects ?? [],
+      for (final modifier in build.meleeModifiers) ...modifier.effects,
       ...regularEffects,
     ];
     final result = CalculatorState(
-      longGun: character.longGun.to(
+      longGun: build.longGun.to(
         (weapon) => calculator.calculate(weapon.damage, longGunEffects),
       ),
-      longGunMod: character.longGunMod.to(
+      longGunMod: build.longGunMod.to(
         (weapon) => calculator.calculate(weapon.damage, longGunEffects),
       ),
-      handGun: character.handGun.to(
+      handGun: build.handGun.to(
         (weapon) => calculator.calculate(weapon.damage, handGunEffects),
       ),
-      handGunMod: character.handGunMod.to(
+      handGunMod: build.handGunMod.to(
         (weapon) => calculator.calculate(weapon.damage, handGunEffects),
       ),
-      melee: character.melee.to(
+      melee: build.melee.to(
         (weapon) => calculator.calculate(weapon.damage, meleeEffects),
       ),
     );

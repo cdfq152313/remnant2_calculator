@@ -10,7 +10,7 @@ import 'package:remnant2_calculator/repository/modifier_repository.dart';
 import 'package:remnant2_calculator/repository/range_mutator_repository.dart';
 import 'package:remnant2_calculator/repository/relic_fragment_repository.dart';
 import 'package:remnant2_calculator/repository/ring_repository.dart';
-import 'package:remnant2_calculator/view/character_view.dart';
+import 'package:remnant2_calculator/view/build_editor_view.dart';
 import 'package:remnant2_calculator/view/item_collection_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -64,7 +64,7 @@ class MyApp extends StatelessWidget {
             ),
             body: const TabBarView(
               children: [
-                CharacterView(),
+                BuildEditorView(),
                 ItemCollectionView(),
               ],
             ),

@@ -1,7 +1,7 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:remnant2_calculator/data/item.dart';
 import 'package:remnant2_calculator/domain/calculator_cubit.dart';
-import 'package:remnant2_calculator/domain/character_cubit.dart';
+import 'package:remnant2_calculator/domain/build_cubit.dart';
 import 'package:remnant2_calculator/domain/item.dart';
 import 'package:test/test.dart';
 
@@ -12,7 +12,7 @@ void main() {
   blocTest(
     'default long gun calculation',
     build: () => cubit,
-    act: (cubit) => cubit.update(CharacterState(
+    act: (cubit) => cubit.update(BuildState(
       primaryArchetype: itemMap['獵人'],
       secondaryArchetype: itemMap['槍手'],
       longGun: itemMap['日暮'] as Weapon,

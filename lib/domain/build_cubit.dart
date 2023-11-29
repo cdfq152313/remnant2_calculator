@@ -3,11 +3,11 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:remnant2_calculator/domain/item.dart';
 import 'package:remnant2_calculator/extension.dart';
 
-part 'character_cubit.freezed.dart';
-part 'character_cubit.g.dart';
+part 'build_cubit.freezed.dart';
+part 'build_cubit.g.dart';
 
-class CharacterCubit extends Cubit<CharacterState> {
-  CharacterCubit({CharacterState? state}) : super(state ?? CharacterState());
+class BuildCubit extends Cubit<BuildState> {
+  BuildCubit({BuildState? state}) : super(state ?? BuildState());
 
   void setPrimaryArchetype(Item? item) {
     emit(
@@ -160,8 +160,8 @@ class CharacterCubit extends Cubit<CharacterState> {
 }
 
 @freezed
-class CharacterState with _$CharacterState {
-  factory CharacterState({
+class BuildState with _$BuildState {
+  factory BuildState({
     Item? primaryArchetype,
     Item? secondaryArchetype,
     Weapon? longGun,
@@ -179,8 +179,8 @@ class CharacterState with _$CharacterState {
     @Default([null, null, null, null]) List<Item?> rings,
     @Default([null, null, null]) List<Item?> relicFragments,
     @Default([]) List<Item> regularModifiers,
-  }) = _CharacterState;
+  }) = _BuildState;
 
-  factory CharacterState.fromJson(Map<String, dynamic> json) =>
-      _$CharacterStateFromJson(json);
+  factory BuildState.fromJson(Map<String, dynamic> json) =>
+      _$BuildStateFromJson(json);
 }

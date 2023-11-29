@@ -22,7 +22,7 @@ void main() async {
       build: () => RegularItemEditorCubit(repository),
       act: (cubit) => cubit.setName('hello'),
       expect: () => [
-        const Item(name: 'hello'),
+        const ItemEditorState(Item(name: 'hello')),
       ],
     );
 
@@ -31,7 +31,7 @@ void main() async {
       build: () => RegularItemEditorCubit(repository),
       act: (cubit) => cubit.addEffect(),
       expect: () => [
-        const Item(name: '', effects: [DamageIncrease(0)]),
+        const ItemEditorState(Item(name: '', effects: [DamageIncrease(0)])),
       ],
     );
 
@@ -44,7 +44,7 @@ void main() async {
       },
       skip: 1,
       expect: () => [
-        const Item(name: '', effects: []),
+        const ItemEditorState(Item(name: '', effects: [])),
       ],
     );
 
@@ -57,9 +57,9 @@ void main() async {
       },
       skip: 1,
       expect: () => [
-        const Item(name: '', effects: [
+        const ItemEditorState(Item(name: '', effects: [
           DamageIncrease(100),
-        ]),
+        ])),
       ],
     );
 
@@ -73,9 +73,12 @@ void main() async {
       },
       skip: 2,
       expect: () => [
-        const Item(name: '', effects: [
-          WeakSpotDamage(33),
-        ]),
+        const ItemEditorState(Item(
+          name: '',
+          effects: [
+            WeakSpotDamage(33),
+          ],
+        )),
       ],
     );
 
@@ -88,7 +91,7 @@ void main() async {
       },
       skip: 1,
       expect: () => [
-        const Item(
+        const ItemEditorState(Item(
           name: '',
           effects: [
             DamageIncrease(0, damageTypes: [
@@ -98,26 +101,40 @@ void main() async {
               DamageType.status
             ]),
           ],
-        ),
+        )),
       ],
     );
 
     blocTest(
       'Item save successfully',
       build: () => RegularItemEditorCubit(repository),
-      act: (cubit) => cubit.setName('hello'),
-      verify: (cubit) {
-        expect(cubit.save(), equals(true));
+      act: (cubit) {
+        cubit.setName('hello');
+        cubit.save();
       },
+      skip: 1,
+      expect: () => [
+        const ItemEditorState<Item>(
+          Item(name: 'hello'),
+          finish: true,
+        ),
+      ],
     );
 
     blocTest(
       'Item name cannot be empty',
       build: () => RegularItemEditorCubit(repository),
-      act: (cubit) => cubit.setName('   '),
-      verify: (cubit) {
-        expect(cubit.save(), equals(false));
+      act: (cubit) {
+        cubit.setName('   ');
+        cubit.save();
       },
+      skip: 1,
+      expect: () => [
+        const ItemEditorState<Item>(
+          Item(name: '   '),
+          nameError: true,
+        ),
+      ],
     );
   });
 }

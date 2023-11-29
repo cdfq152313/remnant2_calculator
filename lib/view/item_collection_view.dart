@@ -25,9 +25,18 @@ class ItemCollectionView extends StatelessWidget {
       child: ListView(
         children: [
           const ShowDefaultCheckbox(),
-          _ItemList(repository: context.read<LongGunRepository>(), title: '長槍'),
-          _ItemList(repository: context.read<HandGunRepository>(), title: '手槍'),
-          _ItemList(repository: context.read<MeleeRepository>(), title: '近戰'),
+          _ItemList(
+            repository: context.read<LongGunRepository>(),
+            title: '長槍',
+          ),
+          _ItemList(
+            repository: context.read<HandGunRepository>(),
+            title: '手槍',
+          ),
+          _ItemList(
+            repository: context.read<MeleeRepository>(),
+            title: '近戰',
+          ),
           _ItemList(
             repository: context.read<RangeMutatorRepository>(),
             title: '遠程突變因子',
@@ -189,7 +198,7 @@ class _ItemView extends StatelessWidget {
               const Divider(),
               if (item is Weapon) ...[
                 Text('適用增傷 ${(item as Weapon).damage.damageTypes.displayText}'),
-                Text('基礎傷害 ${(item as Weapon).damage.value}'),
+                Text('基礎攻擊 ${(item as Weapon).damage.value}'),
               ],
               ...item.effects.map(
                 (e) => Text(e.displayText),
@@ -217,7 +226,11 @@ class _AddItemView extends StatelessWidget {
         child: MaterialButton(
           onPressed: () => showDialog(
             context: context,
-            builder: (_) => ItemEditorDialog(repository),
+            builder: (_) => switch (repository) {
+              ItemRepository<Weapon>() =>
+                WeaponEditorDialog(repository as ItemRepository<Weapon>),
+              _ => ItemEditorDialog(repository),
+            },
           ),
           child: const Icon(Icons.add),
         ),

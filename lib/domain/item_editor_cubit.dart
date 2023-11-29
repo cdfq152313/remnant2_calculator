@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:remnant2_calculator/domain/base_damage.dart';
+import 'package:remnant2_calculator/domain/damage_type.dart';
 import 'package:remnant2_calculator/domain/effect.dart';
 import 'package:remnant2_calculator/domain/item.dart';
 import 'package:remnant2_calculator/extension.dart';
@@ -15,22 +16,12 @@ abstract class ItemEditorCubit<T extends Item>
 
   final ItemRepository<Item> _repository;
 
-  final availableEffects = [
-    const DamageIncrease(0),
-    const CriticalChance(0),
-    const CriticalDamage(0),
-    const WeakSpotDamage(0),
-  ];
-
   void setName(String name) {
     emit(ItemEditorState(state.value.copyWith(name: name) as T));
   }
 
-  void editEffectType(int index, Effect effectType) {
-    final effect = effectType.copyWith(
-      value: state.value.effects[index].value,
-      damageTypes: state.value.effects[index].damageTypes,
-    );
+  void editEffectType(int index, EffectType effectType) {
+    final effect = state.value.effects[index].copyWith(type: effectType);
     emit(ItemEditorState(state.value.copyWith(
         effects: state.value.effects.copyWithReplace(index, effect)) as T));
   }
@@ -55,7 +46,12 @@ abstract class ItemEditorCubit<T extends Item>
   void addEffect() {
     emit(
       ItemEditorState(state.value.copyWith(
-        effects: state.value.effects.copyWithAppend(const DamageIncrease(0)),
+        effects: state.value.effects.copyWithAppend(
+          const Effect(
+            type: EffectType.damageIncrease,
+            value: 0,
+          ),
+        ),
       ) as T),
     );
   }

@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:remnant2_calculator/domain/effect.dart';
+import 'package:remnant2_calculator/domain/damage_type.dart';
 
 part 'base_damage.freezed.dart';
 part 'base_damage.g.dart';

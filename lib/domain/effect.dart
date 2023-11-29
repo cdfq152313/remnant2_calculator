@@ -1,54 +1,75 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:remnant2_calculator/domain/damage_type.dart';
 
 part 'effect.freezed.dart';
 
 part 'effect.g.dart';
 
-enum DamageType { range, melee, mod, elemental, status }
+enum EffectType {
+  damageIncrease,
+  criticalChance,
+  criticalDamage,
+  weakSpotDamage,
+}
 
-extension DamageTypeExtension on DamageType {
+extension EffectTypeExtension on EffectType {
   String get displayText => switch (this) {
-        DamageType.range => '遠端',
-        DamageType.melee => '近戰',
-        DamageType.mod => '改裝',
-        DamageType.elemental => '元素',
-        DamageType.status => '狀態',
+        EffectType.damageIncrease => '傷害',
+        EffectType.criticalChance => '暴擊率',
+        EffectType.criticalDamage => '暴擊傷害',
+        EffectType.weakSpotDamage => '弱點傷害',
       };
 }
 
-extension DamageTypeListExtension on List<DamageType> {
-  String get displayText => isEmpty ? '無' : map((e) => e.displayText).join('/');
-}
-
-mixin _EffectField {
-  int get value;
-
-  List<DamageType> get damageTypes;
-}
-
 @freezed
-sealed class Effect with _$Effect, _EffectField {
+class Effect with _$Effect {
   const Effect._();
 
-  const factory Effect.damageIncrease(
-    int value, {
+  const factory Effect({
+    required EffectType type,
+    required int value,
     @Default(DamageType.values) List<DamageType> damageTypes,
-  }) = DamageIncrease;
+  }) = _Effect;
 
-  const factory Effect.criticalChance(
+  factory Effect.damageIncrease(
     int value, {
-    @Default(DamageType.values) List<DamageType> damageTypes,
-  }) = CriticalChance;
+    List<DamageType> damageTypes = DamageType.values,
+  }) =>
+      _Effect(
+        type: EffectType.damageIncrease,
+        damageTypes: damageTypes,
+        value: value,
+      );
 
-  const factory Effect.criticalDamage(
+  factory Effect.criticalChance(
     int value, {
-    @Default(DamageType.values) List<DamageType> damageTypes,
-  }) = CriticalDamage;
+    List<DamageType> damageTypes = DamageType.values,
+  }) =>
+      _Effect(
+        type: EffectType.criticalChance,
+        damageTypes: damageTypes,
+        value: value,
+      );
 
-  const factory Effect.weakSpotDamage(
+  factory Effect.criticalDamage(
     int value, {
-    @Default(DamageType.values) List<DamageType> damageTypes,
-  }) = WeakSpotDamage;
+    List<DamageType> damageTypes = DamageType.values,
+  }) =>
+      _Effect(
+        type: EffectType.criticalDamage,
+        damageTypes: damageTypes,
+        value: value,
+      );
+
+  factory Effect.weakSpotDamage(
+    int value, {
+    List<DamageType> damageTypes = DamageType.values,
+  }) =>
+      _Effect(
+        type: EffectType.weakSpotDamage,
+        damageTypes: damageTypes,
+        value: value,
+      );
 
   factory Effect.fromJson(Map<String, dynamic> json) => _$EffectFromJson(json);
 
@@ -56,19 +77,5 @@ sealed class Effect with _$Effect, _EffectField {
       ? '全部'
       : damageTypes.displayText;
 
-  String get effectName => switch (this) {
-        DamageIncrease() => '傷害',
-        CriticalChance() => '暴擊率',
-        CriticalDamage() => '暴擊傷害',
-        WeakSpotDamage() => '弱點傷害',
-      };
-
-  Type get caseType => switch (this) {
-        DamageIncrease() => DamageIncrease,
-        CriticalChance() => CriticalChance,
-        CriticalDamage() => CriticalDamage,
-        WeakSpotDamage() => WeakSpotDamage,
-      };
-
-  String get displayText => '$_damageTypeText$effectName $value%';
+  String get displayText => '$_damageTypeText${type.displayText} $value%';
 }

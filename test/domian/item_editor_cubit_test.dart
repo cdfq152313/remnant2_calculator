@@ -1,4 +1,5 @@
 import 'package:bloc_test/bloc_test.dart';
+import 'package:remnant2_calculator/domain/damage_type.dart';
 import 'package:remnant2_calculator/domain/effect.dart';
 import 'package:remnant2_calculator/domain/item.dart';
 import 'package:remnant2_calculator/domain/item_editor_cubit.dart';
@@ -31,7 +32,11 @@ void main() async {
       build: () => RegularItemEditorCubit(repository),
       act: (cubit) => cubit.addEffect(),
       expect: () => [
-        const ItemEditorState(Item(name: '', effects: [DamageIncrease(0)])),
+        ItemEditorState(
+          Item(name: '', effects: [
+            Effect.damageIncrease(0),
+          ]),
+        ),
       ],
     );
 
@@ -57,8 +62,8 @@ void main() async {
       },
       skip: 1,
       expect: () => [
-        const ItemEditorState(Item(name: '', effects: [
-          DamageIncrease(100),
+        ItemEditorState(Item(name: '', effects: [
+          Effect.damageIncrease(100),
         ])),
       ],
     );
@@ -69,14 +74,14 @@ void main() async {
       act: (cubit) {
         cubit.addEffect();
         cubit.editEffectValue(0, '33');
-        cubit.editEffectType(0, const WeakSpotDamage(0));
+        cubit.editEffectType(0, EffectType.weakSpotDamage);
       },
       skip: 2,
       expect: () => [
-        const ItemEditorState(Item(
+        ItemEditorState(Item(
           name: '',
           effects: [
-            WeakSpotDamage(33),
+            Effect.weakSpotDamage(33),
           ],
         )),
       ],
@@ -91,10 +96,10 @@ void main() async {
       },
       skip: 1,
       expect: () => [
-        const ItemEditorState(Item(
+        ItemEditorState(Item(
           name: '',
           effects: [
-            DamageIncrease(0, damageTypes: [
+            Effect.damageIncrease(0, damageTypes: [
               DamageType.melee,
               DamageType.mod,
               DamageType.elemental,

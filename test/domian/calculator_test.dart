@@ -1,5 +1,6 @@
 import 'package:remnant2_calculator/domain/base_damage.dart';
 import 'package:remnant2_calculator/domain/calculator.dart';
+import 'package:remnant2_calculator/domain/damage_type.dart';
 import 'package:remnant2_calculator/domain/effect.dart';
 import 'package:test/test.dart';
 
@@ -8,35 +9,35 @@ void main() {
   test('sum effect', () {
     final result = calculator.mergeEffect(
       [
-        const CriticalDamage(100),
-        const CriticalDamage(50),
-        const CriticalDamage(30),
+        Effect.criticalDamage(100),
+        Effect.criticalDamage(50),
+        Effect.criticalDamage(30),
       ],
       DamageType.values,
     );
-    expect(result[CriticalDamage], equals(180));
+    expect(result[EffectType.criticalDamage], equals(180));
   });
 
   test('critical chance cannot exceed 100', () {
     final result = calculator.mergeEffect(
       [
-        const CriticalChance(40),
-        const CriticalChance(30),
-        const CriticalChance(40),
+        Effect.criticalChance(40),
+        Effect.criticalChance(30),
+        Effect.criticalChance(40),
       ],
       DamageType.values,
     );
-    expect(result[CriticalChance], equals(100));
+    expect(result[EffectType.criticalChance], equals(100));
   });
 
   test('All Damage', () {
     final result = calculator.calculate(
       const BaseDamage(100, DamageType.values),
       [
-        const DamageIncrease(0),
-        const CriticalChance(50),
-        const CriticalDamage(50),
-        const WeakSpotDamage(100),
+        Effect.damageIncrease(0),
+        Effect.criticalChance(50),
+        Effect.criticalDamage(50),
+        Effect.weakSpotDamage(100),
       ],
     );
     expect(result.baseDamage, equals(100));

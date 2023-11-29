@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
         RepositoryProvider(create: (_) => RingRepository(prefs)),
       ],
       child: MaterialApp(
-        title: 'Flutter Demo',
+        title: '遺蹟2傷害計算機',
         theme: ThemeData(
           typography: Typography.material2021(),
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),

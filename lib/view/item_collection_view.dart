@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:remnant2_calculator/domain/effect.dart';
+import 'package:remnant2_calculator/domain/damage_type.dart';
 import 'package:remnant2_calculator/domain/item.dart';
 import 'package:remnant2_calculator/domain/item_list_cubit.dart';
 import 'package:remnant2_calculator/repository/amulet_repository.dart';

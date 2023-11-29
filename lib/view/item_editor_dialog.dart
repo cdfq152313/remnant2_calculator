@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:remnant2_calculator/domain/base_damage.dart';
+import 'package:remnant2_calculator/domain/damage_type.dart';
 import 'package:remnant2_calculator/domain/effect.dart';
 import 'package:remnant2_calculator/domain/item.dart';
 import 'package:remnant2_calculator/domain/item_editor_cubit.dart';
@@ -189,21 +190,15 @@ class _EffectEditor extends StatelessWidget {
               margin: const EdgeInsets.only(left: 8),
               width: 100,
               child: DropdownButton(
-                items: context
-                    .read<ItemEditorCubit>()
-                    .availableEffects
+                items: EffectType.values
                     .map(
                       (e) => DropdownMenuItem(
                         value: e,
-                        child: Text(e.effectName),
+                        child: Text(e.displayText),
                       ),
                     )
                     .toList(),
-                value: context
-                    .read<ItemEditorCubit>()
-                    .availableEffects
-                    .firstWhere(
-                        (element) => element.caseType == effect.caseType),
+                value: effect.type,
                 onChanged: (v) =>
                     context.read<ItemEditorCubit>().editEffectType(index, v!),
               ),

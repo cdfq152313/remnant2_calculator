@@ -18,11 +18,21 @@ import 'package:remnant2_calculator/repository/range_mutator_repository.dart';
 import 'package:remnant2_calculator/repository/relic_fragment_repository.dart';
 import 'package:remnant2_calculator/repository/ring_repository.dart';
 
-class BuildEditorView extends StatelessWidget {
+class BuildEditorView extends StatefulWidget {
   const BuildEditorView({super.key});
 
   @override
+  State<BuildEditorView> createState() => _BuildEditorViewState();
+}
+
+class _BuildEditorViewState extends State<BuildEditorView>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -185,7 +195,6 @@ class _ItemLayout extends StatelessWidget {
     required this.getter,
     required this.setter,
     required this.itemInfo,
-    super.key,
   });
 
   final String title;
@@ -240,7 +249,6 @@ class _ItemView extends StatelessWidget {
     required this.items,
     required this.getter,
     required this.setter,
-    super.key,
   });
 
   final String title;
@@ -275,7 +283,6 @@ class _ItemView extends StatelessWidget {
 
 class _WeaponView extends StatelessWidget {
   const _WeaponView({
-    super.key,
     required this.title,
     required this.items,
     required this.weaponSetter,
@@ -330,7 +337,7 @@ class _WeaponView extends StatelessWidget {
 }
 
 class _BlockLayout extends StatelessWidget {
-  const _BlockLayout({super.key, required this.title, required this.children});
+  const _BlockLayout({required this.title, required this.children});
 
   final String title;
   final List<Widget> children;

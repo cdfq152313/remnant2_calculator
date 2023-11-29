@@ -230,7 +230,6 @@ class _EffectEditor extends StatelessWidget {
 
 class _NumAndCheckboxField extends StatelessWidget {
   const _NumAndCheckboxField({
-    super.key,
     required this.initialValue,
     required this.currentDamageTypes,
     required this.onValueChange,

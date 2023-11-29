@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:remnant2_calculator/domain/build_cubit.dart';
+import 'package:remnant2_calculator/domain/build_record_cubit.dart';
 import 'package:remnant2_calculator/domain/calculator.dart';
 import 'package:remnant2_calculator/domain/calculator_cubit.dart';
-import 'package:remnant2_calculator/domain/build_cubit.dart';
 import 'package:remnant2_calculator/domain/damage_type.dart';
 import 'package:remnant2_calculator/domain/item.dart';
+import 'package:remnant2_calculator/domain/select_build_cubit.dart';
 import 'package:remnant2_calculator/extension.dart';
 import 'package:remnant2_calculator/repository/amulet_repository.dart';
 import 'package:remnant2_calculator/repository/archetype_repository.dart';
@@ -30,10 +32,21 @@ class BuildEditorView extends StatelessWidget {
           create: (_) => CalculatorCubit(),
         ),
       ],
-      child: BlocListener<BuildCubit, BuildState>(
-        listener: (BuildContext context, state) {
-          context.read<CalculatorCubit>().update(state);
-        },
+      child: MultiBlocListener(
+        listeners: [
+          BlocListener<SelectBuildCubit, BuildState?>(
+            listener: (BuildContext context, state) {
+              if (state != null) {
+                context.read<BuildCubit>().setState(state);
+              }
+            },
+          ),
+          BlocListener<BuildCubit, BuildState>(
+            listener: (BuildContext context, state) {
+              context.read<CalculatorCubit>().update(state);
+            },
+          ),
+        ],
         child: const _CharacterView(),
       ),
     );
@@ -47,6 +60,25 @@ class _CharacterView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       children: [
+        TextButton(
+          child: const Row(
+            children: [
+              Padding(
+                padding: EdgeInsets.all(4),
+                child: Icon(Icons.save),
+              ),
+              Text('保存套裝'),
+            ],
+          ),
+          onPressed: () {
+            context
+                .read<BuildRecordCubit>()
+                .add(context.read<BuildCubit>().state);
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('存檔成功')),
+            );
+          },
+        ),
         _BlockLayout(
           title: '武器',
           children: [
@@ -263,7 +295,7 @@ class _WeaponView extends StatelessWidget {
       title: title,
       items: items,
       getter: weaponGetter,
-      setter: (c, i) => weaponSetter(c, i as Weapon),
+      setter: (c, i) => weaponSetter(c, i as Weapon?),
       itemInfo: Builder(
         builder: (context) {
           final buildState = context.watch<BuildCubit>().state;

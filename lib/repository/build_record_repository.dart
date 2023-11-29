@@ -1,4 +1,3 @@
-import 'package:remnant2_calculator/domain/build_cubit.dart';
 import 'package:remnant2_calculator/domain/build_record_cubit.dart';
 import 'package:remnant2_calculator/repository/repository.dart';
 
@@ -8,10 +7,11 @@ class BuildRecordRepository extends Repository<BuildRecordState> {
   }
 
   @override
-  final String key = 'Character';
+  final String key = 'Build';
 
   @override
-  BuildRecordState fromJson(Map<String, dynamic> json) => BuildRecordState.fromJson(json);
+  BuildRecordState fromJson(Map<String, dynamic> json) =>
+      BuildRecordState.fromJson(json);
 
   List<BuildRecordState> _items = [];
 

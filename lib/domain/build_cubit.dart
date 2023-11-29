@@ -4,6 +4,7 @@ import 'package:remnant2_calculator/domain/item.dart';
 import 'package:remnant2_calculator/extension.dart';
 
 part 'build_cubit.freezed.dart';
+
 part 'build_cubit.g.dart';
 
 class BuildCubit extends Cubit<BuildState> {
@@ -156,6 +157,10 @@ class BuildCubit extends Cubit<BuildState> {
       state.copyWith(
           meleeModifiers: state.meleeModifiers.copyWithRemoveAt(index)),
     );
+  }
+
+  void setState(BuildState value) {
+    emit(value);
   }
 }
 

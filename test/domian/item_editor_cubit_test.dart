@@ -40,7 +40,7 @@ void main() async {
       build: () => RegularItemEditorCubit(repository),
       act: (cubit) {
         cubit.addEffect();
-        cubit.removeEffect(const DamageIncrease(0));
+        cubit.removeEffectAt(0);
       },
       skip: 1,
       expect: () => [

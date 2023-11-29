@@ -60,10 +60,10 @@ abstract class ItemEditorCubit<T extends Item>
     );
   }
 
-  void removeEffect(Effect effect) {
+  void removeEffectAt(int index) {
     emit(
       ItemEditorState(state.value
-          .copyWith(effects: state.value.effects.copyWithRemove(effect)) as T),
+          .copyWith(effects: state.value.effects.copyWithRemoveAt(index)) as T),
     );
   }
 

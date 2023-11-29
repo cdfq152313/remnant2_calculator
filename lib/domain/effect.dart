@@ -17,7 +17,7 @@ extension DamageTypeExtension on DamageType {
 }
 
 extension DamageTypeListExtension on List<DamageType> {
-  String get displayText => map((e) => e.displayText).join('/');
+  String get displayText => isEmpty ? '無' : map((e) => e.displayText).join('/');
 }
 
 mixin _EffectField {

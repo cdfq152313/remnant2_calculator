@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:remnant2_calculator/domain/base_damage.dart';
 import 'package:remnant2_calculator/domain/effect.dart';
 import 'package:remnant2_calculator/domain/item.dart';
 import 'package:remnant2_calculator/domain/item_editor_cubit.dart';
@@ -51,10 +52,22 @@ class _ItemEditorDialog extends StatelessWidget {
       child: Dialog(
         child: Column(
           mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                '新增物品',
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+            ),
             Row(
               children: [
-                const Text('名字'),
+                Container(
+                  width: 100,
+                  margin: const EdgeInsets.only(left: 8),
+                  child: const Text('名字'),
+                ),
                 SizedBox(
                   width: 200,
                   child: TextField(
@@ -80,35 +93,25 @@ class _ItemEditorDialog extends StatelessWidget {
                 ),
               ],
             ),
+            const Divider(),
             if (context.read<ItemEditorCubit>() is WeaponEditorCubit)
               Row(
                 children: [
-                  const Text('基礎攻擊'),
-                  SizedBox(
-                    width: 200,
-                    child: BlocSelector<WeaponEditorCubit,
-                        ItemEditorState<Weapon>, int>(
-                      selector: (state) => state.value.damage.value,
-                      builder: (context, state) {
-                        return TextFormField(
-                          initialValue: state.toString(),
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                          ),
-                          onChanged: (v) => context
-                              .read<WeaponEditorCubit>()
-                              .setDamageValue(v),
-                        );
-                      },
-                    ),
+                  Container(
+                    width: 100,
+                    margin: const EdgeInsets.only(left: 8),
+                    child: const Text('基礎攻擊'),
                   ),
                   BlocSelector<WeaponEditorCubit, ItemEditorState<Weapon>,
-                      List<DamageType>>(
-                    selector: (state) => state.value.damage.damageTypes,
+                      BaseDamage>(
+                    selector: (state) => state.value.damage,
                     builder: (context, state) {
-                      return _DamageTypeCheckbox(
-                        currentDamageTypes: state,
-                        onChange: (e, v) => context
+                      return _NumAndCheckboxField(
+                        initialValue: state.value.toString(),
+                        currentDamageTypes: state.damageTypes,
+                        onValueChange: (v) =>
+                            context.read<WeaponEditorCubit>().setDamageValue(v),
+                        onDamageTypeChange: (e, v) => context
                             .read<WeaponEditorCubit>()
                             .setDamageType(e, v),
                       );
@@ -141,17 +144,24 @@ class _ItemEditorDialog extends StatelessWidget {
                 ],
               ),
             ),
-            Wrap(
-              children: [
-                TextButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: const Text('Cancel'),
-                ),
-                TextButton(
-                  onPressed: () => context.read<ItemEditorCubit>().save(),
-                  child: const Text('OK'),
-                ),
-              ],
+            SizedBox(
+              height: 40,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: const Text('取消'),
+                    ),
+                  ),
+                  Expanded(
+                    child: TextButton(
+                      onPressed: () => context.read<ItemEditorCubit>().save(),
+                      child: const Text('OK'),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
@@ -171,46 +181,96 @@ class _EffectEditor extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Column(
       children: [
-        DropdownButton(
-          items: context
-              .read<ItemEditorCubit>()
-              .availableEffects
-              .map(
-                (e) => DropdownMenuItem(
-                  value: e,
-                  child: Text(e.effectName),
-                ),
-              )
-              .toList(),
-          value: context
-              .read<ItemEditorCubit>()
-              .availableEffects
-              .firstWhere((element) => element.caseType == effect.caseType),
-          onChanged: (v) =>
-              context.read<ItemEditorCubit>().editEffectType(index, v!),
+        Row(
+          children: [
+            Container(
+              margin: const EdgeInsets.only(left: 8),
+              width: 100,
+              child: DropdownButton(
+                items: context
+                    .read<ItemEditorCubit>()
+                    .availableEffects
+                    .map(
+                      (e) => DropdownMenuItem(
+                        value: e,
+                        child: Text(e.effectName),
+                      ),
+                    )
+                    .toList(),
+                value: context
+                    .read<ItemEditorCubit>()
+                    .availableEffects
+                    .firstWhere(
+                        (element) => element.caseType == effect.caseType),
+                onChanged: (v) =>
+                    context.read<ItemEditorCubit>().editEffectType(index, v!),
+              ),
+            ),
+            _NumAndCheckboxField(
+              initialValue: effect.value.toString(),
+              currentDamageTypes: effect.damageTypes,
+              onValueChange: (v) =>
+                  context.read<ItemEditorCubit>().editEffectValue(index, v),
+              onDamageTypeChange: (e, v) => context
+                  .read<ItemEditorCubit>()
+                  .editEffectDamageType(index, e, v),
+            ),
+            SizedBox(
+              height: 80,
+              child: MaterialButton(
+                onPressed: () =>
+                    context.read<ItemEditorCubit>().removeEffectAt(index),
+                child: const Icon(Icons.delete),
+              ),
+            ),
+          ],
         ),
-        SizedBox(
-          width: 200,
-          child: TextFormField(
-            initialValue: effect.value.toString(),
-            inputFormatters: [
-              FilteringTextInputFormatter.allow(RegExp(r'^-?\d*$')),
-            ],
-            decoration: const InputDecoration(border: OutlineInputBorder()),
-            keyboardType: const TextInputType.numberWithOptions(
-                signed: true, decimal: false),
-            onChanged: (v) =>
-                context.read<ItemEditorCubit>().editEffectValue(index, v),
-          ),
-        ),
-        _DamageTypeCheckbox(
-          currentDamageTypes: effect.damageTypes,
-          onChange: (e, v) =>
-              context.read<ItemEditorCubit>().editEffectDamageType(index, e, v),
-        ),
+        const Divider(),
       ],
+    );
+  }
+}
+
+class _NumAndCheckboxField extends StatelessWidget {
+  const _NumAndCheckboxField({
+    super.key,
+    required this.initialValue,
+    required this.currentDamageTypes,
+    required this.onValueChange,
+    required this.onDamageTypeChange,
+  });
+
+  final String initialValue;
+  final List<DamageType> currentDamageTypes;
+  final void Function(String value) onValueChange;
+  final void Function(DamageType damageType, bool v) onDamageTypeChange;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            width: 200,
+            child: TextFormField(
+                initialValue: initialValue,
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp(r'^-?\d*$')),
+                ],
+                decoration: const InputDecoration(border: OutlineInputBorder()),
+                keyboardType: const TextInputType.numberWithOptions(
+                    signed: true, decimal: false),
+                onChanged: onValueChange),
+          ),
+          _DamageTypeCheckbox(
+            currentDamageTypes: currentDamageTypes,
+            onChange: onDamageTypeChange,
+          )
+        ],
+      ),
     );
   }
 }
@@ -226,18 +286,20 @@ class _DamageTypeCheckbox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Wrap(
+      crossAxisAlignment: WrapCrossAlignment.center,
       children: [
         const Text('適用增傷: '),
         ...DamageType.values
             .map(
               (e) => Row(
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(e.displayText),
                   Checkbox(
                     value: currentDamageTypes.contains(e),
                     onChanged: (v) => onChange(e, v!),
                   ),
+                  Text(e.displayText),
                 ],
               ),
             )

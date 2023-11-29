@@ -58,10 +58,11 @@ class _ItemEditorDialog extends StatelessWidget {
                   onChanged: (v) => context.read<ItemEditorCubit>().setName(v),
                 ),
               ),
-              BlocBuilder<ItemEditorCubit, ItemEditorState>(
+              BlocSelector<ItemEditorCubit, ItemEditorState, bool>(
+                selector: (state) => state.nameError,
                 builder: (context, state) {
                   return Visibility(
-                    visible: state.nameError,
+                    visible: state,
                     child: Text(
                       '名稱不得為空',
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
@@ -73,45 +74,55 @@ class _ItemEditorDialog extends StatelessWidget {
             ],
           ),
           if (context.read<ItemEditorCubit>() is WeaponEditorCubit)
-            BlocBuilder<WeaponEditorCubit, ItemEditorState<Weapon>>(
-              builder: (context, state) {
-                return Row(
-                  children: [
-                    const Text('基礎攻擊'),
-                    SizedBox(
-                      width: 200,
-                      child: TextFormField(
-                        initialValue: state.value.damage.value.toString(),
+            Row(
+              children: [
+                const Text('基礎攻擊'),
+                SizedBox(
+                  width: 200,
+                  child: BlocSelector<WeaponEditorCubit,
+                      ItemEditorState<Weapon>, int>(
+                    selector: (state) => state.value.damage.value,
+                    builder: (context, state) {
+                      return TextFormField(
+                        initialValue: state.toString(),
                         decoration: const InputDecoration(
                           border: OutlineInputBorder(),
                         ),
                         onChanged: (v) =>
                             context.read<WeaponEditorCubit>().setDamageValue(v),
-                      ),
-                    ),
-                    _DamageTypeCheckbox(
-                      currentDamageTypes: state.value.damage.damageTypes,
+                      );
+                    },
+                  ),
+                ),
+                BlocSelector<WeaponEditorCubit, ItemEditorState<Weapon>,
+                    List<DamageType>>(
+                  selector: (state) => state.value.damage.damageTypes,
+                  builder: (context, state) {
+                    return _DamageTypeCheckbox(
+                      currentDamageTypes: state,
                       onChange: (e, v) =>
                           context.read<WeaponEditorCubit>().setDamageType(e, v),
-                    ),
-                  ],
-                );
-              },
+                    );
+                  },
+                ),
+              ],
             ),
           const Divider(),
-          BlocBuilder<ItemEditorCubit, ItemEditorState>(
-              builder: (context, state) {
-            return Column(
-              children: state.value.effects.indexed
-                  .map(
-                    (e) => _EffectEditor(
-                      index: e.$1,
-                      effect: e.$2,
-                    ),
-                  )
-                  .toList(),
-            );
-          }),
+          BlocSelector<ItemEditorCubit, ItemEditorState, List<Effect>>(
+            selector: (state) => state.value.effects,
+            builder: (context, state) {
+              return Column(
+                children: state.indexed
+                    .map(
+                      (e) => _EffectEditor(
+                        index: e.$1,
+                        effect: e.$2,
+                      ),
+                    )
+                    .toList(),
+              );
+            },
+          ),
           MaterialButton(
             onPressed: () => context.read<ItemEditorCubit>().addEffect(),
             child: const Row(

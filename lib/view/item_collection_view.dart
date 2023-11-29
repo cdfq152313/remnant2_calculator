@@ -142,21 +142,22 @@ class _ItemList extends StatelessWidget {
                 .read<ItemListCubit>()
                 .setState(state.keyword, state.showDefault);
           },
-          child: BlocBuilder<ItemListCubit, ItemListState>(
-            builder: (context, state) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: Text(
-                      title,
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                  ),
-                  Wrap(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8),
+                child: Text(
+                  title,
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+              ),
+              BlocSelector<ItemListCubit, ItemListState, List<Item>>(
+                selector: (state) => state.items,
+                builder: (context, items) {
+                  return Wrap(
                     children: [
-                      ...state.items.map(
+                      ...items.map(
                         (item) => Padding(
                           padding: const EdgeInsets.only(left: 4),
                           child: _ItemView(item: item),
@@ -164,10 +165,10 @@ class _ItemList extends StatelessWidget {
                       ),
                       _AddItemView(repository),
                     ],
-                  ),
-                ],
-              );
-            },
+                  );
+                },
+              ),
+            ],
           ),
         );
       }),

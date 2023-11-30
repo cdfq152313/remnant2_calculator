@@ -40,6 +40,8 @@ dependencies:
   flutter_bloc:
   shared_preferences:
   json_annotation:
+  download:
+  file_picker:
 
 dev_dependencies:
   flutter_test:

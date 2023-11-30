@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:remnant2_calculator/repository/amulet_repository.dart';
 import 'package:remnant2_calculator/repository/archetype_repository.dart';
@@ -65,13 +66,15 @@ class RepositoryPack {
 
   late final Map<String, Repository> _map;
 
-  String export() {
+  Uint8List export() {
     final data = _map.map((key, value) => MapEntry(key, value.export()));
-    return jsonEncode(data);
+    final jsonStr = jsonEncode(data);
+    return utf8.encode(jsonStr);
   }
 
-  void import(String data) {
-    final Map<String, dynamic> json = jsonDecode(data);
+  void import(Uint8List data) {
+    final jsonStr = utf8.decode(data);
+    final Map<String, dynamic> json = jsonDecode(jsonStr);
     for (final pair in json.entries) {
       _map[pair.key]?.import(pair.value);
     }

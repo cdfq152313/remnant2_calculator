@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:remnant2_calculator/domain/build_record_cubit.dart';
 import 'package:remnant2_calculator/domain/select_build_cubit.dart';
-import 'package:remnant2_calculator/repository/build_record_repository.dart';
 import 'package:remnant2_calculator/repository/repository_pack.dart';
 import 'package:remnant2_calculator/view/build_editor_view.dart';
 import 'package:remnant2_calculator/view/build_list_view.dart';
 import 'package:remnant2_calculator/view/item_collection_view.dart';
+import 'package:remnant2_calculator/view/other_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
             useMaterial3: true,
           ),
           home: DefaultTabController(
-            length: 3,
+            length: 4,
             child: Scaffold(
               appBar: AppBar(
                 backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -55,6 +55,7 @@ class MyApp extends StatelessWidget {
                     Tab(text: '配裝'),
                     Tab(text: '儲存列表'),
                     Tab(text: '物品列表'),
+                    Tab(text: '其他'),
                   ],
                 ),
               ),
@@ -63,6 +64,7 @@ class MyApp extends StatelessWidget {
                   BuildEditorView(),
                   BuildListView(),
                   ItemCollectionView(),
+                  OtherView(),
                 ],
               ),
             ),

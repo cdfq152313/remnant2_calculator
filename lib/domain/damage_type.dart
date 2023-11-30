@@ -8,6 +8,7 @@ enum DamageType {
   bow,
   explosion,
   skill,
+  heavy,
 }
 
 extension DamageTypeExtension on DamageType {
@@ -21,6 +22,7 @@ extension DamageTypeExtension on DamageType {
         DamageType.bow => '弓箭',
         DamageType.explosion => '爆炸',
         DamageType.skill => '技能',
+        DamageType.heavy => '重型武器',
       };
 }
 

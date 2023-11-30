@@ -99,12 +99,10 @@ void main() async {
         ItemEditorState(Item(
           name: '',
           effects: [
-            Effect.damageIncrease(0, damageTypes: [
-              DamageType.melee,
-              DamageType.mod,
-              DamageType.elemental,
-              DamageType.status
-            ]),
+            Effect.damageIncrease(
+              0,
+              damageTypes: DamageType.values.toList()..remove(DamageType.range),
+            ),
           ],
         )),
       ],

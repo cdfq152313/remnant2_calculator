@@ -71,6 +71,13 @@ final handGuns = [
       Effect.weakSpotDamage(100),
     ],
   ),
+  Weapon(
+    name: '奧秘',
+    damage: const BaseDamage(42, [DamageType.range, DamageType.shock]),
+    effects: [
+      Effect.criticalChance(-10),
+    ],
+  ),
 ];
 
 final melees = [

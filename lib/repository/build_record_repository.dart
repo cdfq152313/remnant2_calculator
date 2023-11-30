@@ -15,6 +15,22 @@ class BuildRecordRepository extends Repository<BuildRecordState> {
 
   List<BuildRecordState> _items = [];
 
+  @override
+  List<BuildRecordState> export() {
+    return getAll();
+  }
+
+  @override
+  void onImport(List<BuildRecordState> data) {
+    final exist = _items.toSet();
+    for (final item in data) {
+      if (!exist.contains(item)) {
+        _items.add(item);
+      }
+    }
+    saveToDb(_items);
+  }
+
   List<BuildRecordState> getAll() {
     return _items.toList();
   }

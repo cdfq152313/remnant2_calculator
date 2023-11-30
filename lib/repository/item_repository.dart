@@ -12,6 +12,23 @@ abstract class ItemRepository<T extends Item> extends Repository<T> {
   @override
   T fromJson(Map<String, dynamic> json) => Item.fromJson(json) as T;
 
+  @override
+  List<T> export() {
+    return getAllCustomized();
+  }
+
+  @override
+  void onImport(List<T> data) {
+    final exist = _items.toSet();
+    for (final item in data) {
+      if (!exist.contains(item)) {
+        _items.add(item);
+        _customizedItems.add(item);
+      }
+    }
+    saveToDb(_customizedItems);
+  }
+
   T get(String key) {
     return _items.firstWhere((element) => element.name == key);
   }

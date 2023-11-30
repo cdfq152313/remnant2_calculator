@@ -21,6 +21,15 @@ abstract class Repository<T> {
   @protected
   T fromJson(Map<String, dynamic> json);
 
+  List<T> export();
+
+  void import(List data) {
+    onImport(data.map((e) => fromJson(e)).toList());
+  }
+
+  @protected
+  void onImport(List<T> data);
+
   @protected
   void saveToDb(List<T> items) {
     _controller.sink.add(Update());

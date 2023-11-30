@@ -8,7 +8,7 @@ import 'package:remnant2_calculator/repository/archetype_repository.dart';
 import 'package:remnant2_calculator/repository/effect_skill_repository.dart';
 import 'package:remnant2_calculator/repository/hand_gun_repository.dart';
 import 'package:remnant2_calculator/repository/item_repository.dart';
-import 'package:remnant2_calculator/repository/keyword_and_show_default_cubit.dart';
+import 'package:remnant2_calculator/domain/keyword_and_show_default_cubit.dart';
 import 'package:remnant2_calculator/repository/long_gun_repository.dart';
 import 'package:remnant2_calculator/repository/melee_repository.dart';
 import 'package:remnant2_calculator/repository/mod_repository.dart';

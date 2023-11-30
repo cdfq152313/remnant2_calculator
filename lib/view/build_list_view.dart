@@ -37,37 +37,30 @@ class _BuildItem extends StatelessWidget {
         width: 200,
         child: Column(
           children: [
-            TextFormField(
-              initialValue: state.name,
-              onChanged: (v) => context.read<BuildRecordCubit>().editName(i, v),
+            _Button(
+              icon: Icons.edit,
+              text: state.name.isEmpty ? '未命名' : state.name,
+              onPressed: () => _onEditNamePressed(context),
             ),
-            TextButton(
+            _Button(
+              icon: Icons.delete,
+              text: '刪除',
               onPressed: () {
                 context.read<BuildRecordCubit>().removeAt(i);
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text('已刪除')),
                 );
               },
-              child: const Row(
-                children: [
-                  Icon(Icons.delete),
-                  Text('刪除'),
-                ],
-              ),
             ),
-            TextButton(
+            _Button(
+              icon: Icons.download,
+              text: '載入到配裝頁',
               onPressed: () {
                 context.read<SelectBuildCubit>().select(state.build);
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text('已載入')),
                 );
               },
-              child: const Row(
-                children: [
-                  Icon(Icons.download),
-                  Text('載入到配裝頁'),
-                ],
-              ),
             ),
             const Divider(),
             Column(
@@ -94,6 +87,67 @@ class _BuildItem extends StatelessWidget {
             const SizedBox(height: 4),
           ],
         ),
+      ),
+    );
+  }
+
+  void _onEditNamePressed(BuildContext context) {
+    final controller = TextEditingController(text: state.name);
+    showDialog(
+      context: context,
+      builder: (_) {
+        return SimpleDialog(
+          children: [
+            TextFormField(
+              controller: controller,
+              onChanged: (v) => v,
+            ),
+            Row(
+              children: [
+                TextButton(
+                  child: const Text('取消'),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+                TextButton(
+                  child: const Text('確定'),
+                  onPressed: () {
+                    context
+                        .read<BuildRecordCubit>()
+                        .editName(i, controller.text);
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
+
+class _Button extends StatelessWidget {
+  const _Button({
+    required this.icon,
+    required this.onPressed,
+    required this.text,
+  });
+
+  final IconData icon;
+  final void Function() onPressed;
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: onPressed,
+      child: Row(
+        children: [
+          Icon(icon),
+          Text(text),
+        ],
       ),
     );
   }

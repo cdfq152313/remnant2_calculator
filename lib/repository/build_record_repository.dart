@@ -19,6 +19,11 @@ class BuildRecordRepository extends Repository<BuildRecordState> {
     return _items.toList();
   }
 
+  void replace(int index, BuildRecordState state) {
+    _items[index] = state;
+    saveToDb(_items);
+  }
+
   void add(BuildRecordState state) {
     _items.add(state);
     saveToDb(_items);

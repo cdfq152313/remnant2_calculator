@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:remnant2_calculator/domain/build_cubit.dart';
-import 'package:remnant2_calculator/extension.dart';
 import 'package:remnant2_calculator/repository/build_record_repository.dart';
 import 'package:remnant2_calculator/util/auto_close.dart';
 
@@ -18,7 +17,7 @@ class BuildRecordCubit extends Cubit<List<BuildRecordState>> with AutoClose {
   final BuildRecordRepository _repository;
 
   void editName(int index, String name) {
-    emit(state.copyWithReplace(index, state[index].copyWith(name: name)));
+    _repository.replace(index, state[index].copyWith(name: name));
   }
 
   void add(BuildState build) {

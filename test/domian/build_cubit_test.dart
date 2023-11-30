@@ -6,6 +6,7 @@ import '../util.dart';
 
 void main() async {
   final itemMap = await getItemMap();
+
   group('Archetype', () {
     blocTest(
       'Set Primary Archetype successfully',

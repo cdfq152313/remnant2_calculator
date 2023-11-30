@@ -28,7 +28,7 @@ abstract class ItemEditorCubit<T extends Item>
 
   void editEffectValue(int index, String value) {
     final effect =
-        state.value.effects[index].copyWith(value: int.tryParse(value) ?? 0);
+        state.value.effects[index].copyWith(value: double.tryParse(value) ?? 0);
     emit(ItemEditorState(state.value.copyWith(
         effects: state.value.effects.copyWithReplace(index, effect)) as T));
   }
@@ -105,7 +105,7 @@ class WeaponEditorCubit extends ItemEditorCubit<Weapon> {
   void setDamageValue(String value) {
     emit(
       ItemEditorState(
-          state.value.copyWith.damage(value: int.tryParse(value) ?? 0)),
+          state.value.copyWith.damage(value: double.tryParse(value) ?? 0)),
     );
   }
 

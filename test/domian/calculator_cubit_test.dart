@@ -29,9 +29,7 @@ void main() async {
         itemMap['遠程暴擊率'],
         itemMap['遠程暴擊傷害'],
       ],
-      regularModifiers: [
-        itemMap['獵人1技能']!,
-      ],
+      primarySkill: itemMap['獵人1技能'],
     )),
     verify: (cubit) {
       expect(cubit.state.longGun?.expectedDamage, equals(417));

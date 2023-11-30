@@ -12,6 +12,8 @@ class CalculatorCubit extends Cubit<CalculatorState> {
     final regularEffects = <Effect>[
       ...build.primaryArchetype?.effects ?? [],
       ...build.secondaryArchetype?.effects ?? [],
+      ...build.primarySkill?.effects ?? [],
+      ...build.secondarySkill?.effects ?? [],
       ...build.amulet?.effects ?? [],
       for (final ring in build.rings) ...ring?.effects ?? [],
       for (final relicFragment in build.relicFragments)

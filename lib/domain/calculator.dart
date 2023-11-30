@@ -21,22 +21,22 @@ class Calculator {
         (1 + criticalDamage.pc * criticalChance.pc);
     final expectedWeakSpotDamage = expectedDamage * (1 + weakSpotDamage.pc);
     return Calculation(
-      baseDamage: baseDamage.value,
-      baseDamageIncrease: baseDamageIncrease,
-      criticalChance: criticalChance,
-      criticalDamage: criticalDamage,
-      weakSpotDamage: weakSpotDamage,
+      baseDamage: baseDamage.value.toInt(),
+      baseDamageIncrease: baseDamageIncrease.toInt(),
+      criticalChance: criticalChance.toInt(),
+      criticalDamage: criticalDamage.toInt(),
+      weakSpotDamage: weakSpotDamage.toInt(),
       expectedDamage: expectedDamage.toInt(),
       expectedWeakSpotDamage: expectedWeakSpotDamage.toInt(),
     );
   }
 
-  Map<EffectType, int> mergeEffect(
+  Map<EffectType, double> mergeEffect(
     List<Effect> effects,
     List<DamageType> applyDamageTypes,
   ) {
     final applyDamageTypeSet = applyDamageTypes.toSet();
-    final map = <EffectType, int>{};
+    final map = <EffectType, double>{};
     for (final effect in effects.where(
       (effect) => effect.damageTypes.any(
         (damageType) => applyDamageTypeSet.contains(damageType),

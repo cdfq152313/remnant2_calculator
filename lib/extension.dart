@@ -1,5 +1,5 @@
 extension NumExtension on num {
-  double get pc => toDouble() / 100;
+  num get pc => this / 100;
 }
 
 extension ListExtension<T> on List<T> {

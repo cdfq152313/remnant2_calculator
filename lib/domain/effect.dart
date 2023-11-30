@@ -2,7 +2,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:remnant2_calculator/domain/damage_type.dart';
 
 part 'effect.freezed.dart';
-
 part 'effect.g.dart';
 
 enum EffectType {
@@ -27,12 +26,12 @@ class Effect with _$Effect {
 
   const factory Effect({
     required EffectType type,
-    required int value,
+    required double value,
     @Default(DamageType.values) List<DamageType> damageTypes,
   }) = _Effect;
 
   factory Effect.damageIncrease(
-    int value, {
+    double value, {
     List<DamageType> damageTypes = DamageType.values,
   }) =>
       _Effect(
@@ -42,7 +41,7 @@ class Effect with _$Effect {
       );
 
   factory Effect.criticalChance(
-    int value, {
+    double value, {
     List<DamageType> damageTypes = DamageType.values,
   }) =>
       _Effect(
@@ -52,7 +51,7 @@ class Effect with _$Effect {
       );
 
   factory Effect.criticalDamage(
-    int value, {
+    double value, {
     List<DamageType> damageTypes = DamageType.values,
   }) =>
       _Effect(
@@ -62,7 +61,7 @@ class Effect with _$Effect {
       );
 
   factory Effect.weakSpotDamage(
-    int value, {
+    double value, {
     List<DamageType> damageTypes = DamageType.values,
   }) =>
       _Effect(

@@ -2,8 +2,8 @@ import 'package:remnant2_calculator/domain/item.dart';
 import 'package:remnant2_calculator/repository/repository.dart';
 
 abstract class ItemRepository<T extends Item> extends Repository<T> {
-  ItemRepository(super._prefs) {
-    _load();
+  ItemRepository(super._prefs, Map<String, dynamic> defaultJson) {
+    _load(defaultJson);
   }
 
   List<T> _items = [];
@@ -63,12 +63,13 @@ abstract class ItemRepository<T extends Item> extends Repository<T> {
     saveToDb(_customizedItems);
   }
 
-  List<T> getDefaultItems() => [];
-
-  void _load() {
+  void _load(Map<String, dynamic> json) async {
     _customizedItems = loadFromDb();
+
     _items = [
-      ...getDefaultItems(),
+      if (json.containsKey(key))
+        ...deserialize(json[key] as List)
+            .map((v) => v.copyWith(isDefault: true) as T),
       ..._customizedItems,
     ];
   }

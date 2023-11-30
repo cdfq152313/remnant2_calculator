@@ -18,20 +18,20 @@ import 'package:remnant2_calculator/repository/ring_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class RepositoryPack {
-  RepositoryPack(this._prefs)
-      : amuletRepository = AmuletRepository(_prefs),
-        archetypeRepository = ArchetypeRepository(_prefs),
-        buildRecordRepository = BuildRecordRepository(_prefs),
-        effectSkillRepository = EffectSkillRepository(_prefs),
-        handGunRepository = HandGunRepository(_prefs),
-        longGunRepository = LongGunRepository(_prefs),
-        meleeMutatorRepository = MeleeMutatorRepository(_prefs),
-        meleeRepository = MeleeRepository(_prefs),
-        modRepository = ModRepository(_prefs),
-        modifierRepository = ModifierRepository(_prefs),
-        rangeMutatorRepository = RangeMutatorRepository(_prefs),
-        relicFragmentRepository = RelicFragmentRepository(_prefs),
-        ringRepository = RingRepository(_prefs) {
+  RepositoryPack(SharedPreferences prefs, Map<String, dynamic> defaultJson)
+      : amuletRepository = AmuletRepository(prefs, defaultJson),
+        archetypeRepository = ArchetypeRepository(prefs, defaultJson),
+        buildRecordRepository = BuildRecordRepository(prefs),
+        effectSkillRepository = EffectSkillRepository(prefs, defaultJson),
+        handGunRepository = HandGunRepository(prefs, defaultJson),
+        longGunRepository = LongGunRepository(prefs, defaultJson),
+        meleeMutatorRepository = MeleeMutatorRepository(prefs, defaultJson),
+        meleeRepository = MeleeRepository(prefs, defaultJson),
+        modRepository = ModRepository(prefs, defaultJson),
+        modifierRepository = ModifierRepository(prefs, defaultJson),
+        rangeMutatorRepository = RangeMutatorRepository(prefs, defaultJson),
+        relicFragmentRepository = RelicFragmentRepository(prefs, defaultJson),
+        ringRepository = RingRepository(prefs, defaultJson) {
     _map = {
       amuletRepository.key: amuletRepository,
       archetypeRepository.key: archetypeRepository,
@@ -49,7 +49,6 @@ class RepositoryPack {
     };
   }
 
-  final SharedPreferences _prefs;
   final AmuletRepository amuletRepository;
   final ArchetypeRepository archetypeRepository;
   final BuildRecordRepository buildRecordRepository;
@@ -65,6 +64,8 @@ class RepositoryPack {
   final RingRepository ringRepository;
 
   late final Map<String, Repository> _map;
+
+  List<Repository> get repositories => _map.values.toList();
 
   Uint8List export() {
     final data = _map.map((key, value) => MapEntry(key, value.export()));

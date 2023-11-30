@@ -1,11 +1,13 @@
 import 'package:bloc_test/bloc_test.dart';
-import 'package:remnant2_calculator/data/item.dart';
-import 'package:remnant2_calculator/domain/calculator_cubit.dart';
 import 'package:remnant2_calculator/domain/build_cubit.dart';
+import 'package:remnant2_calculator/domain/calculator_cubit.dart';
 import 'package:remnant2_calculator/domain/item.dart';
 import 'package:test/test.dart';
 
-void main() {
+import '../util.dart';
+
+void main() async {
+  final itemMap = await getItemMap();
   late CalculatorCubit cubit;
   setUp(() => cubit = CalculatorCubit());
 

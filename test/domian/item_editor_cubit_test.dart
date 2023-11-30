@@ -15,7 +15,7 @@ void main() async {
     setUp(() async {
       SharedPreferences.setMockInitialValues({});
       final prefs = await SharedPreferences.getInstance();
-      repository = ArchetypeRepository(prefs);
+      repository = ArchetypeRepository(prefs, {});
     });
 
     blocTest(

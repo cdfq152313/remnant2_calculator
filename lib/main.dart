@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:remnant2_calculator/domain/build_record_cubit.dart';
@@ -19,58 +21,70 @@ class MyApp extends StatelessWidget {
 
   final SharedPreferences prefs;
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MultiRepositoryProvider(
-      providers: [
-        RepositoryProvider(create: (_) => RepositoryPack(prefs)),
-      ],
-      child: MultiBlocProvider(
-        providers: [
-          BlocProvider(
-            create: (context) => BuildRecordCubit(
-              context.read<RepositoryPack>().buildRecordRepository,
+    return FutureBuilder(
+      future:
+          DefaultAssetBundle.of(context).loadString('assets/default_item.json'),
+      builder: (context, value) {
+        if (!value.hasData) {
+          return Container();
+        }
+        return MultiRepositoryProvider(
+          providers: [
+            RepositoryProvider(
+              create: (_) =>
+                  RepositoryPack(prefs, jsonDecode(value.requireData)),
             ),
-          ),
-          BlocProvider(
-            create: (context) => SelectBuildCubit(null),
-          )
-        ],
-        child: MaterialApp(
-          title: '遺蹟2傷害計算機',
-          theme: ThemeData(
-            typography: Typography.material2021(),
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-            useMaterial3: true,
-          ),
-          home: DefaultTabController(
-            length: 4,
-            child: Scaffold(
-              appBar: AppBar(
-                backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-                title: const Text('遺跡2傷害計算機'),
-                bottom: const TabBar(
-                  tabs: [
-                    Tab(text: '配裝'),
-                    Tab(text: '儲存列表'),
-                    Tab(text: '物品列表'),
-                    Tab(text: '其他'),
-                  ],
+          ],
+          child: MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) => BuildRecordCubit(
+                  context.read<RepositoryPack>().buildRecordRepository,
                 ),
               ),
-              body: const TabBarView(
-                children: [
-                  BuildEditorView(),
-                  BuildListView(),
-                  ItemCollectionView(),
-                  OtherView(),
-                ],
+              BlocProvider(
+                create: (context) => SelectBuildCubit(null),
+              )
+            ],
+            child: MaterialApp(
+              title: '遺蹟2傷害計算機',
+              theme: ThemeData(
+                typography: Typography.material2021(),
+                colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+                useMaterial3: true,
+              ),
+              home: DefaultTabController(
+                length: 4,
+                child: Scaffold(
+                  appBar: AppBar(
+                    backgroundColor:
+                        Theme.of(context).colorScheme.inversePrimary,
+                    title: const Text('遺跡2傷害計算機'),
+                    bottom: const TabBar(
+                      tabs: [
+                        Tab(text: '配裝'),
+                        Tab(text: '儲存列表'),
+                        Tab(text: '物品列表'),
+                        Tab(text: '其他'),
+                      ],
+                    ),
+                  ),
+                  body: const TabBarView(
+                    children: [
+                      BuildEditorView(),
+                      BuildListView(),
+                      ItemCollectionView(),
+                      OtherView(),
+                    ],
+                  ),
+                ),
               ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

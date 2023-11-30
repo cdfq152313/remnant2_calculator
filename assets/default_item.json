@@ -1,0 +1,623 @@
+{
+  "Amulet": [
+    {
+      "name": "腐蝕磨石",
+      "effects": [
+        {
+          "type": "criticalChance",
+          "value": 15,
+          "damageTypes": [
+            "range",
+            "melee",
+            "mod",
+            "fire",
+            "acid",
+            "shock",
+            "bow",
+            "explosion",
+            "skill"
+          ]
+        },
+        {
+          "type": "criticalDamage",
+          "value": 30,
+          "damageTypes": [
+            "range",
+            "melee",
+            "mod",
+            "fire",
+            "acid",
+            "shock",
+            "bow",
+            "explosion",
+            "skill"
+          ]
+        }
+      ],
+      "runtimeType": "default"
+    },
+    {
+      "name": "聖十字輝光",
+      "effects": [
+        {
+          "type": "damageIncrease",
+          "value": 15,
+          "damageTypes": [
+            "range",
+            "melee",
+            "mod",
+            "fire",
+            "acid",
+            "shock",
+            "bow",
+            "explosion",
+            "skill"
+          ]
+        }
+      ],
+      "runtimeType": "default"
+    }
+  ],
+  "Archetype": [
+    {
+      "name": "獵人",
+      "effects": [
+        {
+          "type": "damageIncrease",
+          "value": 40,
+          "damageTypes": [
+            "range"
+          ]
+        },
+        {
+          "type": "weakSpotDamage",
+          "value": 15,
+          "damageTypes": [
+            "range"
+          ]
+        },
+        {
+          "type": "criticalChance",
+          "value": 5,
+          "damageTypes": [
+            "range"
+          ]
+        }
+      ],
+      "runtimeType": "default"
+    },
+    {
+      "name": "槍手",
+      "effects": [
+        {
+          "type": "damageIncrease",
+          "value": 25,
+          "damageTypes": [
+            "range"
+          ]
+        },
+        {
+          "type": "criticalChance",
+          "value": 5,
+          "damageTypes": [
+            "range"
+          ]
+        }
+      ],
+      "runtimeType": "default"
+    },
+    {
+      "name": "醫療兵",
+      "effects": [
+        {
+          "type": "damageIncrease",
+          "value": 25,
+          "damageTypes": [
+            "range",
+            "melee",
+            "mod",
+            "fire",
+            "acid",
+            "shock",
+            "bow",
+            "explosion",
+            "skill"
+          ]
+        },
+        {
+          "type": "criticalChance",
+          "value": 5,
+          "damageTypes": [
+            "range",
+            "melee",
+            "mod",
+            "fire",
+            "acid",
+            "shock",
+            "bow",
+            "explosion",
+            "skill"
+          ]
+        }
+      ],
+      "runtimeType": "default"
+    }
+  ],
+  "EffectSkill": [
+    {
+      "name": "獵人1技能",
+      "effects": [
+        {
+          "type": "damageIncrease",
+          "value": 15,
+          "damageTypes": [
+            "range"
+          ]
+        },
+        {
+          "type": "criticalChance",
+          "value": 15,
+          "damageTypes": [
+            "range"
+          ]
+        }
+      ],
+      "runtimeType": "default"
+    }
+  ],
+  "HandGun": [
+    {
+      "name": "MP60-R",
+      "damage": {
+        "value": 27,
+        "damageTypes": [
+          "range"
+        ]
+      },
+      "effects": [
+        {
+          "type": "criticalChance",
+          "value": 10,
+          "damageTypes": [
+            "range",
+            "melee",
+            "mod",
+            "fire",
+            "acid",
+            "shock",
+            "bow",
+            "explosion",
+            "skill"
+          ]
+        },
+        {
+          "type": "weakSpotDamage",
+          "value": 100,
+          "damageTypes": [
+            "range",
+            "melee",
+            "mod",
+            "fire",
+            "acid",
+            "shock",
+            "bow",
+            "explosion",
+            "skill"
+          ]
+        }
+      ],
+      "runtimeType": "weapon"
+    },
+    {
+      "name": "奧秘",
+      "damage": {
+        "value": 42,
+        "damageTypes": [
+          "range",
+          "shock"
+        ]
+      },
+      "effects": [
+        {
+          "type": "criticalChance",
+          "value": -10,
+          "damageTypes": [
+            "range",
+            "melee",
+            "mod",
+            "fire",
+            "acid",
+            "shock",
+            "bow",
+            "explosion",
+            "skill"
+          ]
+        }
+      ],
+      "runtimeType": "weapon"
+    }
+  ],
+  "LongGun": [
+    {
+      "name": "日暮",
+      "damage": {
+        "value": 93,
+        "damageTypes": [
+          "range"
+        ]
+      },
+      "effects": [
+        {
+          "type": "criticalChance",
+          "value": 5,
+          "damageTypes": [
+            "range",
+            "melee",
+            "mod",
+            "fire",
+            "acid",
+            "shock",
+            "bow",
+            "explosion",
+            "skill"
+          ]
+        },
+        {
+          "type": "weakSpotDamage",
+          "value": 105,
+          "damageTypes": [
+            "range",
+            "melee",
+            "mod",
+            "fire",
+            "acid",
+            "shock",
+            "bow",
+            "explosion",
+            "skill"
+          ]
+        }
+      ],
+      "runtimeType": "weapon"
+    }
+  ],
+  "MeleeMutator": [
+    {
+      "name": "污穢之刃",
+      "effects": [
+        {
+          "type": "damageIncrease",
+          "value": 20,
+          "damageTypes": [
+            "melee"
+          ]
+        }
+      ],
+      "runtimeType": "default"
+    }
+  ],
+  "Melee": [
+    {
+      "name": "科雷爾斧",
+      "damage": {
+        "value": 162,
+        "damageTypes": [
+          "melee"
+        ]
+      },
+      "effects": [
+        {
+          "type": "criticalChance",
+          "value": 3,
+          "damageTypes": [
+            "range",
+            "melee",
+            "mod",
+            "fire",
+            "acid",
+            "shock",
+            "bow",
+            "explosion",
+            "skill"
+          ]
+        },
+        {
+          "type": "weakSpotDamage",
+          "value": 85,
+          "damageTypes": [
+            "range",
+            "melee",
+            "mod",
+            "fire",
+            "acid",
+            "shock",
+            "bow",
+            "explosion",
+            "skill"
+          ]
+        }
+      ],
+      "runtimeType": "weapon"
+    }
+  ],
+  "Mod": [
+    {
+      "name": "震顫",
+      "damage": {
+        "value": 225,
+        "damageTypes": [
+          "mod"
+        ]
+      },
+      "effects": [],
+      "runtimeType": "weapon"
+    },
+    {
+      "name": "火焰風暴",
+      "damage": {
+        "value": 225,
+        "damageTypes": [
+          "fire",
+          "mod"
+        ]
+      },
+      "effects": [],
+      "runtimeType": "weapon"
+    }
+  ],
+  "Modifier": [
+    {
+      "name": "火熱射擊",
+      "effects": [
+        {
+          "type": "damageIncrease",
+          "value": 15,
+          "damageTypes": [
+            "range"
+          ]
+        }
+      ],
+      "runtimeType": "default"
+    },
+    {
+      "name": "腐蝕彈藥",
+      "effects": [
+        {
+          "type": "criticalChance",
+          "value": 15,
+          "damageTypes": [
+            "range"
+          ]
+        }
+      ],
+      "runtimeType": "default"
+    }
+  ],
+  "RangeMutator": [
+    {
+      "name": "動量",
+      "effects": [
+        {
+          "type": "criticalChance",
+          "value": 30,
+          "damageTypes": [
+            "range",
+            "melee",
+            "mod",
+            "fire",
+            "acid",
+            "shock",
+            "bow",
+            "explosion",
+            "skill"
+          ]
+        },
+        {
+          "type": "criticalDamage",
+          "value": 30,
+          "damageTypes": [
+            "range",
+            "melee",
+            "mod",
+            "fire",
+            "acid",
+            "shock",
+            "bow",
+            "explosion",
+            "skill"
+          ]
+        }
+      ],
+      "runtimeType": "default"
+    },
+    {
+      "name": "扭曲傷口",
+      "effects": [
+        {
+          "type": "damageIncrease",
+          "value": 20,
+          "damageTypes": [
+            "range",
+            "melee",
+            "mod",
+            "fire",
+            "acid",
+            "shock",
+            "bow",
+            "explosion",
+            "skill"
+          ]
+        }
+      ],
+      "runtimeType": "default"
+    },
+    {
+      "name": "調諧者",
+      "effects": [
+        {
+          "type": "damageIncrease",
+          "value": 20,
+          "damageTypes": [
+            "mod"
+          ]
+        }
+      ],
+      "runtimeType": "default"
+    },
+    {
+      "name": "失效保護",
+      "effects": [
+        {
+          "type": "damageIncrease",
+          "value": 20,
+          "damageTypes": [
+            "mod"
+          ]
+        }
+      ],
+      "runtimeType": "default"
+    }
+  ],
+  "RelicFragment": [
+    {
+      "name": "遠程傷害",
+      "effects": [
+        {
+          "type": "damageIncrease",
+          "value": 10,
+          "damageTypes": [
+            "range"
+          ]
+        }
+      ],
+      "runtimeType": "default"
+    },
+    {
+      "name": "遠程暴擊率",
+      "effects": [
+        {
+          "type": "criticalChance",
+          "value": 10,
+          "damageTypes": [
+            "range"
+          ]
+        }
+      ],
+      "runtimeType": "default"
+    },
+    {
+      "name": "遠程暴擊傷害",
+      "effects": [
+        {
+          "type": "criticalDamage",
+          "value": 20,
+          "damageTypes": [
+            "range"
+          ]
+        }
+      ],
+      "runtimeType": "default"
+    }
+  ],
+  "Ring": [
+    {
+      "name": "扎尼亞的惡意",
+      "effects": [
+        {
+          "type": "weakSpotDamage",
+          "value": 30,
+          "damageTypes": [
+            "range",
+            "melee",
+            "mod",
+            "fire",
+            "acid",
+            "shock",
+            "bow",
+            "explosion",
+            "skill"
+          ]
+        }
+      ],
+      "runtimeType": "default"
+    },
+    {
+      "name": "戰爭指環",
+      "effects": [
+        {
+          "type": "criticalChance",
+          "value": 15,
+          "damageTypes": [
+            "range",
+            "melee",
+            "mod",
+            "fire",
+            "acid",
+            "shock",
+            "bow",
+            "explosion",
+            "skill"
+          ]
+        },
+        {
+          "type": "criticalDamage",
+          "value": 15,
+          "damageTypes": [
+            "range",
+            "melee",
+            "mod",
+            "fire",
+            "acid",
+            "shock",
+            "bow",
+            "explosion",
+            "skill"
+          ]
+        }
+      ],
+      "runtimeType": "default"
+    },
+    {
+      "name": "機率之圈",
+      "effects": [
+        {
+          "type": "criticalDamage",
+          "value": 30,
+          "damageTypes": [
+            "range",
+            "melee",
+            "mod",
+            "fire",
+            "acid",
+            "shock",
+            "bow",
+            "explosion",
+            "skill"
+          ]
+        }
+      ],
+      "runtimeType": "default"
+    },
+    {
+      "name": "破壞者之負擔",
+      "effects": [
+        {
+          "type": "damageIncrease",
+          "value": 15,
+          "damageTypes": [
+            "range",
+            "melee",
+            "mod",
+            "fire",
+            "acid",
+            "shock",
+            "bow",
+            "explosion",
+            "skill"
+          ]
+        }
+      ],
+      "runtimeType": "default"
+    }
+  ]
+}

@@ -1,9 +1,11 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:remnant2_calculator/data/item.dart';
 import 'package:remnant2_calculator/domain/build_cubit.dart';
 
-void main() {
+import '../util.dart';
+
+void main() async {
+  final itemMap = await getItemMap();
   group('Archetype', () {
     blocTest(
       'Set Primary Archetype successfully',

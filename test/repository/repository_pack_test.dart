@@ -9,13 +9,13 @@ void main() {
 
     SharedPreferences.setMockInitialValues({});
     var prefs = await SharedPreferences.getInstance();
-    var pack = RepositoryPack(prefs);
+    var pack = RepositoryPack(prefs, {});
     pack.archetypeRepository.add(item);
     final exportValue = pack.export();
 
     SharedPreferences.setMockInitialValues({});
     prefs = await SharedPreferences.getInstance();
-    pack = RepositoryPack(prefs);
+    pack = RepositoryPack(prefs, {});
     pack.import(exportValue);
 
     expect(pack.archetypeRepository.getAllCustomized().first, equals(item));

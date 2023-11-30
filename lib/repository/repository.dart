@@ -23,8 +23,12 @@ abstract class Repository<T> {
 
   List<T> export();
 
+  List<T> deserialize(List data) {
+    return data.map((e) => fromJson(e)).toList();
+  }
+
   void import(List data) {
-    onImport(data.map((e) => fromJson(e)).toList());
+    onImport(deserialize(data));
   }
 
   @protected

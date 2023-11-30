@@ -12,11 +12,11 @@ void main() {
     SharedPreferences.setMockInitialValues({});
     final prefs = await SharedPreferences.getInstance();
     const item = Item(name: 'hello', effects: []);
-    var repository = ArchetypeRepository(prefs);
+    var repository = ArchetypeRepository(prefs, {});
     final event = repository.stream.first;
 
     repository.add(item);
-    repository = ArchetypeRepository(prefs);
+    repository = ArchetypeRepository(prefs, {});
 
     expect(await event, isA<Update>());
     expect(repository.get(item.name).toString(), equals(item.toString()));
@@ -30,11 +30,11 @@ void main() {
       effects: [],
       damage: BaseDamage(100, [DamageType.range]),
     );
-    var repository = MeleeRepository(prefs);
+    var repository = MeleeRepository(prefs, {});
     final event = repository.stream.first;
 
     repository.add(item);
-    repository = MeleeRepository(prefs);
+    repository = MeleeRepository(prefs, {});
 
     expect(await event, isA<Update>());
     expect(repository.get(item.name).toString(), equals(item.toString()));

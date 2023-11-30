@@ -36,6 +36,7 @@
           ]
         }
       ],
+      "isDefault": true,
       "runtimeType": "default"
     },
     {
@@ -58,6 +59,7 @@
           ]
         }
       ],
+      "isDefault": true,
       "runtimeType": "default"
     }
   ],
@@ -87,6 +89,7 @@
           ]
         }
       ],
+      "isDefault": true,
       "runtimeType": "default"
     },
     {
@@ -107,6 +110,7 @@
           ]
         }
       ],
+      "isDefault": true,
       "runtimeType": "default"
     },
     {
@@ -145,6 +149,172 @@
           ]
         }
       ],
+      "isDefault": true,
+      "runtimeType": "default"
+    },
+    {
+      "name": "煉金術師",
+      "effects": [
+        {
+          "type": "damageIncrease",
+          "value": 25,
+          "damageTypes": [
+            "range",
+            "melee",
+            "mod",
+            "fire",
+            "acid",
+            "shock",
+            "bow",
+            "explosion",
+            "skill",
+            "heavy"
+          ]
+        },
+        {
+          "type": "criticalChance",
+          "value": 5,
+          "damageTypes": [
+            "range",
+            "melee",
+            "mod",
+            "fire",
+            "acid",
+            "shock",
+            "bow",
+            "explosion",
+            "skill",
+            "heavy"
+          ]
+        }
+      ],
+      "isDefault": true,
+      "runtimeType": "default"
+    },
+    {
+      "name": "執政官",
+      "effects": [
+        {
+          "type": "damageIncrease",
+          "value": 30,
+          "damageTypes": [
+            "mod"
+          ]
+        },
+        {
+          "type": "criticalChance",
+          "value": 10,
+          "damageTypes": [
+            "mod"
+          ]
+        }
+      ],
+      "isDefault": true,
+      "runtimeType": "default"
+    },
+    {
+      "name": "挑戰者",
+      "effects": [
+        {
+          "type": "damageIncrease",
+          "value": 35,
+          "damageTypes": [
+            "range",
+            "melee",
+            "mod",
+            "fire",
+            "acid",
+            "shock",
+            "bow",
+            "explosion",
+            "skill",
+            "heavy"
+          ]
+        },
+        {
+          "type": "criticalChance",
+          "value": 10,
+          "damageTypes": [
+            "range",
+            "melee",
+            "mod",
+            "fire",
+            "acid",
+            "shock",
+            "bow",
+            "explosion",
+            "skill",
+            "heavy"
+          ]
+        }
+      ],
+      "isDefault": true,
+      "runtimeType": "default"
+    },
+    {
+      "name": "工程師",
+      "effects": [
+        {
+          "type": "damageIncrease",
+          "value": 50,
+          "damageTypes": [
+            "skill"
+          ]
+        },
+        {
+          "type": "criticalChance",
+          "value": 10,
+          "damageTypes": [
+            "skill"
+          ]
+        },
+        {
+          "type": "weakSpotDamage",
+          "value": 25,
+          "damageTypes": [
+            "heavy"
+          ]
+        }
+      ],
+      "isDefault": true,
+      "runtimeType": "default"
+    },
+    {
+      "name": "馴獸師",
+      "effects": [
+        {
+          "type": "damageIncrease",
+          "value": 30,
+          "damageTypes": [
+            "range",
+            "skill"
+          ]
+        },
+        {
+          "type": "criticalChance",
+          "value": 5,
+          "damageTypes": [
+            "range",
+            "skill"
+          ]
+        }
+      ],
+      "isDefault": true,
+      "runtimeType": "default"
+    },
+    {
+      "name": "召喚師",
+      "effects": [
+        {
+          "type": "damageIncrease",
+          "value": 35,
+          "damageTypes": [
+            "skill",
+            "mod"
+          ]
+        }
+      ],
+      "isDefault": true,
       "runtimeType": "default"
     }
   ],
@@ -167,6 +337,56 @@
           ]
         }
       ],
+      "isDefault": true,
+      "runtimeType": "default"
+    },
+    {
+      "name": "獵人2技能",
+      "effects": [
+        {
+          "type": "damageIncrease",
+          "value": 25,
+          "damageTypes": [
+            "range"
+          ]
+        },
+        {
+          "type": "weakSpotDamage",
+          "value": 25,
+          "damageTypes": [
+            "range"
+          ]
+        },
+        {
+          "type": "criticalChance",
+          "value": 25,
+          "damageTypes": [
+            "range"
+          ]
+        }
+      ],
+      "isDefault": true,
+      "runtimeType": "default"
+    },
+    {
+      "name": "獵人3技能",
+      "effects": [
+        {
+          "type": "damageIncrease",
+          "value": 50,
+          "damageTypes": [
+            "range"
+          ]
+        },
+        {
+          "type": "criticalChance",
+          "value": 15,
+          "damageTypes": [
+            "range"
+          ]
+        }
+      ],
+      "isDefault": true,
       "runtimeType": "default"
     }
   ],
@@ -213,6 +433,7 @@
           ]
         }
       ],
+      "isDefault": true,
       "runtimeType": "weapon"
     },
     {
@@ -242,6 +463,7 @@
           ]
         }
       ],
+      "isDefault": true,
       "runtimeType": "weapon"
     }
   ],
@@ -288,6 +510,7 @@
           ]
         }
       ],
+      "isDefault": true,
       "runtimeType": "weapon"
     }
   ],
@@ -303,6 +526,7 @@
           ]
         }
       ],
+      "isDefault": true,
       "runtimeType": "default"
     }
   ],
@@ -349,6 +573,7 @@
           ]
         }
       ],
+      "isDefault": true,
       "runtimeType": "weapon"
     }
   ],
@@ -362,6 +587,7 @@
         ]
       },
       "effects": [],
+      "isDefault": true,
       "runtimeType": "weapon"
     },
     {
@@ -374,6 +600,7 @@
         ]
       },
       "effects": [],
+      "isDefault": true,
       "runtimeType": "weapon"
     }
   ],
@@ -389,6 +616,7 @@
           ]
         }
       ],
+      "isDefault": true,
       "runtimeType": "default"
     },
     {
@@ -402,6 +630,7 @@
           ]
         }
       ],
+      "isDefault": true,
       "runtimeType": "default"
     }
   ],
@@ -442,6 +671,7 @@
           ]
         }
       ],
+      "isDefault": true,
       "runtimeType": "default"
     },
     {
@@ -464,6 +694,7 @@
           ]
         }
       ],
+      "isDefault": true,
       "runtimeType": "default"
     },
     {
@@ -477,6 +708,7 @@
           ]
         }
       ],
+      "isDefault": true,
       "runtimeType": "default"
     },
     {
@@ -490,6 +722,7 @@
           ]
         }
       ],
+      "isDefault": true,
       "runtimeType": "default"
     }
   ],
@@ -505,6 +738,7 @@
           ]
         }
       ],
+      "isDefault": true,
       "runtimeType": "default"
     },
     {
@@ -518,6 +752,7 @@
           ]
         }
       ],
+      "isDefault": true,
       "runtimeType": "default"
     },
     {
@@ -531,6 +766,7 @@
           ]
         }
       ],
+      "isDefault": true,
       "runtimeType": "default"
     }
   ],
@@ -555,6 +791,7 @@
           ]
         }
       ],
+      "isDefault": true,
       "runtimeType": "default"
     },
     {
@@ -593,6 +830,7 @@
           ]
         }
       ],
+      "isDefault": true,
       "runtimeType": "default"
     },
     {
@@ -615,6 +853,7 @@
           ]
         }
       ],
+      "isDefault": true,
       "runtimeType": "default"
     },
     {
@@ -637,6 +876,7 @@
           ]
         }
       ],
+      "isDefault": true,
       "runtimeType": "default"
     }
   ]

@@ -67,9 +67,7 @@ abstract class ItemRepository<T extends Item> extends Repository<T> {
     _customizedItems = loadFromDb();
 
     _items = [
-      if (json.containsKey(key))
-        ...deserialize(json[key] as List)
-            .map((v) => v.copyWith(isDefault: true) as T),
+      if (json.containsKey(key)) ...deserialize(json[key] as List),
       ..._customizedItems,
     ];
   }

@@ -3,19 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:remnant2_calculator/domain/damage_type.dart';
 import 'package:remnant2_calculator/domain/item.dart';
 import 'package:remnant2_calculator/domain/item_list_cubit.dart';
-import 'package:remnant2_calculator/repository/amulet_repository.dart';
-import 'package:remnant2_calculator/repository/archetype_repository.dart';
-import 'package:remnant2_calculator/repository/effect_skill_repository.dart';
-import 'package:remnant2_calculator/repository/hand_gun_repository.dart';
-import 'package:remnant2_calculator/repository/item_repository.dart';
 import 'package:remnant2_calculator/domain/keyword_and_show_default_cubit.dart';
-import 'package:remnant2_calculator/repository/long_gun_repository.dart';
-import 'package:remnant2_calculator/repository/melee_repository.dart';
-import 'package:remnant2_calculator/repository/mod_repository.dart';
-import 'package:remnant2_calculator/repository/modifier_repository.dart';
-import 'package:remnant2_calculator/repository/range_mutator_repository.dart';
-import 'package:remnant2_calculator/repository/relic_fragment_repository.dart';
-import 'package:remnant2_calculator/repository/ring_repository.dart';
+import 'package:remnant2_calculator/repository/item_repository.dart';
+import 'package:remnant2_calculator/repository/repository_pack.dart';
 import 'package:remnant2_calculator/view/item_editor_dialog.dart';
 
 class ItemCollectionView extends StatelessWidget {
@@ -29,51 +19,51 @@ class ItemCollectionView extends StatelessWidget {
         children: [
           const ShowDefaultCheckbox(),
           _ItemList(
-            repository: context.read<LongGunRepository>(),
+            repository: context.read<RepositoryPack>().longGunRepository,
             title: '長槍',
           ),
           _ItemList(
-            repository: context.read<HandGunRepository>(),
+            repository: context.read<RepositoryPack>().handGunRepository,
             title: '手槍',
           ),
           _ItemList(
-            repository: context.read<MeleeRepository>(),
+            repository: context.read<RepositoryPack>().meleeRepository,
             title: '近戰',
           ),
           _ItemList(
-            repository: context.read<ModRepository>(),
+            repository: context.read<RepositoryPack>().modRepository,
             title: '改裝',
           ),
           _ItemList(
-            repository: context.read<RangeMutatorRepository>(),
+            repository: context.read<RepositoryPack>().rangeMutatorRepository,
             title: '遠程突變因子',
           ),
           _ItemList(
-            repository: context.read<MeleeRepository>(),
+            repository: context.read<RepositoryPack>().meleeMutatorRepository,
             title: '近戰突變因子',
           ),
           _ItemList(
-            repository: context.read<ArchetypeRepository>(),
+            repository: context.read<RepositoryPack>().archetypeRepository,
             title: '職業',
           ),
           _ItemList(
-            repository: context.read<EffectSkillRepository>(),
+            repository: context.read<RepositoryPack>().effectSkillRepository,
             title: '技能',
           ),
           _ItemList(
-            repository: context.read<AmuletRepository>(),
+            repository: context.read<RepositoryPack>().amuletRepository,
             title: '項鍊',
           ),
           _ItemList(
-            repository: context.read<RingRepository>(),
+            repository: context.read<RepositoryPack>().ringRepository,
             title: '戒指',
           ),
           _ItemList(
-            repository: context.read<RelicFragmentRepository>(),
+            repository: context.read<RepositoryPack>().relicFragmentRepository,
             title: '聖物碎片',
           ),
           _ItemList(
-            repository: context.read<ModifierRepository>(),
+            repository: context.read<RepositoryPack>().modifierRepository,
             title: '額外',
           ),
           Container(height: 12),

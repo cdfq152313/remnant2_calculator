@@ -2,19 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:remnant2_calculator/domain/build_record_cubit.dart';
 import 'package:remnant2_calculator/domain/select_build_cubit.dart';
-import 'package:remnant2_calculator/repository/amulet_repository.dart';
-import 'package:remnant2_calculator/repository/archetype_repository.dart';
 import 'package:remnant2_calculator/repository/build_record_repository.dart';
-import 'package:remnant2_calculator/repository/effect_skill_repository.dart';
-import 'package:remnant2_calculator/repository/hand_gun_repository.dart';
-import 'package:remnant2_calculator/repository/long_gun_repository.dart';
-import 'package:remnant2_calculator/repository/melee_mutator_repository.dart';
-import 'package:remnant2_calculator/repository/melee_repository.dart';
-import 'package:remnant2_calculator/repository/mod_repository.dart';
-import 'package:remnant2_calculator/repository/modifier_repository.dart';
-import 'package:remnant2_calculator/repository/range_mutator_repository.dart';
-import 'package:remnant2_calculator/repository/relic_fragment_repository.dart';
-import 'package:remnant2_calculator/repository/ring_repository.dart';
+import 'package:remnant2_calculator/repository/repository_pack.dart';
 import 'package:remnant2_calculator/view/build_editor_view.dart';
 import 'package:remnant2_calculator/view/build_list_view.dart';
 import 'package:remnant2_calculator/view/item_collection_view.dart';
@@ -35,25 +24,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
       providers: [
-        RepositoryProvider(create: (_) => AmuletRepository(prefs)),
-        RepositoryProvider(create: (_) => ArchetypeRepository(prefs)),
-        RepositoryProvider(create: (_) => BuildRecordRepository(prefs)),
-        RepositoryProvider(create: (_) => EffectSkillRepository(prefs)),
-        RepositoryProvider(create: (_) => HandGunRepository(prefs)),
-        RepositoryProvider(create: (_) => LongGunRepository(prefs)),
-        RepositoryProvider(create: (_) => ModRepository(prefs)),
-        RepositoryProvider(create: (_) => MeleeMutatorRepository(prefs)),
-        RepositoryProvider(create: (_) => MeleeRepository(prefs)),
-        RepositoryProvider(create: (_) => ModifierRepository(prefs)),
-        RepositoryProvider(create: (_) => RangeMutatorRepository(prefs)),
-        RepositoryProvider(create: (_) => RelicFragmentRepository(prefs)),
-        RepositoryProvider(create: (_) => RingRepository(prefs)),
+        RepositoryProvider(create: (_) => RepositoryPack(prefs)),
       ],
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
             create: (context) => BuildRecordCubit(
-              context.read<BuildRecordRepository>(),
+              context.read<RepositoryPack>().buildRecordRepository,
             ),
           ),
           BlocProvider(

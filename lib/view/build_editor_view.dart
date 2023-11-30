@@ -7,19 +7,8 @@ import 'package:remnant2_calculator/domain/calculator_cubit.dart';
 import 'package:remnant2_calculator/domain/damage_type.dart';
 import 'package:remnant2_calculator/domain/item.dart';
 import 'package:remnant2_calculator/domain/select_build_cubit.dart';
-import 'package:remnant2_calculator/repository/amulet_repository.dart';
-import 'package:remnant2_calculator/repository/archetype_repository.dart';
-import 'package:remnant2_calculator/repository/effect_skill_repository.dart';
-import 'package:remnant2_calculator/repository/hand_gun_repository.dart';
 import 'package:remnant2_calculator/repository/item_repository.dart';
-import 'package:remnant2_calculator/repository/long_gun_repository.dart';
-import 'package:remnant2_calculator/repository/melee_mutator_repository.dart';
-import 'package:remnant2_calculator/repository/melee_repository.dart';
-import 'package:remnant2_calculator/repository/mod_repository.dart';
-import 'package:remnant2_calculator/repository/modifier_repository.dart';
-import 'package:remnant2_calculator/repository/range_mutator_repository.dart';
-import 'package:remnant2_calculator/repository/relic_fragment_repository.dart';
-import 'package:remnant2_calculator/repository/ring_repository.dart';
+import 'package:remnant2_calculator/repository/repository_pack.dart';
 import 'package:remnant2_calculator/view/item_selector_dialog.dart';
 
 class BuildEditorView extends StatefulWidget {
@@ -98,28 +87,28 @@ class _CharacterView extends StatelessWidget {
           children: [
             _WeaponView(
               title: '長槍',
-              repository: context.read<LongGunRepository>(),
+              repository: context.read<RepositoryPack>().longGunRepository,
               weaponSelector: (state) => state.longGun,
               calculationSelector: (state) => state.longGun,
               onChange: (item) => context.read<BuildCubit>().setLongGun(item),
             ),
             _WeaponView(
               title: '手槍',
-              repository: context.read<HandGunRepository>(),
+              repository: context.read<RepositoryPack>().handGunRepository,
               weaponSelector: (state) => state.handGun,
               calculationSelector: (state) => state.handGun,
               onChange: (item) => context.read<BuildCubit>().setHandGun(item),
             ),
             _WeaponView(
               title: '近戰',
-              repository: context.read<MeleeRepository>(),
+              repository: context.read<RepositoryPack>().meleeRepository,
               weaponSelector: (state) => state.melee,
               calculationSelector: (state) => state.melee,
               onChange: (item) => context.read<BuildCubit>().setMelee(item),
             ),
             _WeaponView(
               title: '長槍改裝',
-              repository: context.read<ModRepository>(),
+              repository: context.read<RepositoryPack>().modRepository,
               weaponSelector: (state) => state.longGunMod,
               calculationSelector: (state) => state.longGunMod,
               onChange: (item) =>
@@ -127,7 +116,7 @@ class _CharacterView extends StatelessWidget {
             ),
             _WeaponView(
               title: '手槍改裝',
-              repository: context.read<ModRepository>(),
+              repository: context.read<RepositoryPack>().modRepository,
               weaponSelector: (state) => state.handGunMod,
               calculationSelector: (state) => state.handGunMod,
               onChange: (item) =>
@@ -140,21 +129,21 @@ class _CharacterView extends StatelessWidget {
           children: [
             _ItemView(
               title: '長槍突變因子',
-              repository: context.read<RangeMutatorRepository>(),
+              repository: context.read<RepositoryPack>().rangeMutatorRepository,
               selector: (state) => state.longGunMutator,
               onChange: (item) =>
                   context.read<BuildCubit>().setLongGunMutator(item),
             ),
             _ItemView(
               title: '手槍突變因子',
-              repository: context.read<RangeMutatorRepository>(),
+              repository: context.read<RepositoryPack>().rangeMutatorRepository,
               selector: (state) => state.handGunMutator,
               onChange: (item) =>
                   context.read<BuildCubit>().setHandGunMutator(item),
             ),
             _ItemView(
               title: '近戰突變因子',
-              repository: context.read<MeleeMutatorRepository>(),
+              repository: context.read<RepositoryPack>().meleeMutatorRepository,
               selector: (state) => state.meleeMutator,
               onChange: (item) =>
                   context.read<BuildCubit>().setMeleeMutator(item),
@@ -166,28 +155,28 @@ class _CharacterView extends StatelessWidget {
           children: [
             _ItemView(
               title: '主職業',
-              repository: context.read<ArchetypeRepository>(),
+              repository: context.read<RepositoryPack>().archetypeRepository,
               selector: (state) => state.primaryArchetype,
               onChange: (item) =>
                   context.read<BuildCubit>().setPrimaryArchetype(item),
             ),
             _ItemView(
               title: '副職業',
-              repository: context.read<ArchetypeRepository>(),
+              repository: context.read<RepositoryPack>().archetypeRepository,
               selector: (state) => state.secondaryArchetype,
               onChange: (item) =>
                   context.read<BuildCubit>().setSecondaryArchetype(item),
             ),
             _ItemView(
               title: '主技能',
-              repository: context.read<EffectSkillRepository>(),
+              repository: context.read<RepositoryPack>().effectSkillRepository,
               selector: (state) => state.primarySkill,
               onChange: (item) =>
                   context.read<BuildCubit>().setPrimarySkill(item),
             ),
             _ItemView(
               title: '副技能',
-              repository: context.read<EffectSkillRepository>(),
+              repository: context.read<RepositoryPack>().effectSkillRepository,
               selector: (state) => state.secondarySkill,
               onChange: (item) =>
                   context.read<BuildCubit>().setSecondarySkill(item),
@@ -197,14 +186,14 @@ class _CharacterView extends StatelessWidget {
         _BlockLayout(title: '配件', children: [
           _ItemView(
             title: '項鍊',
-            repository: context.read<AmuletRepository>(),
+            repository: context.read<RepositoryPack>().amuletRepository,
             selector: (state) => state.amulet,
             onChange: (item) => context.read<BuildCubit>().setAmulet(item),
           ),
           for (var i = 0; i < 4; ++i)
             _ItemView(
               title: '戒指${i + 1}',
-              repository: context.read<RingRepository>(),
+              repository: context.read<RepositoryPack>().ringRepository,
               selector: (state) => state.rings[i],
               onChange: (item) => context.read<BuildCubit>().setRing(i, item),
             ),
@@ -215,7 +204,8 @@ class _CharacterView extends StatelessWidget {
             for (var i = 0; i < 3; ++i)
               _ItemView(
                 title: '聖物碎片${i + 1}',
-                repository: context.read<RelicFragmentRepository>(),
+                repository:
+                    context.read<RepositoryPack>().relicFragmentRepository,
                 selector: (state) => state.relicFragments[i],
                 onChange: (item) =>
                     context.read<BuildCubit>().setRelicFragment(i, item),
@@ -227,14 +217,14 @@ class _CharacterView extends StatelessWidget {
           children: [
             _ItemView(
               title: '長槍額外項目',
-              repository: context.read<ModifierRepository>(),
+              repository: context.read<RepositoryPack>().modifierRepository,
               selector: (state) => state.longGunModifier,
               onChange: (item) =>
                   context.read<BuildCubit>().setLongGunModifier(item),
             ),
             _ItemView(
               title: '手槍額外項目',
-              repository: context.read<ModifierRepository>(),
+              repository: context.read<RepositoryPack>().modRepository,
               selector: (state) => state.handGunModifier,
               onChange: (item) =>
                   context.read<BuildCubit>().setHandGunModifier(item),

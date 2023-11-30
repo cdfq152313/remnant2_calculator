@@ -56,7 +56,7 @@ class _ItemEditorDialog extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(12.0),
               child: Text(
                 '新增物品',
                 style: Theme.of(context).textTheme.titleLarge,
@@ -115,6 +115,9 @@ class _ItemEditorDialog extends StatelessWidget {
                         onDamageTypeChange: (e, v) => context
                             .read<WeaponEditorCubit>()
                             .setDamageType(e, v),
+                        onAllDamageTypeChange: (v) => context
+                            .read<WeaponEditorCubit>()
+                            .setAllDamageType(v),
                       );
                     },
                   ),
@@ -211,6 +214,9 @@ class _EffectEditor extends StatelessWidget {
               onDamageTypeChange: (e, v) => context
                   .read<ItemEditorCubit>()
                   .editEffectDamageType(index, e, v),
+              onAllDamageTypeChange: (v) => context
+                  .read<ItemEditorCubit>()
+                  .editEffectAllDamageType(index, v),
             ),
             SizedBox(
               height: 80,
@@ -234,12 +240,14 @@ class _NumAndCheckboxField extends StatelessWidget {
     required this.currentDamageTypes,
     required this.onValueChange,
     required this.onDamageTypeChange,
+    required this.onAllDamageTypeChange,
   });
 
   final String initialValue;
   final List<DamageType> currentDamageTypes;
   final void Function(String value) onValueChange;
   final void Function(DamageType damageType, bool v) onDamageTypeChange;
+  final void Function(bool v) onAllDamageTypeChange;
 
   @override
   Widget build(BuildContext context) {
@@ -262,6 +270,7 @@ class _NumAndCheckboxField extends StatelessWidget {
           _DamageTypeCheckbox(
             currentDamageTypes: currentDamageTypes,
             onChange: onDamageTypeChange,
+            onAllChange: onAllDamageTypeChange,
           )
         ],
       ),
@@ -273,10 +282,12 @@ class _DamageTypeCheckbox extends StatelessWidget {
   const _DamageTypeCheckbox({
     required this.currentDamageTypes,
     required this.onChange,
+    required this.onAllChange,
   });
 
   final List<DamageType> currentDamageTypes;
   final void Function(DamageType damageType, bool v) onChange;
+  final void Function(bool v) onAllChange;
 
   @override
   Widget build(BuildContext context) {
@@ -284,20 +295,26 @@ class _DamageTypeCheckbox extends StatelessWidget {
       crossAxisAlignment: WrapCrossAlignment.center,
       children: [
         const Text('適用增傷: '),
-        ...DamageType.values
-            .map(
-              (e) => Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Checkbox(
-                    value: currentDamageTypes.contains(e),
-                    onChanged: (v) => onChange(e, v!),
-                  ),
-                  Text(e.displayText),
-                ],
+        ...DamageType.values.map(
+          (e) => Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Checkbox(
+                value: currentDamageTypes.contains(e),
+                onChanged: (v) => onChange(e, v!),
               ),
-            )
-            .toList()
+              Text(e.displayText),
+            ],
+          ),
+        ),
+        TextButton(
+          onPressed: () => onAllChange(true),
+          child: const Text('全選'),
+        ),
+        TextButton(
+          onPressed: () => onAllChange(false),
+          child: const Text('全不選'),
+        ),
       ],
     );
   }

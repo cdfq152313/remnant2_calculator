@@ -43,6 +43,14 @@ abstract class ItemEditorCubit<T extends Item>
         effects: state.value.effects.copyWithReplace(index, effect)) as T));
   }
 
+  void editEffectAllDamageType(int index, bool value) {
+    final effect = state.value.effects[index].copyWith(
+      damageTypes: value ? DamageType.values : [],
+    );
+    emit(ItemEditorState(state.value.copyWith(
+        effects: state.value.effects.copyWithReplace(index, effect)) as T));
+  }
+
   void addEffect() {
     emit(
       ItemEditorState(state.value.copyWith(
@@ -108,6 +116,16 @@ class WeaponEditorCubit extends ItemEditorCubit<Weapon> {
             ? state.value.damage.damageTypes.copyWithAppend(type)
             : state.value.damage.damageTypes.copyWithRemove(type),
       )),
+    );
+  }
+
+  void setAllDamageType(bool value) {
+    emit(
+      ItemEditorState(
+        state.value.copyWith.damage(
+          damageTypes: value ? DamageType.values : [],
+        ),
+      ),
     );
   }
 }

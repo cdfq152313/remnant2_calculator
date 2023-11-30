@@ -50,125 +50,115 @@ class _ItemEditorDialog extends StatelessWidget {
           Navigator.pop(context);
         }
       },
-      child: Dialog(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Text(
-                '新增物品',
-                style: Theme.of(context).textTheme.titleLarge,
+      child: SimpleDialog(
+        title: Text(
+          '新增物品',
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
+        children: [
+          Row(
+            children: [
+              Container(
+                width: 100,
+                margin: const EdgeInsets.only(left: 8),
+                child: const Text('名字'),
               ),
-            ),
+              SizedBox(
+                width: 200,
+                child: TextField(
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                  ),
+                  onChanged: (v) => context.read<ItemEditorCubit>().setName(v),
+                ),
+              ),
+              BlocSelector<ItemEditorCubit, ItemEditorState, bool>(
+                selector: (state) => state.nameError,
+                builder: (context, state) {
+                  return Visibility(
+                    visible: state,
+                    child: Text(
+                      '名稱不得為空',
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: Theme.of(context).colorScheme.error),
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
+          const Divider(),
+          if (context.read<ItemEditorCubit>() is WeaponEditorCubit)
             Row(
               children: [
                 Container(
                   width: 100,
                   margin: const EdgeInsets.only(left: 8),
-                  child: const Text('名字'),
+                  child: const Text('基礎攻擊'),
                 ),
-                SizedBox(
-                  width: 200,
-                  child: TextField(
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                    ),
-                    onChanged: (v) =>
-                        context.read<ItemEditorCubit>().setName(v),
-                  ),
-                ),
-                BlocSelector<ItemEditorCubit, ItemEditorState, bool>(
-                  selector: (state) => state.nameError,
+                BlocSelector<WeaponEditorCubit, ItemEditorState<Weapon>,
+                    BaseDamage>(
+                  selector: (state) => state.value.damage,
                   builder: (context, state) {
-                    return Visibility(
-                      visible: state,
-                      child: Text(
-                        '名稱不得為空',
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            color: Theme.of(context).colorScheme.error),
-                      ),
+                    return _NumAndCheckboxField(
+                      initialValue: state.value.toString(),
+                      currentDamageTypes: state.damageTypes,
+                      onValueChange: (v) =>
+                          context.read<WeaponEditorCubit>().setDamageValue(v),
+                      onDamageTypeChange: (e, v) =>
+                          context.read<WeaponEditorCubit>().setDamageType(e, v),
+                      onAllDamageTypeChange: (v) =>
+                          context.read<WeaponEditorCubit>().setAllDamageType(v),
                     );
                   },
                 ),
               ],
             ),
-            const Divider(),
-            if (context.read<ItemEditorCubit>() is WeaponEditorCubit)
-              Row(
-                children: [
-                  Container(
-                    width: 100,
-                    margin: const EdgeInsets.only(left: 8),
-                    child: const Text('基礎攻擊'),
-                  ),
-                  BlocSelector<WeaponEditorCubit, ItemEditorState<Weapon>,
-                      BaseDamage>(
-                    selector: (state) => state.value.damage,
-                    builder: (context, state) {
-                      return _NumAndCheckboxField(
-                        initialValue: state.value.toString(),
-                        currentDamageTypes: state.damageTypes,
-                        onValueChange: (v) =>
-                            context.read<WeaponEditorCubit>().setDamageValue(v),
-                        onDamageTypeChange: (e, v) => context
-                            .read<WeaponEditorCubit>()
-                            .setDamageType(e, v),
-                        onAllDamageTypeChange: (v) => context
-                            .read<WeaponEditorCubit>()
-                            .setAllDamageType(v),
-                      );
-                    },
-                  ),
-                ],
-              ),
-            const Divider(),
-            BlocSelector<ItemEditorCubit, ItemEditorState, List<Effect>>(
-              selector: (state) => state.value.effects,
-              builder: (context, state) {
-                return Column(
-                  children: state.indexed
-                      .map(
-                        (e) => _EffectEditor(
-                          index: e.$1,
-                          effect: e.$2,
-                        ),
-                      )
-                      .toList(),
-                );
-              },
+          const Divider(),
+          BlocSelector<ItemEditorCubit, ItemEditorState, List<Effect>>(
+            selector: (state) => state.value.effects,
+            builder: (context, state) {
+              return Column(
+                children: state.indexed
+                    .map(
+                      (e) => _EffectEditor(
+                        index: e.$1,
+                        effect: e.$2,
+                      ),
+                    )
+                    .toList(),
+              );
+            },
+          ),
+          MaterialButton(
+            onPressed: () => context.read<ItemEditorCubit>().addEffect(),
+            child: const Row(
+              children: [
+                Icon(Icons.add),
+                Text('新增效果'),
+              ],
             ),
-            MaterialButton(
-              onPressed: () => context.read<ItemEditorCubit>().addEffect(),
-              child: const Row(
-                children: [
-                  Icon(Icons.add),
-                  Text('新增效果'),
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 40,
-              child: Row(
-                children: [
-                  Expanded(
-                    child: TextButton(
-                      onPressed: () => Navigator.pop(context),
-                      child: const Text('取消'),
-                    ),
+          ),
+          SizedBox(
+            height: 40,
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: const Text('取消'),
                   ),
-                  Expanded(
-                    child: TextButton(
-                      onPressed: () => context.read<ItemEditorCubit>().save(),
-                      child: const Text('OK'),
-                    ),
+                ),
+                Expanded(
+                  child: TextButton(
+                    onPressed: () => context.read<ItemEditorCubit>().save(),
+                    child: const Text('確定'),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

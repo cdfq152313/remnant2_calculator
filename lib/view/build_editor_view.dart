@@ -7,16 +7,17 @@ import 'package:remnant2_calculator/domain/calculator_cubit.dart';
 import 'package:remnant2_calculator/domain/damage_type.dart';
 import 'package:remnant2_calculator/domain/item.dart';
 import 'package:remnant2_calculator/domain/select_build_cubit.dart';
-import 'package:remnant2_calculator/extension.dart';
 import 'package:remnant2_calculator/repository/amulet_repository.dart';
 import 'package:remnant2_calculator/repository/archetype_repository.dart';
 import 'package:remnant2_calculator/repository/hand_gun_repository.dart';
+import 'package:remnant2_calculator/repository/item_repository.dart';
 import 'package:remnant2_calculator/repository/long_gun_repository.dart';
 import 'package:remnant2_calculator/repository/melee_mutator_repository.dart';
 import 'package:remnant2_calculator/repository/melee_repository.dart';
 import 'package:remnant2_calculator/repository/range_mutator_repository.dart';
 import 'package:remnant2_calculator/repository/relic_fragment_repository.dart';
 import 'package:remnant2_calculator/repository/ring_repository.dart';
+import 'package:remnant2_calculator/view/item_selector_dialog.dart';
 
 class BuildEditorView extends StatefulWidget {
   const BuildEditorView({super.key});
@@ -94,24 +95,24 @@ class _CharacterView extends StatelessWidget {
           children: [
             _WeaponView(
               title: '長槍',
-              items: context.read<LongGunRepository>().getAll(),
-              weaponSetter: (cubit, item) => cubit.setLongGun(item),
-              weaponGetter: (state) => state.longGun,
-              calculationGetter: (state) => state.longGun,
+              repository: context.read<LongGunRepository>(),
+              weaponSelector: (state) => state.longGun,
+              calculationSelector: (state) => state.longGun,
+              onChange: (item) => context.read<BuildCubit>().setLongGun(item),
             ),
             _WeaponView(
               title: '手槍',
-              items: context.read<HandGunRepository>().getAll(),
-              weaponSetter: (cubit, item) => cubit.setHandGun(item),
-              weaponGetter: (state) => state.handGun,
-              calculationGetter: (state) => state.longGun,
+              repository: context.read<HandGunRepository>(),
+              weaponSelector: (state) => state.handGun,
+              calculationSelector: (state) => state.handGun,
+              onChange: (item) => context.read<BuildCubit>().setHandGun(item),
             ),
             _WeaponView(
               title: '近戰',
-              items: context.read<MeleeRepository>().getAll(),
-              weaponSetter: (cubit, item) => cubit.setMelee(item),
-              weaponGetter: (state) => state.melee,
-              calculationGetter: (state) => state.melee,
+              repository: context.read<MeleeRepository>(),
+              weaponSelector: (state) => state.melee,
+              calculationSelector: (state) => state.melee,
+              onChange: (item) => context.read<BuildCubit>().setMelee(item),
             ),
           ],
         ),
@@ -120,21 +121,24 @@ class _CharacterView extends StatelessWidget {
           children: [
             _ItemView(
               title: '長槍突變因子',
-              items: context.read<RangeMutatorRepository>().getAll(),
-              setter: (cubit, item) => cubit.setLongGunMutator(item),
-              getter: (state) => state.longGunMutator,
+              repository: context.read<RangeMutatorRepository>(),
+              selector: (state) => state.longGunMutator,
+              onChange: (item) =>
+                  context.read<BuildCubit>().setLongGunMutator(item),
             ),
             _ItemView(
               title: '手槍突變因子',
-              items: context.read<RangeMutatorRepository>().getAll(),
-              setter: (cubit, item) => cubit.setHandGunMutator(item),
-              getter: (state) => state.handGunMutator,
+              repository: context.read<RangeMutatorRepository>(),
+              selector: (state) => state.handGunMutator,
+              onChange: (item) =>
+                  context.read<BuildCubit>().setHandGunMutator(item),
             ),
             _ItemView(
               title: '近戰突變因子',
-              items: context.read<MeleeMutatorRepository>().getAll(),
-              setter: (cubit, item) => cubit.setMeleeMutator(item),
-              getter: (state) => state.meleeMutator,
+              repository: context.read<MeleeMutatorRepository>(),
+              selector: (state) => state.meleeMutator,
+              onChange: (item) =>
+                  context.read<BuildCubit>().setMeleeMutator(item),
             ),
           ],
         ),
@@ -143,31 +147,33 @@ class _CharacterView extends StatelessWidget {
           children: [
             _ItemView(
               title: '主職業',
-              items: context.read<ArchetypeRepository>().getAll(),
-              setter: (cubit, item) => cubit.setPrimaryArchetype(item),
-              getter: (state) => state.primaryArchetype,
+              repository: context.read<ArchetypeRepository>(),
+              selector: (state) => state.primaryArchetype,
+              onChange: (item) =>
+                  context.read<BuildCubit>().setPrimaryArchetype(item),
             ),
             _ItemView(
               title: '副職業',
-              items: context.read<ArchetypeRepository>().getAll(),
-              setter: (cubit, item) => cubit.setSecondaryArchetype(item),
-              getter: (state) => state.secondaryArchetype,
+              repository: context.read<ArchetypeRepository>(),
+              selector: (state) => state.secondaryArchetype,
+              onChange: (item) =>
+                  context.read<BuildCubit>().setSecondaryArchetype(item),
             ),
           ],
         ),
         _BlockLayout(title: '配件', children: [
           _ItemView(
             title: '項鍊',
-            items: context.read<AmuletRepository>().getAll(),
-            setter: (cubit, item) => cubit.setAmulet(item),
-            getter: (state) => state.amulet,
+            repository: context.read<AmuletRepository>(),
+            selector: (state) => state.amulet,
+            onChange: (item) => context.read<BuildCubit>().setAmulet(item),
           ),
           for (var i = 0; i < 4; ++i)
             _ItemView(
               title: '戒指${i + 1}',
-              items: context.read<RingRepository>().getAll(),
-              setter: (cubit, item) => cubit.setRing(i, item),
-              getter: (state) => state.rings[i],
+              repository: context.read<RingRepository>(),
+              selector: (state) => state.rings[i],
+              onChange: (item) => context.read<BuildCubit>().setRing(i, item),
             ),
         ]),
         _BlockLayout(
@@ -176,9 +182,10 @@ class _CharacterView extends StatelessWidget {
             for (var i = 0; i < 3; ++i)
               _ItemView(
                 title: '聖物碎片${i + 1}',
-                items: context.read<RelicFragmentRepository>().getAll(),
-                setter: (cubit, item) => cubit.setRelicFragment(i, item),
-                getter: (state) => state.relicFragments[i],
+                repository: context.read<RelicFragmentRepository>(),
+                selector: (state) => state.relicFragments[i],
+                onChange: (item) =>
+                    context.read<BuildCubit>().setRelicFragment(i, item),
               ),
           ],
         ),
@@ -188,19 +195,19 @@ class _CharacterView extends StatelessWidget {
   }
 }
 
-class _ItemLayout extends StatelessWidget {
+class _ItemLayout<T extends Item> extends StatelessWidget {
   const _ItemLayout({
     required this.title,
-    required this.items,
-    required this.getter,
-    required this.setter,
+    required this.name,
+    required this.repository,
+    required this.onChange,
     required this.itemInfo,
   });
 
   final String title;
-  final List<Item> items;
-  final void Function(BuildCubit cubit, Item? item) setter;
-  final Item? Function(BuildState state) getter;
+  final String? name;
+  final ItemRepository<T> repository;
+  final void Function(T? item) onChange;
   final Widget itemInfo;
 
   @override
@@ -210,27 +217,28 @@ class _ItemLayout extends StatelessWidget {
         constraints: const BoxConstraints(minWidth: 200),
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(4),
-              child: Text(title),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(4),
+                  child: Text(title),
+                ),
+                TextButton(
+                  onPressed: () => showDialog(
+                    context: context,
+                    builder: (_) => ItemSelectorDialog(
+                      repository,
+                      onChanged: (v) => onChange(v as T?),
+                    ),
+                  ),
+                  child: const Text('選擇'),
+                ),
+              ],
             ),
             Padding(
               padding: const EdgeInsets.all(4),
-              child: BlocBuilder<BuildCubit, BuildState>(
-                  builder: (context, state) {
-                return DropdownButton(
-                  items: [null, ...items]
-                      .map(
-                        (e) => DropdownMenuItem(
-                          value: e,
-                          child: Text(e?.name ?? '空'),
-                        ),
-                      )
-                      .toList(),
-                  value: getter(state),
-                  onChanged: (v) => setter(context.read<BuildCubit>(), v),
-                );
-              }),
+              child: Text(name ?? '空'),
             ),
             Padding(
               padding: const EdgeInsets.all(4),
@@ -246,37 +254,37 @@ class _ItemLayout extends StatelessWidget {
 class _ItemView extends StatelessWidget {
   const _ItemView({
     required this.title,
-    required this.items,
-    required this.getter,
-    required this.setter,
+    required this.repository,
+    required this.selector,
+    required this.onChange,
   });
 
   final String title;
-  final List<Item> items;
-  final void Function(BuildCubit cubit, Item? item) setter;
-  final Item? Function(BuildState state) getter;
+  final ItemRepository<Item> repository;
+  final Item? Function(BuildState state) selector;
+  final void Function(Item? item) onChange;
 
   @override
   Widget build(BuildContext context) {
-    return _ItemLayout(
-      title: title,
-      items: items,
-      getter: getter,
-      setter: setter,
-      itemInfo: BlocBuilder<BuildCubit, BuildState>(
-        builder: (context, state) {
-          return getter(state)?.to(
-                (item) => Column(
-                  children: item.effects
+    return BlocSelector<BuildCubit, BuildState, Item?>(
+      selector: selector,
+      builder: (context, state) {
+        return _ItemLayout(
+          title: title,
+          name: state?.name,
+          repository: repository,
+          onChange: onChange,
+          itemInfo: state == null
+              ? Container()
+              : Column(
+                  children: state.effects
                       .map(
                         (e) => Text(e.displayText),
                       )
                       .toList(),
                 ),
-              ) ??
-              Container();
-        },
-      ),
+        );
+      },
     );
   }
 }
@@ -284,54 +292,60 @@ class _ItemView extends StatelessWidget {
 class _WeaponView extends StatelessWidget {
   const _WeaponView({
     required this.title,
-    required this.items,
-    required this.weaponSetter,
-    required this.weaponGetter,
-    required this.calculationGetter,
+    required this.repository,
+    required this.weaponSelector,
+    required this.calculationSelector,
+    required this.onChange,
   });
 
   final String title;
-  final List<Weapon> items;
-  final void Function(BuildCubit cubit, Weapon? item) weaponSetter;
-  final Weapon? Function(BuildState state) weaponGetter;
-  final Calculation? Function(CalculatorState state) calculationGetter;
+  final ItemRepository<Weapon> repository;
+  final Weapon? Function(BuildState state) weaponSelector;
+  final Calculation? Function(CalculatorState state) calculationSelector;
+  final void Function(Weapon? item) onChange;
 
   @override
   Widget build(BuildContext context) {
-    return _ItemLayout(
-      title: title,
-      items: items,
-      getter: weaponGetter,
-      setter: (c, i) => weaponSetter(c, i as Weapon?),
-      itemInfo: Builder(
-        builder: (context) {
-          final buildState = context.watch<BuildCubit>().state;
-          final calculatorState = context.watch<CalculatorCubit>().state;
-          return weaponGetter(buildState).to(
-                (item) {
-                  final calculation = calculationGetter(calculatorState);
-                  return Column(
-                    children: [
-                      const Divider(indent: 0),
-                      Text(
-                        '適用增傷: ${item.damage.damageTypes.displayText}',
-                      ),
-                      Text(
-                        '基礎攻擊: ${item.damage.value}',
-                      ),
-                      ...item.effects.map((e) => Text(e.displayText)),
-                      const Divider(),
-                      Text('一般期望值: ${calculation?.expectedDamage ?? '--'}'),
-                      Text(
-                        '弱點期望值: ${calculation?.expectedWeakSpotDamage ?? '--'}',
-                      ),
-                    ],
-                  );
-                },
-              ) ??
-              Container();
-        },
-      ),
+    return BlocSelector<BuildCubit, BuildState, Weapon?>(
+      selector: weaponSelector,
+      builder: (context, state) {
+        return _ItemLayout(
+          title: title,
+          repository: repository,
+          name: state?.name,
+          onChange: onChange,
+          itemInfo: Builder(
+            builder: (context) {
+              final item = context.select<BuildCubit, Weapon?>(
+                (cubit) => weaponSelector(cubit.state),
+              );
+              final calculation = context.select<CalculatorCubit, Calculation?>(
+                (cubit) => calculationSelector(cubit.state),
+              );
+              if (item == null || calculation == null) {
+                return Container();
+              }
+              return Column(
+                children: [
+                  const Divider(indent: 0),
+                  Text(
+                    '適用增傷: ${item.damage.damageTypes.displayText}',
+                  ),
+                  Text(
+                    '基礎攻擊: ${item.damage.value}',
+                  ),
+                  ...item.effects.map((e) => Text(e.displayText)),
+                  const Divider(),
+                  Text('一般期望值: ${calculation.expectedDamage ?? '--'}'),
+                  Text(
+                    '弱點期望值: ${calculation.expectedWeakSpotDamage ?? '--'}',
+                  ),
+                ],
+              );
+            },
+          ),
+        );
+      },
     );
   }
 }

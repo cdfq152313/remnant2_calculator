@@ -9,6 +9,7 @@ enum EffectType {
   criticalChance,
   criticalDamage,
   weakSpotDamage,
+  fireRate,
 }
 
 extension EffectTypeExtension on EffectType {
@@ -17,6 +18,7 @@ extension EffectTypeExtension on EffectType {
         EffectType.criticalChance => '暴擊率',
         EffectType.criticalDamage => '暴擊傷害',
         EffectType.weakSpotDamage => '弱點傷害',
+        EffectType.fireRate => '射速',
       };
 }
 
@@ -66,6 +68,16 @@ class Effect with _$Effect {
   }) =>
       _Effect(
         type: EffectType.weakSpotDamage,
+        damageTypes: damageTypes,
+        value: value,
+      );
+
+  factory Effect.fireRate(
+    double value, {
+    List<DamageType> damageTypes = DamageType.values,
+  }) =>
+      _Effect(
+        type: EffectType.fireRate,
         damageTypes: damageTypes,
         value: value,
       );

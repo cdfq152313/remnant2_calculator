@@ -99,7 +99,7 @@ class WeaponEditorCubit extends ItemEditorCubit<Weapon> {
   WeaponEditorCubit(super.repository)
       : super(
           initialState: const ItemEditorState(
-              Weapon(name: '', damage: BaseDamage(100, []))),
+              Weapon(name: '', damage: BaseDamage(100, damageTypes: []))),
         );
 
   void setDamageValue(String value) {

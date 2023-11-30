@@ -28,7 +28,7 @@ void main() {
     const item = Weapon(
       name: 'hello',
       effects: [],
-      damage: BaseDamage(100, [DamageType.range]),
+      damage: BaseDamage(100, damageTypes: [DamageType.range]),
     );
     var repository = MeleeRepository(prefs, {});
     final event = repository.stream.first;

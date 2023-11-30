@@ -431,6 +431,7 @@
       "name": "MP60-R",
       "damage": {
         "value": 27,
+        "rps": 14.2,
         "damageTypes": [
           "range"
         ]
@@ -484,6 +485,7 @@
       "name": "奧秘",
       "damage": {
         "value": 42,
+        "rps": 4,
         "damageTypes": [
           "range",
           "shock"
@@ -520,6 +522,7 @@
       "name": "日暮",
       "damage": {
         "value": 93,
+        "rps": 4.3,
         "damageTypes": [
           "range"
         ]

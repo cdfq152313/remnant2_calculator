@@ -32,15 +32,19 @@ void main() {
 
   test('All Damage', () {
     final result = calculator.calculate(
-      const BaseDamage(100, DamageType.values),
+      const BaseDamage(
+        100,
+        rps: 10,
+        damageTypes: DamageType.values,
+      ),
       [
         Effect.damageIncrease(0),
         Effect.criticalChance(50),
         Effect.criticalDamage(50),
         Effect.weakSpotDamage(100),
+        Effect.fireRate(100),
       ],
     );
-    expect(result.baseDamage, equals(100));
     expect(result.baseDamageIncrease, equals(0));
     expect(result.criticalChance, equals(50));
     expect(result.criticalDamage, equals(100));
@@ -48,5 +52,7 @@ void main() {
 
     expect(result.expectedDamage, equals(150));
     expect(result.expectedWeakSpotDamage, equals(300));
+    expect(result.expectedDps, equals(3000));
+    expect(result.expectedWeakSpotDps, equals(6000));
   });
 }

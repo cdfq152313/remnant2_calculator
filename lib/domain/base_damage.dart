@@ -8,9 +8,10 @@ part 'base_damage.g.dart';
 @freezed
 class BaseDamage with _$BaseDamage {
   const factory BaseDamage(
-    double value,
-    List<DamageType> damageTypes,
-  ) = _BaseDamage;
+    double value, {
+    required List<DamageType> damageTypes,
+    double? rps,
+  }) = _BaseDamage;
 
   factory BaseDamage.fromJson(Map<String, dynamic> json) =>
       _$BaseDamageFromJson(json);

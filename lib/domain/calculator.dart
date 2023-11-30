@@ -15,19 +15,26 @@ class Calculator {
     final criticalChance = effectMap[EffectType.criticalChance] ?? 0;
     final criticalDamage = 50 + (effectMap[EffectType.criticalDamage] ?? 0);
     final weakSpotDamage = effectMap[EffectType.weakSpotDamage] ?? 0;
+    final fireRate = effectMap[EffectType.fireRate] ?? 0;
 
     final expectedDamage = baseDamage.value *
         (1 + baseDamageIncrease.pc) *
         (1 + criticalDamage.pc * criticalChance.pc);
     final expectedWeakSpotDamage = expectedDamage * (1 + weakSpotDamage.pc);
+    final double? expectedDps = baseDamage.rps?.to(
+        (rps) => rps == 0 ? null : expectedDamage * rps * (1 + fireRate.pc));
+    final double? expectedWeakSpotDps = baseDamage.rps?.to((rps) =>
+        rps == 0 ? null : expectedWeakSpotDamage * rps * (1 + fireRate.pc));
     return Calculation(
-      baseDamage: baseDamage.value.toInt(),
       baseDamageIncrease: baseDamageIncrease.toInt(),
       criticalChance: criticalChance.toInt(),
       criticalDamage: criticalDamage.toInt(),
       weakSpotDamage: weakSpotDamage.toInt(),
+      fireRate: fireRate,
       expectedDamage: expectedDamage.toInt(),
       expectedWeakSpotDamage: expectedWeakSpotDamage.toInt(),
+      expectedDps: expectedDps?.toInt(),
+      expectedWeakSpotDps: expectedWeakSpotDps?.toInt(),
     );
   }
 
@@ -59,16 +66,16 @@ class Calculator {
 
 class Calculation {
   Calculation({
-    required this.baseDamage,
     required this.baseDamageIncrease,
     required this.criticalChance,
     required this.criticalDamage,
     required this.weakSpotDamage,
+    this.fireRate,
     required this.expectedDamage,
     required this.expectedWeakSpotDamage,
+    this.expectedDps,
+    this.expectedWeakSpotDps,
   });
-
-  final int baseDamage;
 
   final int baseDamageIncrease;
 
@@ -78,7 +85,13 @@ class Calculation {
 
   final int weakSpotDamage;
 
+  final double? fireRate;
+
   final int expectedDamage;
 
   final int expectedWeakSpotDamage;
+
+  final int? expectedDps;
+
+  final int? expectedWeakSpotDps;
 }

@@ -8,6 +8,7 @@ final itemMap = Map.fromEntries([
   ...longGuns,
   ...handGuns,
   ...melees,
+  ...mods,
   ...amulets,
   ...rings,
   ...relicFragments,
@@ -88,6 +89,19 @@ final melees = [
       Effect.criticalChance(3),
       Effect.weakSpotDamage(85),
     ],
+  ),
+];
+
+final mods = [
+  const Weapon(
+    name: '震顫',
+    damage: BaseDamage(225, [DamageType.mod]),
+    effects: [],
+  ),
+  const Weapon(
+    name: '火焰風暴',
+    damage: BaseDamage(225, [DamageType.fire, DamageType.mod]),
+    effects: [],
   ),
 ];
 

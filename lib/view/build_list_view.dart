@@ -69,6 +69,8 @@ class _BuildItem extends StatelessWidget {
                 Text('長槍 ${state.build.longGun?.name ?? '--'}'),
                 Text('手槍 ${state.build.handGun?.name ?? '--'}'),
                 Text('近戰 ${state.build.melee?.name ?? '--'}'),
+                Text('長槍改裝 ${state.build.longGunMod?.name ?? '--'}'),
+                Text('手槍改裝 ${state.build.handGunMod?.name ?? '--'}'),
                 Text('長槍突變因子 ${state.build.longGunMutator?.name ?? '--'}'),
                 Text('手槍突變因子 ${state.build.handGunMutator?.name ?? '--'}'),
                 Text('近戰突變因子 ${state.build.meleeMutator?.name ?? '--'}'),

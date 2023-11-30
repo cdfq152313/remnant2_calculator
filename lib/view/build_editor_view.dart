@@ -14,6 +14,7 @@ import 'package:remnant2_calculator/repository/item_repository.dart';
 import 'package:remnant2_calculator/repository/long_gun_repository.dart';
 import 'package:remnant2_calculator/repository/melee_mutator_repository.dart';
 import 'package:remnant2_calculator/repository/melee_repository.dart';
+import 'package:remnant2_calculator/repository/mod_repository.dart';
 import 'package:remnant2_calculator/repository/range_mutator_repository.dart';
 import 'package:remnant2_calculator/repository/relic_fragment_repository.dart';
 import 'package:remnant2_calculator/repository/ring_repository.dart';
@@ -113,6 +114,22 @@ class _CharacterView extends StatelessWidget {
               weaponSelector: (state) => state.melee,
               calculationSelector: (state) => state.melee,
               onChange: (item) => context.read<BuildCubit>().setMelee(item),
+            ),
+            _WeaponView(
+              title: '長槍改裝',
+              repository: context.read<ModRepository>(),
+              weaponSelector: (state) => state.longGunMod,
+              calculationSelector: (state) => state.longGunMod,
+              onChange: (item) =>
+                  context.read<BuildCubit>().setLongGunMod(item),
+            ),
+            _WeaponView(
+              title: '手槍改裝',
+              repository: context.read<ModRepository>(),
+              weaponSelector: (state) => state.handGunMod,
+              calculationSelector: (state) => state.handGunMod,
+              onChange: (item) =>
+                  context.read<BuildCubit>().setHandGunMod(item),
             ),
           ],
         ),

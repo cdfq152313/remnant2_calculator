@@ -9,6 +9,7 @@ import 'package:remnant2_calculator/repository/hand_gun_repository.dart';
 import 'package:remnant2_calculator/repository/long_gun_repository.dart';
 import 'package:remnant2_calculator/repository/melee_mutator_repository.dart';
 import 'package:remnant2_calculator/repository/melee_repository.dart';
+import 'package:remnant2_calculator/repository/mod_repository.dart';
 import 'package:remnant2_calculator/repository/modifier_repository.dart';
 import 'package:remnant2_calculator/repository/range_mutator_repository.dart';
 import 'package:remnant2_calculator/repository/relic_fragment_repository.dart';
@@ -37,6 +38,7 @@ class MyApp extends StatelessWidget {
         RepositoryProvider(create: (_) => ArchetypeRepository(prefs)),
         RepositoryProvider(create: (_) => HandGunRepository(prefs)),
         RepositoryProvider(create: (_) => LongGunRepository(prefs)),
+        RepositoryProvider(create: (_) => ModRepository(prefs)),
         RepositoryProvider(create: (_) => MeleeMutatorRepository(prefs)),
         RepositoryProvider(create: (_) => MeleeRepository(prefs)),
         RepositoryProvider(create: (_) => ModifierRepository(prefs)),

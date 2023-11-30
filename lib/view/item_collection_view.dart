@@ -10,6 +10,7 @@ import 'package:remnant2_calculator/repository/item_repository.dart';
 import 'package:remnant2_calculator/repository/keyword_and_show_default_cubit.dart';
 import 'package:remnant2_calculator/repository/long_gun_repository.dart';
 import 'package:remnant2_calculator/repository/melee_repository.dart';
+import 'package:remnant2_calculator/repository/mod_repository.dart';
 import 'package:remnant2_calculator/repository/range_mutator_repository.dart';
 import 'package:remnant2_calculator/repository/relic_fragment_repository.dart';
 import 'package:remnant2_calculator/repository/ring_repository.dart';
@@ -36,6 +37,10 @@ class ItemCollectionView extends StatelessWidget {
           _ItemList(
             repository: context.read<MeleeRepository>(),
             title: '近戰',
+          ),
+          _ItemList(
+            repository: context.read<ModRepository>(),
+            title: '改裝',
           ),
           _ItemList(
             repository: context.read<RangeMutatorRepository>(),

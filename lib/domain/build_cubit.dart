@@ -37,7 +37,11 @@ class BuildCubit extends Cubit<BuildState> {
   }
 
   void setLongGunMod(Weapon? item) {
-    emit(state.copyWith(longGunMod: item));
+    if (item != null && item == state.handGunMod) {
+      emit(state.copyWith(longGunMod: item, handGunMod: null));
+    } else {
+      emit(state.copyWith(longGunMod: item));
+    }
   }
 
   void setLongGunMutator(Item? item) {
@@ -53,7 +57,11 @@ class BuildCubit extends Cubit<BuildState> {
   }
 
   void setHandGunMod(Weapon? item) {
-    emit(state.copyWith(handGunMod: item));
+    if (item != null && item == state.longGunMod) {
+      emit(state.copyWith(longGunMod: null, handGunMod: item));
+    } else {
+      emit(state.copyWith(handGunMod: item));
+    }
   }
 
   void setHandGunMutator(Item? item) {

@@ -4,7 +4,6 @@ import 'package:remnant2_calculator/domain/item.dart';
 import 'package:remnant2_calculator/extension.dart';
 
 part 'build_cubit.freezed.dart';
-
 part 'build_cubit.g.dart';
 
 class BuildCubit extends Cubit<BuildState> {
@@ -29,6 +28,28 @@ class BuildCubit extends Cubit<BuildState> {
               secondaryArchetype: item,
             )
           : state.copyWith(secondaryArchetype: item),
+    );
+  }
+
+  void setPrimarySkill(Item? item) {
+    emit(
+      item != null && item == state.secondarySkill
+          ? state.copyWith(
+              primarySkill: item,
+              secondarySkill: state.primarySkill,
+            )
+          : state.copyWith(primarySkill: item),
+    );
+  }
+
+  void setSecondarySkill(Item? item) {
+    emit(
+      item != null && item == state.primarySkill
+          ? state.copyWith(
+              primarySkill: state.secondarySkill,
+              secondarySkill: item,
+            )
+          : state.copyWith(secondarySkill: item),
     );
   }
 
@@ -122,49 +143,12 @@ class BuildCubit extends Cubit<BuildState> {
     );
   }
 
-  void addLongGunModifier(Item item) {
-    emit(
-      state.copyWith(
-        longGunModifiers: state.longGunModifiers.copyWithAppend(item),
-      ),
-    );
+  void setLongGunModifier(Item? item) {
+    emit(state.copyWith(longGunModifier: item));
   }
 
-  void removeLongGunModifier(int index) {
-    emit(
-      state.copyWith(
-        longGunModifiers: state.longGunModifiers.copyWithRemoveAt(index),
-      ),
-    );
-  }
-
-  void addHandGunModifier(Item item) {
-    emit(
-      state.copyWith(
-        handGunModifiers: state.handGunModifiers.copyWithAppend(item),
-      ),
-    );
-  }
-
-  void removeHandGunModifier(int index) {
-    emit(
-      state.copyWith(
-        handGunModifiers: state.handGunModifiers.copyWithRemoveAt(index),
-      ),
-    );
-  }
-
-  void addMeleeModifier(Item item) {
-    emit(
-      state.copyWith(meleeModifiers: state.meleeModifiers.copyWithAppend(item)),
-    );
-  }
-
-  void removeMeleeModifier(int index) {
-    emit(
-      state.copyWith(
-          meleeModifiers: state.meleeModifiers.copyWithRemoveAt(index)),
-    );
+  void setHandGunModifier(Item? item) {
+    emit(state.copyWith(handGunModifier: item));
   }
 
   void setState(BuildState value) {
@@ -176,18 +160,19 @@ class BuildCubit extends Cubit<BuildState> {
 class BuildState with _$BuildState {
   factory BuildState({
     Item? primaryArchetype,
+    Item? primarySkill,
     Item? secondaryArchetype,
+    Item? secondarySkill,
     Weapon? longGun,
     Weapon? longGunMod,
     Item? longGunMutator,
-    @Default([]) List<Item> longGunModifiers,
+    Item? longGunModifier,
     Weapon? handGun,
     Weapon? handGunMod,
     Item? handGunMutator,
-    @Default([]) List<Item> handGunModifiers,
+    Item? handGunModifier,
     Weapon? melee,
     Item? meleeMutator,
-    @Default([]) List<Item> meleeModifiers,
     Item? amulet,
     @Default([null, null, null, null]) List<Item?> rings,
     @Default([null, null, null]) List<Item?> relicFragments,

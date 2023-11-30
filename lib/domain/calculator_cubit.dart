@@ -21,19 +21,18 @@ class CalculatorCubit extends Cubit<CalculatorState> {
     final longGunEffects = <Effect>[
       ...build.longGun?.effects ?? [],
       ...build.longGunMutator?.effects ?? [],
-      for (final modifier in build.longGunModifiers) ...modifier.effects,
+      ...build.longGunModifier?.effects ?? [],
       ...regularEffects,
     ];
     final handGunEffects = <Effect>[
       ...build.handGun?.effects ?? [],
       ...build.handGunMutator?.effects ?? [],
-      for (final modifier in build.handGunModifiers) ...modifier.effects,
+      ...build.handGunModifier?.effects ?? [],
       ...regularEffects,
     ];
     final meleeEffects = <Effect>[
       ...build.melee?.effects ?? [],
       ...build.meleeMutator?.effects ?? [],
-      for (final modifier in build.meleeModifiers) ...modifier.effects,
       ...regularEffects,
     ];
     final result = CalculatorState(

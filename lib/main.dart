@@ -5,6 +5,7 @@ import 'package:remnant2_calculator/domain/select_build_cubit.dart';
 import 'package:remnant2_calculator/repository/amulet_repository.dart';
 import 'package:remnant2_calculator/repository/archetype_repository.dart';
 import 'package:remnant2_calculator/repository/build_record_repository.dart';
+import 'package:remnant2_calculator/repository/effect_skill_repository.dart';
 import 'package:remnant2_calculator/repository/hand_gun_repository.dart';
 import 'package:remnant2_calculator/repository/long_gun_repository.dart';
 import 'package:remnant2_calculator/repository/melee_mutator_repository.dart';
@@ -36,6 +37,8 @@ class MyApp extends StatelessWidget {
       providers: [
         RepositoryProvider(create: (_) => AmuletRepository(prefs)),
         RepositoryProvider(create: (_) => ArchetypeRepository(prefs)),
+        RepositoryProvider(create: (_) => BuildRecordRepository(prefs)),
+        RepositoryProvider(create: (_) => EffectSkillRepository(prefs)),
         RepositoryProvider(create: (_) => HandGunRepository(prefs)),
         RepositoryProvider(create: (_) => LongGunRepository(prefs)),
         RepositoryProvider(create: (_) => ModRepository(prefs)),
@@ -45,7 +48,6 @@ class MyApp extends StatelessWidget {
         RepositoryProvider(create: (_) => RangeMutatorRepository(prefs)),
         RepositoryProvider(create: (_) => RelicFragmentRepository(prefs)),
         RepositoryProvider(create: (_) => RingRepository(prefs)),
-        RepositoryProvider(create: (_) => BuildRecordRepository(prefs)),
       ],
       child: MultiBlocProvider(
         providers: [

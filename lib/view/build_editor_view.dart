@@ -9,12 +9,14 @@ import 'package:remnant2_calculator/domain/item.dart';
 import 'package:remnant2_calculator/domain/select_build_cubit.dart';
 import 'package:remnant2_calculator/repository/amulet_repository.dart';
 import 'package:remnant2_calculator/repository/archetype_repository.dart';
+import 'package:remnant2_calculator/repository/effect_skill_repository.dart';
 import 'package:remnant2_calculator/repository/hand_gun_repository.dart';
 import 'package:remnant2_calculator/repository/item_repository.dart';
 import 'package:remnant2_calculator/repository/long_gun_repository.dart';
 import 'package:remnant2_calculator/repository/melee_mutator_repository.dart';
 import 'package:remnant2_calculator/repository/melee_repository.dart';
 import 'package:remnant2_calculator/repository/mod_repository.dart';
+import 'package:remnant2_calculator/repository/modifier_repository.dart';
 import 'package:remnant2_calculator/repository/range_mutator_repository.dart';
 import 'package:remnant2_calculator/repository/relic_fragment_repository.dart';
 import 'package:remnant2_calculator/repository/ring_repository.dart';
@@ -176,6 +178,20 @@ class _CharacterView extends StatelessWidget {
               onChange: (item) =>
                   context.read<BuildCubit>().setSecondaryArchetype(item),
             ),
+            _ItemView(
+              title: '主技能',
+              repository: context.read<EffectSkillRepository>(),
+              selector: (state) => state.primarySkill,
+              onChange: (item) =>
+                  context.read<BuildCubit>().setPrimarySkill(item),
+            ),
+            _ItemView(
+              title: '副技能',
+              repository: context.read<EffectSkillRepository>(),
+              selector: (state) => state.secondarySkill,
+              onChange: (item) =>
+                  context.read<BuildCubit>().setSecondarySkill(item),
+            ),
           ],
         ),
         _BlockLayout(title: '配件', children: [
@@ -204,6 +220,25 @@ class _CharacterView extends StatelessWidget {
                 onChange: (item) =>
                     context.read<BuildCubit>().setRelicFragment(i, item),
               ),
+          ],
+        ),
+        _BlockLayout(
+          title: '額外項目(Ex: 腐蝕彈藥)',
+          children: [
+            _ItemView(
+              title: '長槍額外項目',
+              repository: context.read<ModifierRepository>(),
+              selector: (state) => state.longGunModifier,
+              onChange: (item) =>
+                  context.read<BuildCubit>().setLongGunModifier(item),
+            ),
+            _ItemView(
+              title: '手槍額外項目',
+              repository: context.read<ModifierRepository>(),
+              selector: (state) => state.handGunModifier,
+              onChange: (item) =>
+                  context.read<BuildCubit>().setHandGunModifier(item),
+            )
           ],
         ),
         Container(height: 12),

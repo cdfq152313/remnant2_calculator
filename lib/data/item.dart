@@ -5,6 +5,7 @@ import 'package:remnant2_calculator/domain/item.dart';
 
 final itemMap = Map.fromEntries([
   ...archetypes,
+  ...effectSkills,
   ...longGuns,
   ...handGuns,
   ...melees,
@@ -42,11 +43,26 @@ final archetypes = [
   ),
 ];
 
-final modifiers = [
+final effectSkills = [
   Item(
     name: '獵人1技能',
     effects: [
       Effect.damageIncrease(15, damageTypes: [DamageType.range]),
+      Effect.criticalChance(15, damageTypes: [DamageType.range]),
+    ],
+  ),
+];
+
+final modifiers = [
+  Item(
+    name: '火熱射擊',
+    effects: [
+      Effect.damageIncrease(15, damageTypes: [DamageType.range]),
+    ],
+  ),
+  Item(
+    name: '腐蝕彈藥',
+    effects: [
       Effect.criticalChance(15, damageTypes: [DamageType.range]),
     ],
   ),

@@ -5,12 +5,14 @@ import 'package:remnant2_calculator/domain/item.dart';
 import 'package:remnant2_calculator/domain/item_list_cubit.dart';
 import 'package:remnant2_calculator/repository/amulet_repository.dart';
 import 'package:remnant2_calculator/repository/archetype_repository.dart';
+import 'package:remnant2_calculator/repository/effect_skill_repository.dart';
 import 'package:remnant2_calculator/repository/hand_gun_repository.dart';
 import 'package:remnant2_calculator/repository/item_repository.dart';
 import 'package:remnant2_calculator/repository/keyword_and_show_default_cubit.dart';
 import 'package:remnant2_calculator/repository/long_gun_repository.dart';
 import 'package:remnant2_calculator/repository/melee_repository.dart';
 import 'package:remnant2_calculator/repository/mod_repository.dart';
+import 'package:remnant2_calculator/repository/modifier_repository.dart';
 import 'package:remnant2_calculator/repository/range_mutator_repository.dart';
 import 'package:remnant2_calculator/repository/relic_fragment_repository.dart';
 import 'package:remnant2_calculator/repository/ring_repository.dart';
@@ -55,6 +57,10 @@ class ItemCollectionView extends StatelessWidget {
             title: '職業',
           ),
           _ItemList(
+            repository: context.read<EffectSkillRepository>(),
+            title: '技能',
+          ),
+          _ItemList(
             repository: context.read<AmuletRepository>(),
             title: '項鍊',
           ),
@@ -65,6 +71,10 @@ class ItemCollectionView extends StatelessWidget {
           _ItemList(
             repository: context.read<RelicFragmentRepository>(),
             title: '聖物碎片',
+          ),
+          _ItemList(
+            repository: context.read<ModifierRepository>(),
+            title: '額外',
           ),
           Container(height: 12),
         ],

@@ -109,6 +109,13 @@ class WeaponEditorCubit extends ItemEditorCubit<Weapon> {
     );
   }
 
+  void setDamageRps(String value) {
+    final rps = double.tryParse(value);
+    emit(
+      ItemEditorState(state.value.copyWith.damage(rps: rps == 0 ? null : rps)),
+    );
+  }
+
   void setDamageType(DamageType type, bool? value) {
     emit(
       ItemEditorState(state.value.copyWith.damage(

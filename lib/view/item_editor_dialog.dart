@@ -89,31 +89,7 @@ class _ItemEditorDialog extends StatelessWidget {
           ),
           const Divider(),
           if (context.read<ItemEditorCubit>() is WeaponEditorCubit)
-            Row(
-              children: [
-                Container(
-                  width: 100,
-                  margin: const EdgeInsets.only(left: 8),
-                  child: const Text('基礎攻擊'),
-                ),
-                BlocSelector<WeaponEditorCubit, ItemEditorState<Weapon>,
-                    BaseDamage>(
-                  selector: (state) => state.value.damage,
-                  builder: (context, state) {
-                    return _NumAndCheckboxField(
-                      initialValue: state.value.toString(),
-                      currentDamageTypes: state.damageTypes,
-                      onValueChange: (v) =>
-                          context.read<WeaponEditorCubit>().setDamageValue(v),
-                      onDamageTypeChange: (e, v) =>
-                          context.read<WeaponEditorCubit>().setDamageType(e, v),
-                      onAllDamageTypeChange: (v) =>
-                          context.read<WeaponEditorCubit>().setAllDamageType(v),
-                    );
-                  },
-                ),
-              ],
-            ),
+            const _WeaponBaseDamageEditor(),
           const Divider(),
           BlocSelector<ItemEditorCubit, ItemEditorState, List<Effect>>(
             selector: (state) => state.value.effects,
@@ -160,6 +136,92 @@ class _ItemEditorDialog extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _WeaponBaseDamageEditor extends StatelessWidget {
+  const _WeaponBaseDamageEditor();
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Container(
+          width: 100,
+          margin: const EdgeInsets.only(left: 8),
+          child: const Text('基礎攻擊'),
+        ),
+        BlocSelector<WeaponEditorCubit, ItemEditorState<Weapon>, BaseDamage>(
+          selector: (state) => state.value.damage,
+          builder: (context, state) {
+            return Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      const SizedBox(
+                        width: 40,
+                        child: Text('傷害'),
+                      ),
+                      SizedBox(
+                        width: 200,
+                        child: TextFormField(
+                          initialValue: state.value.toString(),
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(
+                                RegExp(r'^-?\d*$')),
+                          ],
+                          decoration: const InputDecoration(
+                              border: OutlineInputBorder()),
+                          keyboardType: const TextInputType.numberWithOptions(
+                              signed: true, decimal: false),
+                          onChanged: (v) => context
+                              .read<WeaponEditorCubit>()
+                              .setDamageValue(v),
+                        ),
+                      )
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      const SizedBox(
+                        width: 40,
+                        child: Text('RPS'),
+                      ),
+                      SizedBox(
+                        width: 200,
+                        child: TextFormField(
+                          initialValue: state.rps?.toString(),
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(
+                                RegExp(r'^-?\d*$')),
+                          ],
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                          ),
+                          keyboardType: const TextInputType.numberWithOptions(
+                              signed: true, decimal: false),
+                          onChanged: (v) =>
+                              context.read<WeaponEditorCubit>().setDamageRps(v),
+                        ),
+                      )
+                    ],
+                  ),
+                  _DamageTypeCheckbox(
+                    currentDamageTypes: state.damageTypes,
+                    onChange: (e, v) =>
+                        context.read<WeaponEditorCubit>().setDamageType(e, v),
+                    onAllChange: (v) =>
+                        context.read<WeaponEditorCubit>().setAllDamageType(v),
+                  )
+                ],
+              ),
+            );
+          },
+        ),
+      ],
     );
   }
 }

@@ -204,6 +204,7 @@ class _ItemView extends StatelessWidget {
               if (item is Weapon) ...[
                 Text('適用增傷 ${(item as Weapon).damage.damageTypes.displayText}'),
                 Text('基礎攻擊 ${(item as Weapon).damage.value}'),
+                Text('基礎射速 ${(item as Weapon).damage.rps ?? '--'}'),
               ],
               ...item.effects.map(
                 (e) => Text(e.displayText),

@@ -120,6 +120,13 @@
           "damageTypes": [
             "range"
           ]
+        },
+        {
+          "type": "fireRate",
+          "value": 15,
+          "damageTypes": [
+            "range"
+          ]
         }
       ],
       "isDefault": true,
@@ -840,6 +847,20 @@
         {
           "type": "criticalDamage",
           "value": 20,
+          "damageTypes": [
+            "range"
+          ]
+        }
+      ],
+      "isDefault": true,
+      "runtimeType": "default"
+    },
+    {
+      "name": "遠程射速",
+      "effects": [
+        {
+          "type": "fireRate",
+          "value": 10,
           "damageTypes": [
             "range"
           ]

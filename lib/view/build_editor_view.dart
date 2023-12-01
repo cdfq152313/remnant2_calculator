@@ -376,12 +376,15 @@ class _WeaponView extends StatelessWidget {
                   Text(
                     '基礎攻擊: ${item.damage.value}',
                   ),
+                  Text(
+                    '基礎射速: ${item.damage.rps ?? '--'}',
+                  ),
                   ...item.effects.map((e) => Text(e.displayText)),
                   const Divider(),
-                  Text('一般期望值: ${calculation.expectedDamage ?? '--'}'),
-                  Text(
-                    '弱點期望值: ${calculation.expectedWeakSpotDamage ?? '--'}',
-                  ),
+                  Text('一般期望值: ${calculation.expectedDamage}'),
+                  Text('弱點期望值: ${calculation.expectedWeakSpotDamage}'),
+                  Text('一般DPS: ${calculation.expectedDps ?? '--'}'),
+                  Text('弱點DPS: ${calculation.expectedWeakSpotDps ?? '--'}'),
                 ],
               );
             },

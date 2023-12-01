@@ -6,6 +6,7 @@ import 'package:remnant2_calculator/domain/damage_type.dart';
 import 'package:remnant2_calculator/domain/effect.dart';
 import 'package:remnant2_calculator/domain/item.dart';
 import 'package:remnant2_calculator/domain/item_editor_cubit.dart';
+import 'package:remnant2_calculator/extension.dart';
 import 'package:remnant2_calculator/repository/item_repository.dart';
 
 class ItemEditorDialog extends StatelessWidget {
@@ -170,8 +171,7 @@ class _WeaponBaseDamageEditor extends StatelessWidget {
                         child: TextFormField(
                           initialValue: state.value.toString(),
                           inputFormatters: [
-                            FilteringTextInputFormatter.allow(
-                                RegExp(r'^-?\d*$')),
+                            FilteringTextInputFormatter.allow(floatRegExp),
                           ],
                           decoration: const InputDecoration(
                               border: OutlineInputBorder()),
@@ -195,14 +195,15 @@ class _WeaponBaseDamageEditor extends StatelessWidget {
                         child: TextFormField(
                           initialValue: state.rps?.toString(),
                           inputFormatters: [
-                            FilteringTextInputFormatter.allow(
-                                RegExp(r'^-?\d*$')),
+                            FilteringTextInputFormatter.allow(floatRegExp),
                           ],
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                           ),
                           keyboardType: const TextInputType.numberWithOptions(
-                              signed: true, decimal: false),
+                            signed: true,
+                            decimal: false,
+                          ),
                           onChanged: (v) =>
                               context.read<WeaponEditorCubit>().setDamageRps(v),
                         ),
@@ -312,7 +313,7 @@ class _NumAndCheckboxField extends StatelessWidget {
             child: TextFormField(
                 initialValue: initialValue,
                 inputFormatters: [
-                  FilteringTextInputFormatter.allow(RegExp(r'^-?\d*$')),
+                  FilteringTextInputFormatter.allow(floatRegExp),
                 ],
                 decoration: const InputDecoration(border: OutlineInputBorder()),
                 keyboardType: const TextInputType.numberWithOptions(

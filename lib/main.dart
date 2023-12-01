@@ -55,29 +55,31 @@ class MyApp extends StatelessWidget {
                 colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
                 useMaterial3: true,
               ),
-              home: DefaultTabController(
-                length: 4,
-                child: Scaffold(
-                  appBar: AppBar(
-                    backgroundColor:
-                        Theme.of(context).colorScheme.inversePrimary,
-                    title: const Text('遺跡2傷害計算機'),
-                    bottom: const TabBar(
-                      tabs: [
-                        Tab(text: '配裝'),
-                        Tab(text: '儲存列表'),
-                        Tab(text: '物品列表'),
-                        Tab(text: '其他'),
+              home: SelectionArea(
+                child: DefaultTabController(
+                  length: 4,
+                  child: Scaffold(
+                    appBar: AppBar(
+                      backgroundColor:
+                          Theme.of(context).colorScheme.inversePrimary,
+                      title: const Text('遺跡2傷害計算機'),
+                      bottom: const TabBar(
+                        tabs: [
+                          Tab(text: '配裝'),
+                          Tab(text: '儲存列表'),
+                          Tab(text: '物品列表'),
+                          Tab(text: '其他'),
+                        ],
+                      ),
+                    ),
+                    body: const TabBarView(
+                      children: [
+                        BuildEditorView(),
+                        BuildListView(),
+                        ItemCollectionView(),
+                        OtherView(),
                       ],
                     ),
-                  ),
-                  body: const TabBarView(
-                    children: [
-                      BuildEditorView(),
-                      BuildListView(),
-                      ItemCollectionView(),
-                      OtherView(),
-                    ],
                   ),
                 ),
               ),

@@ -897,6 +897,20 @@
       ],
       "isDefault": true,
       "runtimeType": "default"
+    },
+    {
+      "name": "日暮 - 恐怖行者",
+      "effects": [
+        {
+          "type": "fireRate",
+          "value": 25,
+          "damageTypes": [
+            "range"
+          ]
+        }
+      ],
+      "isDefault": true,
+      "runtimeType": "default"
     }
   ],
   "RangeMutator": [

@@ -17,7 +17,7 @@ enum DamageType {
 
 extension DamageTypeExtension on DamageType {
   String get displayText => switch (this) {
-        DamageType.range => '遠端',
+        DamageType.range => '遠程',
         DamageType.melee => '近戰',
         DamageType.mod => '改裝',
         DamageType.fire => '火焰',

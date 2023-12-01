@@ -1,6 +1,94 @@
 {
   "Amulet": [
     {
+      "name": "引爆觸發器",
+      "effects": [
+        {
+          "type": "damageIncrease",
+          "value": 25,
+          "damageTypes": [
+            "explosion"
+          ]
+        }
+      ],
+      "isDefault": true,
+      "runtimeType": "default"
+    },
+    {
+      "name": "織夜者的仇怨",
+      "effects": [
+        {
+          "type": "criticalChance",
+          "value": 20,
+          "damageTypes": [
+            "range",
+            "melee",
+            "mod",
+            "fire",
+            "acid",
+            "shock",
+            "bleeding",
+            "burning",
+            "corroded",
+            "overloaded",
+            "bow",
+            "explosion",
+            "skill",
+            "heavy"
+          ]
+        },
+        {
+          "type": "fireRate",
+          "value": 7,
+          "damageTypes": [
+            "range",
+            "melee",
+            "mod",
+            "fire",
+            "acid",
+            "shock",
+            "bleeding",
+            "burning",
+            "corroded",
+            "overloaded",
+            "bow",
+            "explosion",
+            "skill",
+            "heavy"
+          ]
+        }
+      ],
+      "isDefault": true,
+      "runtimeType": "default"
+    },
+    {
+      "name": "槍手神符",
+      "effects": [
+        {
+          "type": "fireRate",
+          "value": 15,
+          "damageTypes": [
+            "range",
+            "melee",
+            "mod",
+            "fire",
+            "acid",
+            "shock",
+            "bleeding",
+            "burning",
+            "corroded",
+            "overloaded",
+            "bow",
+            "explosion",
+            "skill",
+            "heavy"
+          ]
+        }
+      ],
+      "isDefault": true,
+      "runtimeType": "default"
+    },
+    {
       "name": "腐蝕磨石",
       "effects": [
         {
@@ -431,6 +519,27 @@
       ],
       "isDefault": true,
       "runtimeType": "default"
+    },
+    {
+      "name": "槍手3技能",
+      "effects": [
+        {
+          "type": "fireRate",
+          "value": 20,
+          "damageTypes": [
+            "range"
+          ]
+        },
+        {
+          "type": "criticalChance",
+          "value": 15,
+          "damageTypes": [
+            "bow"
+          ]
+        }
+      ],
+      "isDefault": true,
+      "runtimeType": "default"
     }
   ],
   "HandGun": [
@@ -522,6 +631,20 @@
       ],
       "isDefault": true,
       "runtimeType": "weapon"
+    },
+    {
+      "name": "腐化巔峰",
+      "damage": {
+        "value": 270,
+        "damageTypes": [
+          "range",
+          "explosion"
+        ],
+        "rps": 1.9
+      },
+      "effects": [],
+      "isDefault": true,
+      "runtimeType": "weapon"
     }
   ],
   "LongGun": [
@@ -558,6 +681,60 @@
         {
           "type": "weakSpotDamage",
           "value": 105,
+          "damageTypes": [
+            "range",
+            "melee",
+            "mod",
+            "fire",
+            "acid",
+            "shock",
+            "bleeding",
+            "burning",
+            "corroded",
+            "overloaded",
+            "bow",
+            "explosion",
+            "skill",
+            "heavy"
+          ]
+        }
+      ],
+      "isDefault": true,
+      "runtimeType": "weapon"
+    },
+    {
+      "name": "AR-47",
+      "damage": {
+        "value": 51,
+        "damageTypes": [
+          "range"
+        ],
+        "rps": 7.3
+      },
+      "effects": [
+        {
+          "type": "criticalChance",
+          "value": 10,
+          "damageTypes": [
+            "range",
+            "melee",
+            "mod",
+            "fire",
+            "acid",
+            "shock",
+            "bleeding",
+            "burning",
+            "corroded",
+            "overloaded",
+            "bow",
+            "explosion",
+            "skill",
+            "heavy"
+          ]
+        },
+        {
+          "type": "weakSpotDamage",
+          "value": 100,
           "damageTypes": [
             "range",
             "melee",
@@ -672,6 +849,20 @@
           "fire",
           "mod"
         ]
+      },
+      "effects": [],
+      "isDefault": true,
+      "runtimeType": "weapon"
+    },
+    {
+      "name": "腐化巔峰 - 死亡點",
+      "damage": {
+        "value": 150,
+        "damageTypes": [
+          "mod",
+          "explosion"
+        ],
+        "rps": null
       },
       "effects": [],
       "isDefault": true,
@@ -868,6 +1059,39 @@
       ],
       "isDefault": true,
       "runtimeType": "default"
+    },
+    {
+      "name": "改裝傷害",
+      "effects": [
+        {
+          "type": "damageIncrease",
+          "value": 10,
+          "damageTypes": [
+            "mod"
+          ]
+        }
+      ],
+      "isDefault": true,
+      "runtimeType": "default"
+    },
+    {
+      "name": "元素傷害",
+      "effects": [
+        {
+          "type": "damageIncrease",
+          "value": 10,
+          "damageTypes": [
+            "fire",
+            "acid",
+            "shock",
+            "burning",
+            "corroded",
+            "overloaded"
+          ]
+        }
+      ],
+      "isDefault": true,
+      "runtimeType": "default"
     }
   ],
   "Ring": [
@@ -980,6 +1204,200 @@
           "value": 15,
           "damageTypes": [
             "range",
+            "melee",
+            "mod",
+            "fire",
+            "acid",
+            "shock",
+            "bleeding",
+            "burning",
+            "corroded",
+            "overloaded",
+            "bow",
+            "explosion",
+            "skill",
+            "heavy"
+          ]
+        }
+      ],
+      "isDefault": true,
+      "runtimeType": "default"
+    },
+    {
+      "name": "贖罪皺襞",
+      "effects": [
+        {
+          "type": "criticalChance",
+          "value": 10,
+          "damageTypes": [
+            "range",
+            "melee",
+            "mod",
+            "fire",
+            "acid",
+            "shock",
+            "bleeding",
+            "burning",
+            "corroded",
+            "overloaded",
+            "bow",
+            "explosion",
+            "skill",
+            "heavy"
+          ]
+        }
+      ],
+      "isDefault": true,
+      "runtimeType": "default"
+    },
+    {
+      "name": "偽智者之負擔",
+      "effects": [
+        {
+          "type": "damageIncrease",
+          "value": 15,
+          "damageTypes": [
+            "mod",
+            "skill"
+          ]
+        }
+      ],
+      "isDefault": true,
+      "runtimeType": "default"
+    },
+    {
+      "name": "碎片重鑄戒指",
+      "effects": [
+        {
+          "type": "damageIncrease",
+          "value": 12,
+          "damageTypes": [
+            "mod"
+          ]
+        }
+      ],
+      "isDefault": true,
+      "runtimeType": "default"
+    },
+    {
+      "name": "破壞者之負擔",
+      "effects": [
+        {
+          "type": "damageIncrease",
+          "value": 15,
+          "damageTypes": [
+            "range",
+            "melee",
+            "mod",
+            "fire",
+            "acid",
+            "shock",
+            "bleeding",
+            "burning",
+            "corroded",
+            "overloaded",
+            "bow",
+            "explosion",
+            "skill",
+            "heavy"
+          ]
+        }
+      ],
+      "isDefault": true,
+      "runtimeType": "default"
+    },
+    {
+      "name": "狂熱者指環",
+      "effects": [
+        {
+          "type": "damageIncrease",
+          "value": 25,
+          "damageTypes": [
+            "bleeding",
+            "burning",
+            "corroded",
+            "overloaded"
+          ]
+        }
+      ],
+      "isDefault": true,
+      "runtimeType": "default"
+    },
+    {
+      "name": "賭徒之負擔",
+      "effects": [
+        {
+          "type": "criticalChance",
+          "value": 10,
+          "damageTypes": [
+            "range",
+            "melee",
+            "mod",
+            "fire",
+            "acid",
+            "shock",
+            "bleeding",
+            "burning",
+            "corroded",
+            "overloaded",
+            "bow",
+            "explosion",
+            "skill",
+            "heavy"
+          ]
+        },
+        {
+          "type": "criticalDamage",
+          "value": 20,
+          "damageTypes": [
+            "range",
+            "melee",
+            "mod",
+            "fire",
+            "acid",
+            "shock",
+            "bleeding",
+            "burning",
+            "corroded",
+            "overloaded",
+            "bow",
+            "explosion",
+            "skill",
+            "heavy"
+          ]
+        }
+      ],
+      "isDefault": true,
+      "runtimeType": "default"
+    },
+    {
+      "name": "缺陷美戒指",
+      "effects": [
+        {
+          "type": "damageIncrease",
+          "value": 25,
+          "damageTypes": [
+            "range"
+          ]
+        }
+      ],
+      "isDefault": true,
+      "runtimeType": "default"
+    },
+    {
+      "name": "擴張之石",
+      "effects": [
+        {
+          "type": "damageIncrease",
+          "value": 12,
+          "damageTypes": [
+            "range"
+          ]
+        },
+        {
+          "type": "damageIncrease",
+          "value": -6,
+          "damageTypes": [
             "melee",
             "mod",
             "fire",

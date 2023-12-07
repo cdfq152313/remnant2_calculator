@@ -161,6 +161,53 @@
       ],
       "isDefault": true,
       "runtimeType": "default"
+    },
+    {
+      "name": "能量分流器",
+      "effects": [
+        {
+          "type": "criticalChance",
+          "value": 10,
+          "damageTypes": [
+            "range",
+            "melee",
+            "mod",
+            "fire",
+            "acid",
+            "shock",
+            "bleeding",
+            "burning",
+            "corroded",
+            "overloaded",
+            "bow",
+            "explosion",
+            "skill",
+            "heavy"
+          ]
+        },
+        {
+          "type": "damageIncrease",
+          "value": 15,
+          "damageTypes": [
+            "range",
+            "melee",
+            "mod",
+            "fire",
+            "acid",
+            "shock",
+            "bleeding",
+            "burning",
+            "corroded",
+            "overloaded",
+            "bow",
+            "explosion",
+            "skill",
+            "heavy"
+          ]
+        }
+      ],
+      "isDefault": false,
+      "runtimeType": "default"
     }
   ],
   "Archetype": [
@@ -755,6 +802,61 @@
       ],
       "isDefault": true,
       "runtimeType": "weapon"
+    },
+    {
+      "name": "新月",
+      "damage": {
+        "value": 261,
+        "damageTypes": [
+          "range",
+          "bow"
+        ],
+        "rps": null
+      },
+      "effects": [
+        {
+          "type": "criticalChance",
+          "value": 5,
+          "damageTypes": [
+            "range",
+            "melee",
+            "mod",
+            "fire",
+            "acid",
+            "shock",
+            "bleeding",
+            "burning",
+            "corroded",
+            "overloaded",
+            "bow",
+            "explosion",
+            "skill",
+            "heavy"
+          ]
+        },
+        {
+          "type": "weakSpotDamage",
+          "value": 70,
+          "damageTypes": [
+            "range",
+            "melee",
+            "mod",
+            "fire",
+            "acid",
+            "shock",
+            "bleeding",
+            "burning",
+            "corroded",
+            "overloaded",
+            "bow",
+            "explosion",
+            "skill",
+            "heavy"
+          ]
+        }
+      ],
+      "isDefault": false,
+      "runtimeType": "weapon"
     }
   ],
   "MeleeMutator": [
@@ -1014,6 +1116,20 @@
         }
       ],
       "isDefault": true,
+      "runtimeType": "default"
+    },
+    {
+      "name": "增壓器",
+      "effects": [
+        {
+          "type": "criticalChance",
+          "value": 15,
+          "damageTypes": [
+            "bow"
+          ]
+        }
+      ],
+      "isDefault": false,
       "runtimeType": "default"
     }
   ],

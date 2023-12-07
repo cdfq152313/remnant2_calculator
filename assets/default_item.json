@@ -206,7 +206,7 @@
           ]
         }
       ],
-      "isDefault": false,
+      "isDefault": true,
       "runtimeType": "default"
     }
   ],
@@ -855,7 +855,7 @@
           ]
         }
       ],
-      "isDefault": false,
+      "isDefault": true,
       "runtimeType": "weapon"
     }
   ],
@@ -1129,7 +1129,7 @@
           ]
         }
       ],
-      "isDefault": false,
+      "isDefault": true,
       "runtimeType": "default"
     }
   ],

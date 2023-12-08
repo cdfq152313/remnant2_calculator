@@ -494,6 +494,53 @@
       ],
       "isDefault": true,
       "runtimeType": "default"
+    },
+    {
+      "name": "祭祀者",
+      "effects": [
+        {
+          "type": "damageIncrease",
+          "value": 20,
+          "damageTypes": [
+            "range",
+            "melee",
+            "mod",
+            "fire",
+            "acid",
+            "shock",
+            "bleeding",
+            "burning",
+            "corroded",
+            "overloaded",
+            "bow",
+            "explosion",
+            "skill",
+            "heavy"
+          ]
+        },
+        {
+          "type": "criticalChance",
+          "value": 10,
+          "damageTypes": [
+            "range",
+            "melee",
+            "mod",
+            "fire",
+            "acid",
+            "shock",
+            "bleeding",
+            "burning",
+            "corroded",
+            "overloaded",
+            "bow",
+            "explosion",
+            "skill",
+            "heavy"
+          ]
+        }
+      ],
+      "isDefault": true,
+      "runtimeType": "default"
     }
   ],
   "EffectSkill": [
@@ -1070,6 +1117,20 @@
           "type": "damageIncrease",
           "value": 20,
           "damageTypes": [
+            "range"
+          ]
+        }
+      ],
+      "isDefault": true,
+      "runtimeType": "default"
+    },
+    {
+      "name": "惡臭傷痕",
+      "effects": [
+        {
+          "type": "criticalChance",
+          "value": 15,
+          "damageTypes": [
             "range",
             "melee",
             "mod",
@@ -1403,33 +1464,6 @@
           "value": 12,
           "damageTypes": [
             "mod"
-          ]
-        }
-      ],
-      "isDefault": true,
-      "runtimeType": "default"
-    },
-    {
-      "name": "破壞者之負擔",
-      "effects": [
-        {
-          "type": "damageIncrease",
-          "value": 15,
-          "damageTypes": [
-            "range",
-            "melee",
-            "mod",
-            "fire",
-            "acid",
-            "shock",
-            "bleeding",
-            "burning",
-            "corroded",
-            "overloaded",
-            "bow",
-            "explosion",
-            "skill",
-            "heavy"
           ]
         }
       ],

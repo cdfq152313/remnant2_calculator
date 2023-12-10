@@ -224,7 +224,7 @@ class _CharacterView extends StatelessWidget {
             ),
             _ItemView(
               title: '手槍額外項目',
-              repository: context.read<RepositoryPack>().modRepository,
+              repository: context.read<RepositoryPack>().modifierRepository,
               selector: (state) => state.handGunModifier,
               onChange: (item) =>
                   context.read<BuildCubit>().setHandGunModifier(item),

@@ -430,6 +430,29 @@
       "runtimeType": "default"
     },
     {
+      "name": "入侵者",
+      "effects": [
+        {
+          "type": "damageIncrease",
+          "value": 35,
+          "damageTypes": [
+            "range",
+            "melee"
+          ]
+        },
+        {
+          "type": "criticalChance",
+          "value": 5,
+          "damageTypes": [
+            "range",
+            "melee"
+          ]
+        }
+      ],
+      "isDefault": true,
+      "runtimeType": "default"
+    },
+    {
       "name": "工程師",
       "effects": [
         {
